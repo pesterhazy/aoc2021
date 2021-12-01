@@ -26,4 +26,3 @@ export function windows(xs: number[]) {
   }
   return result;
 }
-export async function run() {}
