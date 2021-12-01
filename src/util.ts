@@ -17,3 +17,11 @@ export function time(fun: any) {
 export function mod(n: number, m: number) {
   return ((n % m) + m) % m;
 }
+
+export function parseLinesInt(s: string) {
+  var xs = s
+    .split("\n")
+    .filter(l => l.length > 0)
+    .map(l => parseInt(l));
+  return xs;
+}
