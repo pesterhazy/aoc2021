@@ -1,5 +1,5 @@
 import { solvea } from "./day01";
-import { parseLinesInt } from "./util";
+import { parseLinesInt, slurp } from "./util";
 
 test("should return 7 increases", () => {
   const inp = `
@@ -15,4 +15,9 @@ test("should return 7 increases", () => {
 263 (increased)
 `;
   expect(solvea(parseLinesInt(inp))).toBe(7);
+});
+
+test("should return result for input", () => {
+  const inp = slurp("data/day01a.txt");
+  expect(solvea(parseLinesInt(inp))).toBe(1791);
 });
