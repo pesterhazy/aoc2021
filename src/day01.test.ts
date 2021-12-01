@@ -1,4 +1,4 @@
-import { solvea, solveb, windows } from "./day01";
+import * as day from "./day01";
 import { parseLinesInt, slurp } from "./util";
 
 const inp = `
@@ -15,26 +15,26 @@ const inp = `
 `;
 
 test("should return 7 increases", () => {
-  expect(solvea(parseLinesInt(inp))).toBe(7);
+  expect(day.solvea(parseLinesInt(inp))).toBe(7);
 });
 
 test("should return result for input", () => {
   const inp = slurp("data/day01a.txt");
-  expect(solvea(parseLinesInt(inp))).toBe(1791);
+  expect(day.solvea(parseLinesInt(inp))).toBe(1791);
 });
 
 test("should return 8 windows", () => {
-  let result = windows(parseLinesInt(inp));
+  let result = day.windows(parseLinesInt(inp));
   expect(result.length).toBe(8);
   expect(result[0]).toBe(607);
 });
 
 test("should return 5 increases", () => {
-  let result = solveb(parseLinesInt(inp));
+  let result = day.solveb(parseLinesInt(inp));
   expect(result).toBe(5);
 });
 
 test("should return result for input", () => {
   const inp = slurp("data/day01a.txt");
-  expect(solveb(parseLinesInt(inp))).toBe(1822);
+  expect(day.solveb(parseLinesInt(inp))).toBe(1822);
 });
