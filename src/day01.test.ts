@@ -15,5 +15,5 @@ test("solvea", () => {
 263 (increased)
 `;
   console.log(parseLinesInt(inp));
-  // expect([1]).toBe(2);
+  expect(solvea(parseLinesInt(inp))).toBe(-999);
 });
