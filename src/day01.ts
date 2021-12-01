@@ -14,6 +14,16 @@ export function solvea(xs: number[]) {
   return count;
 }
 
-function solveb(xs: number[]) {}
+export function solveb(xs: number[]) {
+  return solvea(windows(xs));
+}
 
+export function windows(xs: number[]) {
+  var result: number[] = [];
+  while (xs.length >= 3) {
+    result.push(xs[0] + xs[1] + xs[2]);
+    xs.shift();
+  }
+  return result;
+}
 export async function run() {}
