@@ -3,6 +3,9 @@ module.exports = {
   setupFilesAfterEnv: [
     '<rootDir>support/check-assertions-number.js',
   ],
+  "testPathIgnorePatterns": [
+    "\\/\\.#"
+  ],
   preset: 'ts-jest',
   testEnvironment: 'node',
 };

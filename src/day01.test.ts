@@ -1,7 +1,7 @@
 import { solvea } from "./day01";
 import { parseLinesInt } from "./util";
 
-test("solvea", () => {
+test("should return 7 increases", () => {
   const inp = `
 199 (N/A - no previous measurement)
 200 (increased)
@@ -14,6 +14,5 @@ test("solvea", () => {
 260 (decreased)
 263 (increased)
 `;
-  console.log(parseLinesInt(inp));
-  expect(solvea(parseLinesInt(inp))).toBe(-999);
+  expect(solvea(parseLinesInt(inp))).toBe(7);
 });
