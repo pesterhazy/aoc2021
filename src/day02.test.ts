@@ -17,3 +17,11 @@ test("should return 150", () => {
 test("should return result", () => {
   expect(day.solvea(day.parse(slurp("data/day02.txt")))).toBe(2019945);
 });
+
+test("should return result", () => {
+  expect(day.solveb(day.parse(inp))).toBe(900);
+});
+
+test("should return result", () => {
+  expect(day.solveb(day.parse(slurp("data/day02.txt")))).toBe(-999);
+});

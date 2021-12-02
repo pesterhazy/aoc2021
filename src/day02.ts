@@ -34,7 +34,27 @@ export function solvea(cmds: Cmd[]) {
   return pos.x * pos.y;
 }
 
-export function solveb(xs: number[]) {}
+export function solveb(cmds: Cmd[]) {
+  let pos = { x: 0, y: 0 };
+  let aim = 0;
+
+  for (let cmd of cmds) {
+    switch (cmd.dir) {
+      case "down":
+        aim += cmd.v;
+        break;
+      case "up":
+        aim -= cmd.v;
+        break;
+      case "forward":
+        pos = { x: pos.x + cmd.v, y: pos.y + cmd.v * aim };
+        break;
+      default:
+        throw "boom";
+    }
+  }
+  return pos.x * pos.y;
+}
 
 export function parse(s: string): Cmd[] {
   return s
