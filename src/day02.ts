@@ -18,16 +18,21 @@ interface Cmd {
   v: number;
 }
 
-const delta: Record<string, Vec> = {
+const delta = {
   forward: { x: 1, y: 0 },
   down: { x: 0, y: 1 },
   up: { x: 0, y: -1 }
 };
 
+function isDir(s: string): s is keyof typeof delta {
+  return s in delta;
+}
+
 export function solvea(cmds: Cmd[]) {
   let pos = { x: 0, y: 0 };
 
   for (let cmd of cmds) {
+    if (!isDir(cmd.dir)) throw "Unknown dir";
     let vec: Vec = delta[cmd.dir];
     pos = add(pos, mul(vec, cmd.v));
   }
