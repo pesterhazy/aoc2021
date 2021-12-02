@@ -1,4 +1,4 @@
-import { slurp } from "./util";
+import * as util from "./util";
 
 interface Vec {
   x: number;
@@ -57,11 +57,5 @@ export function solveb(cmds: Cmd[]) {
 }
 
 export function parse(s: string): Cmd[] {
-  return s
-    .split("\n")
-    .filter(l => l.length > 0)
-    .map(l => {
-      let words = l.split(" ");
-      return { dir: words[0], v: parseInt(words[1]) };
-    });
+  return util.parseWords(s).map(l => ({ dir: l[0], v: parseInt(l[1]) }));
 }

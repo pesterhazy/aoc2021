@@ -23,5 +23,5 @@ test("should return result", () => {
 });
 
 test("should return result", () => {
-  expect(day.solveb(day.parse(slurp("data/day02.txt")))).toBe(-999);
+  expect(day.solveb(day.parse(slurp("data/day02.txt")))).toBe(1599311480);
 });

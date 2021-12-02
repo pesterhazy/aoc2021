@@ -25,3 +25,12 @@ export function parseLinesInt(s: string) {
     .map(l => parseInt(l));
   return xs;
 }
+
+export function parseWords(s: string): string[][] {
+  return s
+    .split("\n")
+    .filter(l => l.length > 0)
+    .map(l => {
+      return l.split(" ");
+    });
+}
