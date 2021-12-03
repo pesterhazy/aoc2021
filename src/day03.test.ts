@@ -16,10 +16,14 @@ const inp = `
 01010
 `;
 
-test("should return demo solution", () => {
+test("should return binary number", () => {
   expect(day.count(util.parseLinesStr(inp))).toBe("10110");
 });
 
 test("should return complement", () => {
   expect(day.comp("1011")).toBe("0100");
+});
+
+test("should return demo solution", () => {
+  expect(day.solvea(util.parseLinesStr(inp))).toBe(198);
 });

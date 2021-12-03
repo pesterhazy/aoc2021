@@ -21,3 +21,8 @@ export function comp(x: string) {
   }
   return result;
 }
+
+export function solvea(xs: string[]) {
+  let r = count(xs);
+  return parseInt(r, 2) * parseInt(comp(r), 2);
+}
