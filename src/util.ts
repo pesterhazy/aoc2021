@@ -18,6 +18,11 @@ export function mod(n: number, m: number) {
   return ((n % m) + m) % m;
 }
 
+export function parseLinesStr(s: string) {
+  var xs = s.split("\n").filter(l => l.length > 0);
+  return xs;
+}
+
 export function parseLinesInt(s: string) {
   var xs = s
     .split("\n")
