@@ -35,5 +35,35 @@ test("should return result", () => {
 });
 
 test("should return oxygen generator rating", () => {
-  expect(day.ogr(util.parseLinesStr(inp))).toBe(23);
+  expect(
+    day.find(util.parseLinesStr(inp), "1", (a: number, b: number) => a >= b)
+  ).toBe(23);
+});
+
+test("should return co2 scrubber rating", () => {
+  expect(
+    day.find(util.parseLinesStr(inp), "0", (a: number, b: number) => a <= b)
+  ).toBe(10);
+});
+
+test("should return demo solution", () => {
+  expect(
+    day.find(util.parseLinesStr(inp), "1", (a: number, b: number) => a >= b) *
+      day.find(util.parseLinesStr(inp), "0", (a: number, b: number) => a <= b)
+  ).toBe(230);
+});
+
+test("should return solution", () => {
+  expect(
+    day.find(
+      util.parseLinesStr(util.slurp("data/day03.txt")),
+      "1",
+      (a: number, b: number) => a >= b
+    ) *
+      day.find(
+        util.parseLinesStr(util.slurp("data/day03.txt")),
+        "0",
+        (a: number, b: number) => a <= b
+      )
+  ).toBe(7928162);
 });
