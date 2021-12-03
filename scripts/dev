@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail && cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-exec npx jest --watch
+exec npx jest --watchAll --no-cache
