@@ -13,3 +13,11 @@ export function count(xs: string[]) {
   }
   return result;
 }
+
+export function comp(x: string) {
+  let result = "";
+  for (let c of x) {
+    result += c === "0" ? "1" : "0";
+  }
+  return result;
+}

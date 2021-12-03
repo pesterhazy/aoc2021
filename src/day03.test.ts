@@ -19,3 +19,7 @@ const inp = `
 test("should return demo solution", () => {
   expect(day.count(util.parseLinesStr(inp))).toBe("10110");
 });
+
+test("should return complement", () => {
+  expect(day.comp("1011")).toBe("0100");
+});
