@@ -27,3 +27,13 @@ test("should return complement", () => {
 test("should return demo solution", () => {
   expect(day.solvea(util.parseLinesStr(inp))).toBe(198);
 });
+
+test("should return result", () => {
+  expect(day.solvea(util.parseLinesStr(util.slurp("data/day03.txt")))).toBe(
+    3895776
+  );
+});
+
+test("should return oxygen generator rating", () => {
+  expect(day.ogr(util.parseLinesStr(inp))).toBe(23);
+});
