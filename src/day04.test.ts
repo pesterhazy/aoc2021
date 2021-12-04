@@ -36,6 +36,10 @@ test("should not match", () => {
   expect(day.match(demoBoard, new Set([8, 2, 23, 4, 24]))).toBe(true);
 });
 
-test("should return answer", () => {
+test("should return demo answer", () => {
   expect(day.solvea(day.parse(inp))).toBe(4512);
+});
+
+test("should return answer", () => {
+  expect(day.solvea(day.parse(util.slurp("data/day04.txt")))).toBe(82440);
 });
