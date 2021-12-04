@@ -76,3 +76,27 @@ export function solvea(input: Input): number {
   }
   throw "not found";
 }
+
+export function solveb(input: Input): number {
+  let ns: Set<number> = new Set();
+  let winners: Set<number> = new Set();
+  for (let n of input.numbers) {
+    ns.add(n);
+    for (let i = 0; i < input.boards.length; i++) {
+      if (winners.has(i)) continue;
+      let board = input.boards[i];
+      if (match(board, ns)) {
+        winners.add(i);
+        if (winners.size === input.boards.length)
+          return (
+            n *
+            board
+              .flatMap(b => b)
+              .filter(x => !ns.has(x))
+              .reduce((a, b) => a + b, 0)
+          );
+      }
+    }
+  }
+  throw "not found";
+}
