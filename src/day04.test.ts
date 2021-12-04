@@ -26,3 +26,16 @@ const inp = `
 test("should parse into 3 boards", () => {
   expect(day.parse(inp).boards.length).toBe(3);
 });
+
+test("should not match", () => {
+  const demoBoard = day.parse(inp).boards[0];
+  expect(day.match(demoBoard, new Set())).toBe(false);
+  expect(day.match(demoBoard, new Set([17, 23, 14]))).toBe(false);
+  expect(day.match(demoBoard, new Set([17, 23, 14, 3, 20]))).toBe(true);
+  expect(day.match(demoBoard, new Set([8, 2, 23]))).toBe(false);
+  expect(day.match(demoBoard, new Set([8, 2, 23, 4, 24]))).toBe(true);
+});
+
+test("should return answer", () => {
+  expect(day.solvea(day.parse(inp))).toBe(4512);
+});

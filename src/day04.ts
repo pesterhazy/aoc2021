@@ -37,3 +37,42 @@ export function parse(s: string): Input {
     boards: boards
   };
 }
+
+export function match(board: Board, ns: Set<number>) {
+  let rows = new Set();
+  let cols = new Set();
+
+  for (let i = 0; i < 5; i++) {
+    rows.add(i);
+    cols.add(i);
+  }
+
+  for (let x = 0; x < 5; x++) {
+    for (let y = 0; y < 5; y++) {
+      if (!ns.has(board[y][x])) {
+        cols.delete(x);
+        rows.delete(y);
+      }
+    }
+  }
+  return cols.size > 0 || rows.size > 0;
+}
+
+export function solvea(input: Input): number {
+  let ns: Set<number> = new Set();
+  for (let n of input.numbers) {
+    ns.add(n);
+    for (let board of input.boards) {
+      if (match(board, ns)) {
+        return (
+          n *
+          board
+            .flatMap(b => b)
+            .filter(x => !ns.has(x))
+            .reduce((a, b) => a + b)
+        );
+      }
+    }
+  }
+  throw "not found";
+}
