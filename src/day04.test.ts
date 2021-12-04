@@ -47,3 +47,7 @@ test("should return answer", () => {
 test("should return demo answer", () => {
   expect(day.solveb(day.parse(inp))).toBe(1924);
 });
+
+test("should return answer", () => {
+  expect(day.solveb(day.parse(util.slurp("data/day04.txt")))).toBe(20774);
+});
