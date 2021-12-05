@@ -56,25 +56,25 @@ export class Canvas {
   }
 }
 
-export function drawLine(canvas: Canvas, line: Line) {
-  if (line[0].x === line[1].x) {
-    for (
-      let i = Math.min(line[0].y, line[1].y);
-      i <= Math.max(line[0].y, line[1].y);
-      i++
-    ) {
-      canvas.swap({ x: line[0].x, y: i }, n => n + 1);
-    }
-  } else if (line[0].y === line[1].y) {
-    for (
-      let i = Math.min(line[0].x, line[1].x);
-      i <= Math.max(line[0].x, line[1].x);
-      i++
-    ) {
-      canvas.swap({ x: i, y: line[0].y }, n => n + 1);
-    }
-  } else {
-    // do nothing
+function add(v1: Vec, v2: Vec) {
+  return { x: v1.x + v2.x, y: v1.y + v2.y };
+}
+
+export function drawLine(canvas: Canvas, line: Line, skipDiagonal: boolean) {
+  if (line[0].x !== line[1].x && line[0].y !== line[1].y && skipDiagonal) {
+    return;
+  }
+
+  let delta = {
+    x: Math.sign(line[1].x - line[0].x),
+    y: Math.sign(line[1].y - line[0].y)
+  };
+
+  let pos = line[0];
+  canvas.swap(pos, n => n + 1);
+  while (!(pos.x === line[1].x && pos.y === line[1].y)) {
+    pos = add(pos, delta);
+    canvas.swap(pos, n => n + 1);
   }
 }
 
@@ -82,7 +82,7 @@ export function solvea(input: Line[]) {
   let canvas = new Canvas();
 
   for (let line of input) {
-    drawLine(canvas, line);
+    drawLine(canvas, line, true);
   }
   let count = 0;
   for (let vec of canvas.all()) {

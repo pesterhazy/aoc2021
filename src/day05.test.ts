@@ -38,22 +38,35 @@ test("should peek and poke", () => {
 
 test("should draw", () => {
   let canvas = new day.Canvas();
-  day.drawLine(canvas, [
-    { x: 2, y: 1 },
-    { x: 2, y: 2 }
-  ]);
+  day.drawLine(
+    canvas,
+    [
+      { x: 2, y: 1 },
+      { x: 2, y: 2 }
+    ],
+    true
+  );
   expect(canvas.peek({ x: 2, y: 1 })).toBe(1);
-  day.drawLine(canvas, [
-    { x: 1, y: 2 },
-    { x: 2, y: 2 }
-  ]);
+  expect(canvas.peek({ x: 2, y: 2 })).toBe(1);
+  day.drawLine(
+    canvas,
+    [
+      { x: 1, y: 2 },
+      { x: 2, y: 2 }
+    ],
+    true
+  );
   expect(canvas.peek({ x: 1, y: 2 })).toBe(1);
   expect(canvas.peek({ x: 2, y: 2 })).toBe(2);
-  expect(canvas.all()).toStrictEqual([
-    { x: 2, y: 1 },
-    { x: 2, y: 2 },
-    { x: 1, y: 2 }
-  ]);
+  day.drawLine(
+    canvas,
+    [
+      { x: 5, y: 5 },
+      { x: 3, y: 5 }
+    ],
+    true
+  );
+  expect(canvas.peek({ x: 4, y: 5 })).toBe(1);
 });
 
 test("should work with simple input", () => {
@@ -77,6 +90,6 @@ test("should answer demo", () => {
   expect(day.solvea(day.parse(inp))).toBe(5);
 });
 
-test("should answer a", () => {
-  expect(day.solvea(day.parse(util.slurp("data/day05.txt")))).toBe(-999);
+test("should answer puzzle a", () => {
+  expect(day.solvea(day.parse(util.slurp("data/day05.txt")))).toBe(6841);
 });
