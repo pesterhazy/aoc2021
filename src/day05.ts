@@ -12,8 +12,8 @@ export function parse(s: string): Line[] {
     let m = l.match(/(\d+),(\d+) -> (\d+),(\d+)/);
     if (!m) throw "ouch";
     return [
-      { x: parseInt(m[0]), y: parseInt(m[1]) },
-      { x: parseInt(m[2]), y: parseInt(m[3]) }
+      { x: parseInt(m[1]), y: parseInt(m[2]) },
+      { x: parseInt(m[3]), y: parseInt(m[4]) }
     ];
   });
 }

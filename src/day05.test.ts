@@ -16,6 +16,10 @@ const inp = `
 
 test("should parse into 10 lines", () => {
   expect(day.parse(inp).length).toBe(10);
+  expect(day.parse(inp)[0]).toStrictEqual([
+    { x: 0, y: 9 },
+    { x: 5, y: 9 }
+  ]);
 });
 
 test("should peek and poke", () => {
@@ -45,6 +49,11 @@ test("should draw", () => {
   ]);
   expect(canvas.peek({ x: 1, y: 2 })).toBe(1);
   expect(canvas.peek({ x: 2, y: 2 })).toBe(2);
+  expect(canvas.all()).toStrictEqual([
+    { x: 2, y: 1 },
+    { x: 2, y: 2 },
+    { x: 1, y: 2 }
+  ]);
 });
 
 test("should work with simple input", () => {
