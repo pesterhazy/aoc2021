@@ -25,6 +25,11 @@ test("should peek and poke", () => {
   expect(canvas.peek({ x: 3, y: 2 })).toBe(1);
   canvas.swap({ x: 3, y: 2 }, n => n + 1);
   expect(canvas.peek({ x: 3, y: 2 })).toBe(2);
+  canvas.poke({ x: 4, y: 4 }, 1);
+  expect(canvas.all()).toStrictEqual([
+    { x: 3, y: 2 },
+    { x: 4, y: 4 }
+  ]);
 });
 
 test("should draw", () => {
@@ -40,4 +45,25 @@ test("should draw", () => {
   ]);
   expect(canvas.peek({ x: 1, y: 2 })).toBe(1);
   expect(canvas.peek({ x: 2, y: 2 })).toBe(2);
+});
+
+test("should work with simple input", () => {
+  expect(day.solvea([])).toBe(0);
+  expect(
+    day.solvea([
+      [
+        { x: 1, y: 1 },
+        { x: 3, y: 1 }
+      ],
+
+      [
+        { x: 1, y: 1 },
+        { x: 2, y: 1 }
+      ]
+    ])
+  ).toBe(2);
+});
+
+test("should answer demo", () => {
+  expect(day.solvea(day.parse(inp))).toBe(5);
 });

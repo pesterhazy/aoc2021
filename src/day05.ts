@@ -43,6 +43,17 @@ export class Canvas {
   swap(vec: Vec, f: (n: number) => number) {
     this.poke(vec, f(this.peek(vec)));
   }
+
+  all(): Vec[] {
+    let result: Vec[] = [];
+
+    for (let [x, mm] of this.m.entries()) {
+      for (let [y, _] of mm.entries()) {
+        result.push({ x, y });
+      }
+    }
+    return result;
+  }
 }
 
 export function drawLine(canvas: Canvas, line: Line) {
@@ -60,9 +71,22 @@ export function drawLine(canvas: Canvas, line: Line) {
       i <= Math.max(line[0].x, line[1].x);
       i++
     ) {
-      canvas.swap({ y: line[0].y, x: i }, n => n + 1);
+      canvas.swap({ x: i, y: line[0].y }, n => n + 1);
     }
   } else {
     // do nothing
   }
+}
+
+export function solvea(input: Line[]) {
+  let canvas = new Canvas();
+
+  for (let line of input) {
+    drawLine(canvas, line);
+  }
+  let count = 0;
+  for (let vec of canvas.all()) {
+    if (canvas.peek(vec) >= 2) count++;
+  }
+  return count;
 }
