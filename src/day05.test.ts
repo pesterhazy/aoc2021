@@ -76,3 +76,7 @@ test("should work with simple input", () => {
 test("should answer demo", () => {
   expect(day.solvea(day.parse(inp))).toBe(5);
 });
+
+test("should answer a", () => {
+  expect(day.solvea(day.parse(util.slurp("data/day05.txt")))).toBe(-999);
+});
