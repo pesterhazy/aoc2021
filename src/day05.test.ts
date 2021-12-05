@@ -69,27 +69,14 @@ test("should draw", () => {
   expect(canvas.peek({ x: 4, y: 5 })).toBe(1);
 });
 
-test("should work with simple input", () => {
-  expect(day.solvea([])).toBe(0);
-  expect(
-    day.solvea([
-      [
-        { x: 1, y: 1 },
-        { x: 3, y: 1 }
-      ],
-
-      [
-        { x: 1, y: 1 },
-        { x: 2, y: 1 }
-      ]
-    ])
-  ).toBe(2);
-});
-
 test("should answer demo", () => {
-  expect(day.solvea(day.parse(inp))).toBe(5);
+  expect(day.solve(day.parse(inp), true)).toBe(5);
 });
 
 test("should answer puzzle a", () => {
-  expect(day.solvea(day.parse(util.slurp("data/day05.txt")))).toBe(6841);
+  expect(day.solve(day.parse(util.slurp("data/day05.txt")), true)).toBe(6841);
+});
+
+test("should answer puzzle b", () => {
+  expect(day.solve(day.parse(util.slurp("data/day05.txt")), false)).toBe(19258);
 });

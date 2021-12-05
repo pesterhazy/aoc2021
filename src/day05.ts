@@ -78,11 +78,11 @@ export function drawLine(canvas: Canvas, line: Line, skipDiagonal: boolean) {
   }
 }
 
-export function solvea(input: Line[]) {
+export function solve(input: Line[], skipDiagonal: boolean) {
   let canvas = new Canvas();
 
   for (let line of input) {
-    drawLine(canvas, line, true);
+    drawLine(canvas, line, skipDiagonal);
   }
   let count = 0;
   for (let vec of canvas.all()) {
