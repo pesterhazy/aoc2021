@@ -1,5 +1,5 @@
-export function fish(init: number[], days: number) {
-  let gen = [...init];
+export function calc(days: number) {
+  let gen = [0];
 
   for (let day = 0; day < days; day++) {
     let newGen = [];
@@ -15,5 +15,13 @@ export function fish(init: number[], days: number) {
     for (let i = 0; i < born; i++) newGen.push(8);
     gen = newGen;
   }
-  return gen;
+  return gen.length;
+}
+
+export function fish(init: number[], days: number) {
+  let answer = 0;
+  for (let g of init) {
+    answer += calc(days - g);
+  }
+  return answer;
 }
