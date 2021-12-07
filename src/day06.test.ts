@@ -28,5 +28,5 @@ test("should return answer b", () => {
       inp.split(",").map(s => parseInt(s)),
       256
     )
-  ).toBe(-999);
+  ).toBe(1609314870967);
 });
