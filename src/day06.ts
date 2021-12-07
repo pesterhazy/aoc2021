@@ -1,31 +1,15 @@
-export function calc(days: number, cache: Map<number, number>) {
-  let gen = [0];
-  let sum = 0;
-
-  for (let day = 0; day < days; day++) {
-    let newGen = [];
-    for (let g of gen) {
-      if (g === 0) {
-        if (cache.has(days)) sum = sum + cache.get(days)!;
-        else newGen.push(6);
-        if (cache.has(days - 2)) sum = sum + cache.get(days - 2)!;
-        else newGen.push(8);
-      } else {
-        newGen.push(g - 1);
-      }
-    }
-    gen = newGen;
-  }
-
-  let result = sum + gen.length;
-  cache.set(days, result);
-  return result;
-}
+// Stolen from
+// https://old.reddit.com/r/adventofcode/comments/r9z49j/2021_day_6_solutions/hng2l63/
 
 export function fish(init: number[], days: number) {
-  let answer = 0;
-  for (let g of init) {
-    answer += calc(days - g, new Map());
+  let ages = [];
+  for (let i = 0; i < 9; i++) {
+    ages[i] = 0;
   }
-  return answer;
+  for (let i of init) ages[i]++;
+
+  for (let day = 0; day < days; day++) {
+    ages[(day + 7) % 9] += ages[day % 9];
+  }
+  return ages.reduce((a, b) => a + b, 0);
 }

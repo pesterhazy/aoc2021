@@ -20,3 +20,13 @@ test("should return answer a", () => {
     )
   ).toBe(353274);
 });
+
+test("should return answer b", () => {
+  const inp = util.slurp("data/day06.txt");
+  expect(
+    day.fish(
+      inp.split(",").map(s => parseInt(s)),
+      256
+    )
+  ).toBe(-999);
+});
