@@ -1,7 +1,9 @@
 export function calc(days: number) {
   let gen = [0];
+  let lens = [];
 
   for (let day = 0; day < days; day++) {
+    lens.push(gen.length);
     let newGen = [];
     let born = 0;
     for (let g of gen) {

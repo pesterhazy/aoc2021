@@ -18,5 +18,5 @@ test("should return demo answer", () => {
 
 test("should return answer", () => {
   const inp = util.slurp("data/day07.txt");
-  expect(day.solveb(inp.split(",").map(s => parseInt(s)))).toBe(168);
+  expect(day.solveb(inp.split(",").map(s => parseInt(s)))).toBe(95519693);
 });
