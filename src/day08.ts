@@ -10,6 +10,14 @@ export function parse(s: string) {
     });
 }
 
+function isSimple(w: string) {
+  return [2, 3, 4, 7].includes(w.length);
+}
+
 export function solvea(lines: string[][][]) {
-  console.log(lines);
+  let ans = 0;
+  for (let xs of lines.map(line => line[1])) {
+    ans += xs.filter(isSimple).length;
+  }
+  return ans;
 }

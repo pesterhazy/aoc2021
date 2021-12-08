@@ -2,7 +2,7 @@ import * as day from "./day08";
 import * as util from "./util";
 
 test("should return demo answer", () => {
-  let inp = day.parse(`be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb |
+  let inp = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb |
 fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec |
 fcgedb cgb dgebacf gc
@@ -21,7 +21,13 @@ ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg |
 gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc |
-fgae cfgab fg bagce`);
+fgae cfgab fg bagce`;
 
-  expect(day.solvea(inp)).toBe(26);
+  expect(day.solvea(day.parse(inp))).toBe(26);
+});
+
+test("should return answer", () => {
+  let inp = util.slurp("data/day08.txt");
+
+  expect(day.solvea(day.parse(inp))).toBe(330);
 });
