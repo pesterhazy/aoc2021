@@ -36,3 +36,9 @@ test("should return demo answer", () => {
 
   expect(day.solveb(inp.split(/\n/))).toBe(288957);
 });
+
+test("should return answer", () => {
+  let inp = util.slurp("data/day10.txt");
+
+  expect(day.solveb(inp.split(/\n/))).toBe(-999);
+});
