@@ -42,3 +42,55 @@ export function solvea(rows: string[]) {
   }
   return score;
 }
+
+function size(rows: string[], init: Vec) {
+  let seen: Set<string> = new Set();
+  let todo: Vec[] = [init];
+  while (true) {
+    let pos = todo.shift();
+    if (pos == undefined) break;
+    let h = peek(rows, pos);
+
+    if (h === undefined || h === 9) continue;
+    seen.add(`${pos.x},${pos.y}`);
+    for (let delta of deltas) {
+      let pospos = add(pos, delta);
+
+      if (!seen.has(`${pospos.x},${pospos.y}`)) todo.push(pospos);
+    }
+  }
+  return seen.size;
+}
+
+export function solveb(rows: string[]) {
+  let basins: number[] = [];
+  for (let y = 0; y < rows.length; y++) {
+    for (let x = 0; x < rows[0].length; x++) {
+      let found = true;
+      let h: number = peek(rows, { x, y })!;
+      for (let delta of deltas) {
+        let pos = add({ x, y }, delta);
+        let hh = peek(rows, pos);
+        if (hh === undefined) continue;
+        if (h >= hh) {
+          found = false;
+          break;
+        }
+      }
+      if (found) {
+        basins.push(size(rows, { x, y }));
+      }
+    }
+  }
+  basins.sort((a, b) => {
+    if (a > b) return 1;
+    else if (a < b) return -1;
+    else return 0;
+  });
+  if (basins.length < 3) throw "oh no";
+  return (
+    basins[basins.length - 3] *
+    basins[basins.length - 2] *
+    basins[basins.length - 1]
+  );
+}
