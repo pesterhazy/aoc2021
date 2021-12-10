@@ -6,7 +6,7 @@ const PAIRS: Record<Opening, Closing> = {
   "[": "]",
   "{": "}",
   "<": ">"
-};
+} as const;
 const SCORE = { ")": 3, "]": 57, "}": 1197, ">": 25137 };
 
 function isClosing(c: string): c is Closing {
@@ -14,7 +14,7 @@ function isClosing(c: string): c is Closing {
 }
 
 function isOpening(c: string): c is Opening {
-  return ["(", "[", "{", "<"].includes(c);
+  return c in PAIRS;
 }
 
 export function solvea(lines: string[]) {
