@@ -18,3 +18,7 @@ test("should return answer", () => {
 test("should return demo answer", () => {
   expect(day.solveb(demo.split(/\n/))).toBe(1134);
 });
+
+test("should return answer", () => {
+  expect(day.solveb(util.slurp("data/day09.txt").split(/\n/))).toBe(786780);
+});
