@@ -76,10 +76,6 @@ export function solveb(lines: string[]) {
       scores.push(score);
     }
   }
-  scores.sort((a, b) => {
-    if (a > b) return 1;
-    else if (a < b) return -1;
-    else return 0;
-  });
+  scores.sort((a, b) => a - b);
   return scores[Math.floor(scores.length / 2)];
 }

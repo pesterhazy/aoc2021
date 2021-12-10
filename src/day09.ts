@@ -82,11 +82,7 @@ export function solveb(rows: string[]) {
       }
     }
   }
-  basins.sort((a, b) => {
-    if (a > b) return 1;
-    else if (a < b) return -1;
-    else return 0;
-  });
+  basins.sort((a, b) => a - b);
   if (basins.length < 3) throw "oh no";
   return (
     basins[basins.length - 3] *
