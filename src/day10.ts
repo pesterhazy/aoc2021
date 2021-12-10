@@ -1,7 +1,7 @@
 type Opening = "(" | "[" | "{" | "<";
 type Closing = ")" | "]" | "}" | ">";
 
-const PAIRS2: Record<Opening, Closing> = {
+const PAIRS: Record<Opening, Closing> = {
   "(": ")",
   "[": "]",
   "{": "}",
@@ -33,7 +33,7 @@ export function solvea(lines: string[]) {
           let r = stack.pop();
           if (c !== r) return SCORE[c];
         } else if (isOpening(c)) {
-          stack.push(PAIRS2[c]);
+          stack.push(PAIRS[c]);
         } else throw "Unexpected";
       }
     }
@@ -67,7 +67,7 @@ export function solveb(lines: string[]) {
           let r = stack.pop();
           if (c !== r) return 0;
         } else if (isOpening(c)) {
-          stack.push(PAIRS2[c]);
+          stack.push(PAIRS[c]);
         } else throw "Unexpected";
       }
     }
