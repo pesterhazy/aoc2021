@@ -1,12 +1,6 @@
 type Opening = "(" | "[" | "{" | "<";
 type Closing = ")" | "]" | "}" | ">";
 
-const PAIRS: Record<Closing, Opening> = {
-  ")": "(",
-  "]": "[",
-  "}": "{",
-  ">": "<"
-};
 const PAIRS2: Record<Opening, Closing> = {
   "(": ")",
   "[": "]",
@@ -16,7 +10,7 @@ const PAIRS2: Record<Opening, Closing> = {
 const SCORE = { ")": 3, "]": 57, "}": 1197, ">": 25137 };
 
 function isClosing(c: string): c is Closing {
-  return c in PAIRS;
+  return [")", "]", "}", ">"].includes(c);
 }
 
 function isOpening(c: string): c is Opening {
@@ -28,7 +22,7 @@ export function solvea(lines: string[]) {
   for (let line of lines) {
     function pa(line: string) {
       let i = 0;
-      let stack: string[] = [];
+      let stack: Closing[] = [];
       while (true) {
         if (i >= line.length) {
           if (stack.length > 0) return 0;
@@ -37,10 +31,10 @@ export function solvea(lines: string[]) {
         let c = line[i++];
         if (isClosing(c)) {
           let r = stack.pop();
-          if (PAIRS[c] !== r) return SCORE[c];
-        } else {
-          stack.push(c);
-        }
+          if (c !== r) return SCORE[c];
+        } else if (isOpening(c)) {
+          stack.push(PAIRS2[c]);
+        } else throw "Unexpected";
       }
     }
 
