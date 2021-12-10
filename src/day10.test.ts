@@ -1,8 +1,7 @@
 import * as day from "./day10";
 import * as util from "./util";
 
-test("should return demo answer", () => {
-  let inp = `[({(<(())[]>[[{[]{<()<>>
+const demo = `[({(<(())[]>[[{[]{<()<>>
 [(()[<>])]({[<{<<[]>>(
 {([(<{}[<>[]}>{[]{[(<()>
 (((({<>}<{<{<>}{[]{[]{}
@@ -13,7 +12,8 @@ test("should return demo answer", () => {
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]`;
 
-  expect(day.solvea(inp.split(/\n/))).toBe(26397);
+test("should return demo answer", () => {
+  expect(day.solvea(demo.split(/\n/))).toBe(26397);
 });
 
 test("should return answer", () => {
@@ -23,22 +23,11 @@ test("should return answer", () => {
 });
 
 test("should return demo answer", () => {
-  let inp = `[({(<(())[]>[[{[]{<()<>>
-[(()[<>])]({[<{<<[]>>(
-{([(<{}[<>[]}>{[]{[(<()>
-(((({<>}<{<{<>}{[]{[]{}
-[[<[([]))<([[{}[[()]]]
-[{[{({}]{}}([{[{{{}}([]
-{<[[]]>}<{[{[{[]{()[[[]
-[<(<(<(<{}))><([]([]()
-<{([([[(<>()){}]>(<<{{
-<{([{{}}[<[[[<>{}]]]>[]]`;
-
-  expect(day.solveb(inp.split(/\n/))).toBe(288957);
+  expect(day.solveb(demo.split(/\n/))).toBe(288957);
 });
 
 test("should return answer", () => {
   let inp = util.slurp("data/day10.txt");
 
-  expect(day.solveb(inp.split(/\n/))).toBe(-999);
+  expect(day.solveb(inp.split(/\n/))).toBe(3094671161);
 });
