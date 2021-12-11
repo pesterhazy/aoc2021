@@ -20,6 +20,14 @@ test("should return demo answer", () => {
   expect(day.solvea(day.parse(demo), 100)).toBe(1656);
 });
 
+test("should return answer", () => {
+  expect(day.solvea(day.parse(util.slurp("data/day11.txt")), 100)).toBe(1613);
+});
+
 test("should return demo answer", () => {
-  expect(day.solvea(day.parse(util.slurp("data/day11.txt")), 100)).toBe(-999);
+  expect(day.solveb(day.parse(demo))).toBe(195);
+});
+
+test("should return answer", () => {
+  expect(day.solveb(day.parse(util.slurp("data/day11.txt")))).toBe(510);
 });
