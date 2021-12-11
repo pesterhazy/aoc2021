@@ -60,35 +60,12 @@ function permute(permutation: string[]) {
   return result;
 }
 
-export function digits(xs: string[]) {
-  let ys = Object.keys(M);
-  console.log(xs, ys);
-
-  let source = "abcdefg";
-  let permutations = permute(Array.from(source)).map(a => a.join(""));
-  for (let permutation of permutations) {
-    let mapping: Record<string, string> = {};
-    for (let i = 0; i < 7; i++) mapping[source[i]] = permutation[i];
-
-    let found = true;
-    let hits = 0;
-    for (let x of xs) {
-      let xx = Array.from(x)
-        .map(c => mapping[c])
-        .join("");
-
-      if (ys.includes(xx)) {
-        hits++;
-      }
-    }
-    if (hits === ys.length) {
-      return mapping;
-    }
+export function find(xs: string[]) {
+  for (let permutation of permute(Array.from("abcdefg")).map(a => a.join(""))) {
+    if (!xs.some(x => !(project(x, permutation) in M))) return permutation;
   }
-  throw "not found";
+  throw "NOTFOUND";
 }
-
-export function find(xs: string[]) {}
 
 export function project(s: string, mapping: string) {
   let a = Array.from(s).map(c =>

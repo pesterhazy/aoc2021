@@ -32,11 +32,11 @@ test("should return answer", () => {
   expect(day.solvea(day.parse(inp))).toBe(330);
 });
 
-test.skip("should return digits", () => {
+test("should find digits", () => {
   let inp = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
 cdfeb fcadb cdfeb cdbaf`;
 
-  expect(day.find(day.parse(inp)[0][0])).toStrictEqual("deafgbc");
+  expect(day.find(day.parse(inp)[0][0])).toBe("deafgbc");
 });
 
 test("demo projection", () => {
