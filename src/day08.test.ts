@@ -55,3 +55,7 @@ cdfeb fcadb cdfeb cdbaf`;
 test("should solve demo", () => {
   expect(day.solveb(day.parse(demo))).toBe(61229);
 });
+
+test("should return answer", () => {
+  expect(day.solveb(day.parse(util.slurp("data/day08.txt")))).toBe(1010472);
+});
