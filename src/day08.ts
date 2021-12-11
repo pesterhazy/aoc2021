@@ -35,33 +35,22 @@ const M = {
   abcdfg: 9
 };
 
-function permute(permutation: string[]) {
-  var length = permutation.length,
-    result = [permutation.slice()],
-    c = new Array(length).fill(0),
-    i = 1,
-    k,
-    p;
+function permutations(s: string): string[] {
+  if (s.length < 2) return [s];
 
-  while (i < length) {
-    if (c[i] < i) {
-      k = i % 2 && c[i];
-      p = permutation[i];
-      permutation[i] = permutation[k];
-      permutation[k] = p;
-      ++c[i];
-      i = 1;
-      result.push(permutation.slice());
-    } else {
-      c[i] = 0;
-      ++i;
-    }
+  var result = [];
+  for (var i = 0; i < s.length; i++) {
+    var char = s[i];
+    if (s.indexOf(char) != i) continue;
+    var rem = s.slice(0, i) + s.slice(i + 1, s.length);
+    for (var subPermutation of permutations(rem))
+      result.push(char + subPermutation);
   }
   return result;
 }
 
 export function find(xs: string[]) {
-  for (let permutation of permute(Array.from("abcdefg")).map(a => a.join(""))) {
+  for (let permutation of permutations("abcdefg")) {
     if (!xs.some(x => !(project(x, permutation) in M))) return permutation;
   }
   throw "NOTFOUND";
