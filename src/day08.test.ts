@@ -1,8 +1,7 @@
 import * as day from "./day08";
 import * as util from "./util";
 
-test("should return demo answer", () => {
-  let inp = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb |
+const demo = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb |
 fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec |
 fcgedb cgb dgebacf gc
@@ -23,6 +22,9 @@ gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc |
 fgae cfgab fg bagce`;
 
+test("should return demo answer", () => {
+  let inp = demo;
+
   expect(day.solvea(day.parse(inp))).toBe(26);
 });
 
@@ -30,13 +32,6 @@ test("should return answer", () => {
   let inp = util.slurp("data/day08.txt");
 
   expect(day.solvea(day.parse(inp))).toBe(330);
-});
-
-test("should find digits", () => {
-  let inp = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
-cdfeb fcadb cdfeb cdbaf`;
-
-  expect(day.find(day.parse(inp)[0][0])).toBe("deafgbc");
 });
 
 test("demo projection", () => {
@@ -48,4 +43,15 @@ cdfeb fcadb cdfeb cdbaf`;
   expect(day.project("eafb", "deafgbc")).toBe("bcdf");
   expect(day.project("cefabd", "deafgbc")).toBe("abcdfg");
   expect(day.project("acedgfb", "deafgbc")).toBe("abcdefg");
+});
+
+test("should find demo digits", () => {
+  let inp = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
+cdfeb fcadb cdfeb cdbaf`;
+
+  expect(day.find(day.parse(inp)[0][0])).toBe("deafgbc");
+});
+
+test("should solve demo", () => {
+  expect(day.solveb(day.parse(demo))).toBe(61229);
 });

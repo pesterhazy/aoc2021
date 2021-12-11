@@ -74,3 +74,14 @@ export function project(s: string, mapping: string) {
   a.sort();
   return a.join("");
 }
+
+export function solveb(lines: string[][][]) {
+  let sum = 0;
+  for (let line of lines) {
+    let mapping = find(line[0]);
+    sum += parseInt(
+      line[1].map(s => "" + M[project(s, mapping) as keyof typeof M]).join("")
+    );
+  }
+  return sum;
+}
