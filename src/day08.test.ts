@@ -32,17 +32,20 @@ test("should return answer", () => {
   expect(day.solvea(day.parse(inp))).toBe(330);
 });
 
-test("should return digits", () => {
+test.skip("should return digits", () => {
   let inp = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
 cdfeb fcadb cdfeb cdbaf`;
 
-  expect(day.digits(day.parse(inp)[0][0])).toStrictEqual({
-    a: "d",
-    b: "e",
-    c: "a",
-    d: "f",
-    e: "g",
-    f: "b",
-    g: "c"
-  });
+  expect(day.find(day.parse(inp)[0][0])).toStrictEqual("deafgbc");
+});
+
+test("demo projection", () => {
+  let inp = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
+cdfeb fcadb cdfeb cdbaf`;
+
+  expect(day.project("ab", "deafgbc")).toBe("cf");
+  expect(day.project("dab", "deafgbc")).toBe("acf");
+  expect(day.project("eafb", "deafgbc")).toBe("bcdf");
+  expect(day.project("cefabd", "deafgbc")).toBe("abcdfg");
+  expect(day.project("acedgfb", "deafgbc")).toBe("abcdefg");
 });

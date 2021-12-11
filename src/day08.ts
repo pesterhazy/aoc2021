@@ -87,3 +87,13 @@ export function digits(xs: string[]) {
   }
   throw "not found";
 }
+
+export function find(xs: string[]) {}
+
+export function project(s: string, mapping: string) {
+  let a = Array.from(s).map(c =>
+    String.fromCharCode(mapping.indexOf(c) + "a".charCodeAt(0))
+  );
+  a.sort();
+  return a.join("");
+}
