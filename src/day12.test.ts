@@ -26,3 +26,9 @@ test("should return demo answer", () => {
 
   expect(day.solve(day.parse(inp), day.admissibleb)).toBe(36);
 });
+
+test("should return answer", () => {
+  let inp = util.slurp("data/day12.txt");
+
+  expect(day.solve(day.parse(inp), day.admissibleb)).toBe(92111);
+});
