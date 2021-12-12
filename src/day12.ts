@@ -13,7 +13,7 @@ export function admissiblea(path: string[]) {
   else return true;
 }
 
-export function solvea(xs: string[][]) {
+export function solve(xs: string[][], admissible: (path: string[]) => boolean) {
   let m: Record<string, string[]> = {};
 
   for (let [x, y] of xs) {
@@ -40,7 +40,7 @@ export function solvea(xs: string[][]) {
         for (let candidate of candidates) {
           let newPath = [...path, candidate];
 
-          if (admissiblea(newPath)) todo.push(newPath);
+          if (admissible(newPath)) todo.push(newPath);
         }
     }
   }

@@ -12,11 +12,11 @@ b-end`;
 test("should return demo answer", () => {
   let inp = demo;
 
-  expect(day.solvea(day.parse(inp))).toBe(10);
+  expect(day.solve(day.parse(inp), day.admissiblea)).toBe(10);
 });
 
 test("should return answer", () => {
   let inp = util.slurp("data/day12.txt");
 
-  expect(day.solvea(day.parse(inp))).toBe(4186);
+  expect(day.solve(day.parse(inp), day.admissiblea)).toBe(4186);
 });
