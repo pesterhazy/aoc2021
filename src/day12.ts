@@ -13,6 +13,27 @@ export function admissiblea(path: string[]) {
   else return true;
 }
 
+export function admissibleb(path: string[]): boolean {
+  let m: Record<string, number> = {};
+  for (let x of path) {
+    if (x === x.toLowerCase()) {
+      m[x] = m[x] || 0;
+      m[x]++;
+    }
+  }
+
+  if (m["start"] > 1 || m["end"] > 1) return false;
+
+  let count = 0;
+  for (let e of Object.values(m)) {
+    if (e > 2) return false;
+    if (e === 2) count++;
+  }
+  if (count > 1) return false;
+
+  return true;
+}
+
 export function solve(xs: string[][], admissible: (path: string[]) => boolean) {
   let m: Record<string, string[]> = {};
 

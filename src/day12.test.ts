@@ -20,3 +20,9 @@ test("should return answer", () => {
 
   expect(day.solve(day.parse(inp), day.admissiblea)).toBe(4186);
 });
+
+test("should return demo answer", () => {
+  let inp = demo;
+
+  expect(day.solve(day.parse(inp), day.admissibleb)).toBe(36);
+});
