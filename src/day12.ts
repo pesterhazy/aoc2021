@@ -2,6 +2,17 @@ export function parse(s: string): string[][] {
   return s.split(/\n/).map(l => l.split(/-/));
 }
 
+export function admissiblea(path: string[]) {
+  let last = path[path.length - 1];
+
+  if (
+    last === last.toLowerCase() &&
+    path.reduce((a, b) => (b === last ? a + 1 : a), 0) > 1
+  )
+    return false;
+  else return true;
+}
+
 export function solvea(xs: string[][]) {
   let m: Record<string, string[]> = {};
 
@@ -27,10 +38,9 @@ export function solvea(xs: string[][]) {
 
       if (candidates)
         for (let candidate of candidates) {
-          if (candidate === candidate.toLowerCase() && path.includes(candidate))
-            continue;
+          let newPath = [...path, candidate];
 
-          todo.push([...path, candidate]);
+          if (admissiblea(newPath)) todo.push(newPath);
         }
     }
   }
