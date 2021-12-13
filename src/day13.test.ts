@@ -37,3 +37,10 @@ test("should give demo answer", () => {
   let result = day.parse(inp);
   expect(day.solvea(result)).toBe(17);
 });
+
+test("should give answer", () => {
+  let inp = util.slurp("data/day13.txt");
+
+  let result = day.parse(inp);
+  expect(day.solvea(result)).toBe(607);
+});
