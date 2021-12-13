@@ -29,3 +29,27 @@ export function parse(s: string): Input {
       })
   };
 }
+
+export function solvea(input: Input): number {
+  let points: Vec[] = input.points;
+  let instruction = input.instructions[0];
+
+  points = points.map(point => {
+    let newPoint = { x: point.x, y: point.y };
+    if (instruction[0] === "x") {
+      let delta = point.x - instruction[1];
+      if (delta > 0) newPoint.x -= 2 * delta;
+    } else if (instruction[0] === "y") {
+      let delta = point.y - instruction[1];
+      if (delta > 0) newPoint.y -= 2 * delta;
+    } else throw "boom";
+    return newPoint;
+  });
+
+  let s: Set<string> = new Set();
+
+  for (let point of points) {
+    s.add(`${point.x},${point.y}`);
+  }
+  return s.size;
+}

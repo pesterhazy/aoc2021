@@ -30,3 +30,10 @@ test("should parse", () => {
   expect(result.points.length).toBe(18);
   expect(result.instructions.length).toBe(2);
 });
+
+test("should give demo answer", () => {
+  let inp = demo;
+
+  let result = day.parse(inp);
+  expect(day.solvea(result)).toBe(17);
+});
