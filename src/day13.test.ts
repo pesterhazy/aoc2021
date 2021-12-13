@@ -44,3 +44,14 @@ test("should give answer", () => {
   let result = day.parse(inp);
   expect(day.solvea(result)).toBe(607);
 });
+
+let expe;
+
+test("should give answer", () => {
+  let inp = util.slurp("data/day13.txt");
+  let expected =
+    ".**..***..****.*....***..****.****.*...\n*..*.*..*....*.*....*..*.*.......*.*...\n*....*..*...*..*....*..*.***....*..*...\n*....***...*...*....***..*.....*...*...\n*..*.*....*....*....*....*....*....*...\n.**..*....****.****.*....*....****.****";
+
+  let result = day.parse(inp);
+  expect(day.solveb(result)).toBe(expected);
+});
