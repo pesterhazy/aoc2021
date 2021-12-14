@@ -19,7 +19,7 @@ export function parse(s: string): Input {
   };
 }
 
-export function solvea(input: Input, n: number): number {
+export function solve(input: Input, n: number): number {
   let m: Record<string, number> = {};
   m[input.init[0]] = 1;
   for (let i = 1; i < input.init.length; i++) {
