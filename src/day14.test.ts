@@ -27,3 +27,9 @@ test("should parse", () => {
   expect(Object.keys(result.dict).length).toBe(16);
   expect(result.init.length).toBe(4);
 });
+
+test("should expand", () => {
+  let inp = demo;
+  let r = day.xform("NNCB", day.parse(inp).dict);
+  expect(r).toBe("NCNBCHB");
+});

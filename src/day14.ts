@@ -18,3 +18,13 @@ export function parse(s: string): Input {
     init: lines[0]
   };
 }
+
+export function xform(s: string, r: Record<string, string>): string {
+  let ss = s[0];
+  for (let i = 1; i < s.length; i++) {
+    let c = r[s[i - 1] + s[i]];
+    if (!c) throw "oops";
+    ss += c + s[i];
+  }
+  return ss;
+}
