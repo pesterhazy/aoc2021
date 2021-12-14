@@ -28,3 +28,19 @@ export function xform(s: string, r: Record<string, string>): string {
   }
   return ss;
 }
+
+export function solvea(input: Input): number {
+  let s = input.init;
+  for (let i = 0; i < 10; i++) {
+    s = xform(s, input.dict);
+  }
+
+  let m: Record<string, number> = {};
+  for (let i = 0; i < s.length; i++) {
+    if (!m[s[i]]) m[s[i]] = 0;
+    m[s[i]]++;
+  }
+  let xs = Object.values(m);
+  xs.sort((a, b) => a - b);
+  return xs[xs.length - 1] - xs[0];
+}

@@ -33,3 +33,17 @@ test("should expand", () => {
   let r = day.xform("NNCB", day.parse(inp).dict);
   expect(r).toBe("NCNBCHB");
 });
+
+test("should give demo answer", () => {
+  let inp = demo;
+  let p = day.parse(inp);
+  let r = day.solvea(p);
+  expect(r).toBe(1588);
+});
+
+test("should give answer", () => {
+  let inp = util.slurp("data/day14.txt");
+  let p = day.parse(inp);
+  let r = day.solvea(p);
+  expect(r).toBe(2745);
+});
