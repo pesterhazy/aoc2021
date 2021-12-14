@@ -47,3 +47,10 @@ test("should give answer", () => {
   let r = day.solvea(p);
   expect(r).toBe(2745);
 });
+
+test("should f", () => {
+  let inp = demo;
+  let p = day.parse(inp);
+  expect(day.f("NN", 1, p.dict)).toStrictEqual({ N: 2, C: 1 });
+  expect(day.f("NN", 2, p.dict)).toStrictEqual({ N: 2, C: 2, B: 1 });
+});
