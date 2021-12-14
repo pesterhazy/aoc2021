@@ -31,14 +31,14 @@ test("should parse", () => {
 test("should give demo answer", () => {
   let inp = demo;
   let p = day.parse(inp);
-  let r = day.solvea(p);
+  let r = day.solvea(p, 10);
   expect(r).toBe(1588);
 });
 
 test("should give answer", () => {
   let inp = util.slurp("data/day14.txt");
   let p = day.parse(inp);
-  let r = day.solvea(p);
+  let r = day.solvea(p, 10);
   expect(r).toBe(2745);
 });
 
@@ -48,4 +48,11 @@ test("should f", () => {
   expect(day.f("NN", 1, p.dict)).toStrictEqual({ N: 2, C: 1 });
   expect(day.f("NN", 2, p.dict)).toStrictEqual({ N: 2, C: 2, B: 1 });
   expect(day.f("NN", 3, p.dict)).toStrictEqual({ N: 3, C: 3, B: 3 });
+});
+
+test("should give answer @40", () => {
+  let inp = util.slurp("data/day14.txt");
+  let p = day.parse(inp);
+  let r = day.solvea(p, 40);
+  expect(r).toBe(3420801168962);
 });

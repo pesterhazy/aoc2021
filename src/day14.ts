@@ -19,12 +19,12 @@ export function parse(s: string): Input {
   };
 }
 
-export function solvea(input: Input): number {
+export function solvea(input: Input, n: number): number {
   let m: Record<string, number> = {};
   m[input.init[0]] = 1;
   for (let i = 1; i < input.init.length; i++) {
     let s = input.init[i - 1] + input.init[i];
-    m = add(m, f(s, 10, input.dict));
+    m = add(m, f(s, n, input.dict));
   }
   let xs = Object.values(m);
   xs.sort((a, b) => a - b);
@@ -48,24 +48,28 @@ export function f(
   n: number,
   dict: Record<string, string>
 ): Record<string, number> {
-  let result;
-  if (n === 1) {
-    let r: Record<string, number> = {};
+  let cache: Map<string, Record<string, number>> = new Map();
+  function ff(pair: string, n: number) {
+    let result;
+    let cached = cache.get(pair + "," + n);
+    if (cached) return cached;
+    if (n === 1) {
+      let r: Record<string, number> = {};
 
-    r[pair[0]] = (r[pair[0]] || 0) + 1;
-    r[pair[1]] = (r[pair[1]] || 0) + 1;
-    r[dict[pair]] = (r[dict[pair]] || 0) + 1;
-    result = r;
-  } else {
-    let cc: Record<string, number> = {};
-    cc[dict[pair]] = -1;
-    result = add(
-      add(
-        f(pair[0] + dict[pair], n - 1, dict),
-        f(dict[pair] + pair[1], n - 1, dict)
-      ),
-      cc
-    );
+      r[pair[0]] = (r[pair[0]] || 0) + 1;
+      r[pair[1]] = (r[pair[1]] || 0) + 1;
+      r[dict[pair]] = (r[dict[pair]] || 0) + 1;
+      result = r;
+    } else {
+      let cc: Record<string, number> = {};
+      cc[dict[pair]] = -1;
+      result = add(
+        add(ff(pair[0] + dict[pair], n - 1), ff(dict[pair] + pair[1], n - 1)),
+        cc
+      );
+    }
+    cache.set(pair + "," + n, result);
+    return result;
   }
-  return result;
+  return ff(pair, n);
 }
