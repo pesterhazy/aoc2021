@@ -53,4 +53,5 @@ test("should f", () => {
   let p = day.parse(inp);
   expect(day.f("NN", 1, p.dict)).toStrictEqual({ N: 2, C: 1 });
   expect(day.f("NN", 2, p.dict)).toStrictEqual({ N: 2, C: 2, B: 1 });
+  expect(day.f("NN", 3, p.dict)).toStrictEqual({ N: 3, C: 3, B: 3 });
 });
