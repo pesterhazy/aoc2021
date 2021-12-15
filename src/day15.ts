@@ -36,6 +36,7 @@ export function solvea(cave: number[][]): number {
 
     if (pos.x === cave[0].length - 1 && pos.y === cave.length - 1) {
       if (job.cost < minScore) {
+        console.log("FOUND:", job.cost);
         minScore = job.cost;
       }
       continue;
