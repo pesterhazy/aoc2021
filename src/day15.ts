@@ -40,7 +40,7 @@ export function solvea(cave: number[][]): number {
       }
       continue;
     }
-    // FIXME: order by score
+    let newJobs: Job[] = [];
     for (let delta of deltas) {
       let newPos = add(pos, delta);
       if (job.path.some(pp => pp.x === newPos.x && pp.y === newPos.y)) continue;
@@ -55,11 +55,13 @@ export function solvea(cave: number[][]): number {
 
       if (newCost > minScore) continue;
 
-      jobs.push({
+      newJobs.push({
         path: [...job.path, newPos],
         cost: newCost
       });
     }
+    newJobs.sort((a: Job, b: Job) => b.cost - a.cost);
+    jobs = [...jobs, ...newJobs];
   }
   console.log(count);
   return minScore;
