@@ -12,6 +12,6 @@ const demo = `1163751742
 1293138521
 2311944581`;
 
-test("should give demo answer", () => {
+test.skip("should give demo answer", () => {
   expect(day.solvea(day.parse(demo))).toBe(40);
 });

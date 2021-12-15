@@ -1,5 +1,3 @@
-import * as util from "./util";
-
 export function parse(s: string): number[][] {
   return s.split(/\n/).map(l => Array.from(l).map(c => parseInt(c)));
 }
@@ -36,7 +34,6 @@ export function solvea(cave: number[][]): number {
   let minScore = Infinity;
 
   while (true) {
-    util.log(JSON.stringify(jobs));
     if (jobs.length === 0) return minScore;
 
     let job: Job = jobs.pop()!;
