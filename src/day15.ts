@@ -19,20 +19,14 @@ let deltas: Vec[] = [
 
 interface Job {
   path: Vec[];
+  cost: number;
 }
 
 export function solvea(cave: number[][]): number {
-  function score(path: Vec[]) {
-    let r = 0;
-    for (let i = 1; i < path.length - 1; i++) {
-      r += cave[path[i].y][path[i].x];
-    }
-    return r;
-  }
-
-  let jobs: Job[] = [{ path: [{ x: 0, y: 0 }] }];
+  let jobs: Job[] = [{ path: [{ x: 0, y: 0 }], cost: 0 }];
   let minScore = Infinity;
 
+  let count = 0;
   while (true) {
     if (jobs.length === 0) return minScore;
 
@@ -40,10 +34,13 @@ export function solvea(cave: number[][]): number {
     let pos = job.path[job.path.length - 1];
 
     if (pos.x === cave[0].length - 1 && pos.y === cave.length - 1) {
-      let sc = score(job.path);
-      if (sc < minScore) minScore = sc;
+      console.log("END", job.cost);
+      if (job.cost < minScore) {
+        minScore = job.cost;
+      }
       continue;
     }
+    // FIXME: order by score
     for (let delta of deltas) {
       let newPos = add(pos, delta);
       if (job.path.some(pp => pp.x === newPos.x && pp.y === newPos.y)) continue;
@@ -54,7 +51,14 @@ export function solvea(cave: number[][]): number {
         newPos.y >= cave.length
       )
         continue;
-      jobs.push({ path: [...job.path, newPos] });
+      let newCost = job.cost + cave[newPos.y][newPos.x];
+
+      if (newCost > minScore) continue;
+
+      jobs.push({
+        path: [...job.path, newPos],
+        cost: newCost
+      });
     }
   }
 }
