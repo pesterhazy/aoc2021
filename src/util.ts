@@ -1,8 +1,12 @@
-import { readFileSync } from "fs";
+import { readFileSync, appendFileSync } from "fs";
 import { performance } from "perf_hooks";
 
 export function slurp(fname: string): string {
   return readFileSync(fname, "utf-8");
+}
+
+export function log(s: string) {
+  appendFileSync("out.txt", s);
 }
 
 export function time(fun: any) {
