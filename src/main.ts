@@ -12,4 +12,6 @@ const demo = `1163751742
 1293138521
 2311944581`;
 
-day.solvea(day.parse(demo));
+let result = day.solvea(day.parse(demo));
+
+console.log(result);

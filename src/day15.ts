@@ -25,16 +25,16 @@ interface Job {
 export function solvea(cave: number[][]): number {
   let jobs: Job[] = [{ path: [{ x: 0, y: 0 }], cost: 0 }];
   let minScore = Infinity;
-
   let count = 0;
+
   while (true) {
-    if (jobs.length === 0) return minScore;
+    count++;
+    if (jobs.length === 0) break;
 
     let job: Job = jobs.pop()!;
     let pos = job.path[job.path.length - 1];
 
     if (pos.x === cave[0].length - 1 && pos.y === cave.length - 1) {
-      console.log("END", job.cost);
       if (job.cost < minScore) {
         minScore = job.cost;
       }
@@ -61,4 +61,6 @@ export function solvea(cave: number[][]): number {
       });
     }
   }
+  console.log(count);
+  return minScore;
 }
