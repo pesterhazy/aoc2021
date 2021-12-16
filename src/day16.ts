@@ -118,10 +118,5 @@ function walk(packet: Packet): number {
 }
 
 export function solvea(reader: Reader): number {
-  let ans = 0;
-  while (!reader.eof()) {
-    let packet = reader.readPacket();
-    ans += walk(packet);
-  }
-  return ans;
+  return walk(reader.readPacket());
 }

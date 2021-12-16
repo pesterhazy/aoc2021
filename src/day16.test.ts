@@ -28,5 +28,5 @@ test("should answer demo", () => {
 
 test("should answer", () => {
   let n = day.solvea(day.fromString(util.slurp("data/day16.txt")));
-  expect(n).toBe(-999);
+  expect(n).toBe(821);
 });
