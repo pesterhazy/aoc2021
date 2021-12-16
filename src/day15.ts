@@ -23,17 +23,27 @@ interface Job {
   score: number;
 }
 
-function popBest(xs: Job[]): [Job, Job[]] {
+function popBest(xs: Job[], dead: Set<number>): [Job, Job[]] {
   let minScore = Infinity;
   let besti: number | undefined = undefined;
   for (let i = 0; i < xs.length; i++) {
+    if (dead.has(i)) continue;
+
     if (xs[i].score < minScore) {
       besti = i;
       minScore = xs[i].score;
     }
   }
   if (besti === undefined) throw "This shouldn't happen";
-  return [xs[besti], [...xs.slice(0, besti), ...xs.slice(besti + 1)]];
+  let x = xs[besti];
+
+  dead.add(besti);
+  if (dead.size >= 100) {
+    xs = xs.filter((_, idx) => !dead.has(idx));
+    dead.clear();
+  }
+
+  return [x, xs];
 }
 
 export function solvea(cave: number[][]): number {
@@ -53,12 +63,13 @@ export function solvea(cave: number[][]): number {
   let minCost = Infinity;
   let count = 0;
   let g: Map<string, number> = new Map();
+  let dead: Set<number> = new Set();
 
-  while (jobs.length > 0) {
+  while (jobs.length > dead.size) {
     count++;
 
     let job: Job;
-    [job, jobs] = popBest(jobs);
+    [job, jobs] = popBest(jobs, dead);
     let pos = job.path[job.path.length - 1];
 
     if (job.cost > minCost) continue;
