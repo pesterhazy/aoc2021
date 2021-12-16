@@ -1,3 +1,5 @@
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
+
 export function parse(s: string): number[][] {
   return s.split(/\n/).map(l => Array.from(l).map(c => parseInt(c)));
 }
@@ -23,29 +25,6 @@ interface Job {
   score: number;
 }
 
-function popBest(xs: Job[], dead: Set<number>): [Job, Job[]] {
-  let minScore = Infinity;
-  let besti: number | undefined = undefined;
-  for (let i = 0; i < xs.length; i++) {
-    if (dead.has(i)) continue;
-
-    if (xs[i].score < minScore) {
-      besti = i;
-      minScore = xs[i].score;
-    }
-  }
-  if (besti === undefined) throw "This shouldn't happen";
-  let x = xs[besti];
-
-  dead.add(besti);
-  if (dead.size >= 100) {
-    xs = xs.filter((_, idx) => !dead.has(idx));
-    dead.clear();
-  }
-
-  return [x, xs];
-}
-
 export function solvea(cave: number[][]): number {
   const c = 5; // multiplier for manhattan distance
 
@@ -53,23 +32,25 @@ export function solvea(cave: number[][]): number {
   let height = cave.length;
 
   // Use a stack to implement DFS
-  let jobs: Job[] = [
-    {
-      path: [{ x: 0, y: 0 }],
-      cost: 0,
-      score: c * (width + height)
-    }
-  ];
+  let jobs: MinPriorityQueue<Job> = new MinPriorityQueue<Job>({
+    priority: (job: Job) => job.score
+  });
+
+  jobs.enqueue({
+    path: [{ x: 0, y: 0 }],
+    cost: 0,
+    score: c * (width + height)
+  });
+
   let minCost = Infinity;
   let count = 0;
   let g: Map<string, number> = new Map();
-  let dead: Set<number> = new Set();
 
-  while (jobs.length > dead.size) {
+  while (!jobs.isEmpty()) {
     count++;
 
-    let job: Job;
-    [job, jobs] = popBest(jobs, dead);
+    let job: Job = (jobs.dequeue() as any).element;
+
     let pos = job.path[job.path.length - 1];
 
     if (job.cost > minCost) continue;
@@ -101,7 +82,7 @@ export function solvea(cave: number[][]): number {
 
       let newCost = job.cost + cave[newPos.y][newPos.x];
 
-      jobs.push({
+      jobs.enqueue({
         path: [...job.path, newPos],
         cost: newCost,
         score: newCost + c * (width - newPos.x + (height - newPos.y))
