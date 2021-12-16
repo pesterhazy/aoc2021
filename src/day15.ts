@@ -20,10 +20,17 @@ let deltas: Vec[] = [
 interface Job {
   path: Vec[];
   cost: number;
+  score: number;
 }
 
 export function solvea(cave: number[][]): number {
-  let jobs: Job[] = [{ path: [{ x: 0, y: 0 }], cost: 0 }];
+  let jobs: Job[] = [
+    {
+      path: [{ x: 0, y: 0 }],
+      cost: 0,
+      score: 5 * (cave[0].length + cave.length)
+    }
+  ];
   let minScore = Infinity;
   let count = 0;
   let g: Map<string, number> = new Map();
@@ -63,10 +70,12 @@ export function solvea(cave: number[][]): number {
 
       newJobs.push({
         path: [...job.path, newPos],
-        cost: newCost
+        cost: newCost,
+        score:
+          newCost + 5 * (cave[0].length - newPos.x + (cave.length - newPos.y))
       });
     }
-    newJobs.sort((a: Job, b: Job) => b.cost - a.cost);
+    newJobs.sort((a: Job, b: Job) => b.score - a.score);
     jobs = [...jobs, ...newJobs];
   }
   console.log(count);
