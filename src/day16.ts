@@ -33,14 +33,25 @@ class Reader {
     let version = this.readBitsAsNumber(3);
     let typeID = this.readBitsAsNumber(3);
 
-    let bits: string = "";
-    while (this.readBitsAsNumber(1) === 1) {
+    if (typeID === 4) {
+      let bits: string = "";
+      while (this.readBitsAsNumber(1) === 1) {
+        bits += this.readBits(4);
+      }
       bits += this.readBits(4);
-    }
-    bits += this.readBits(4);
-    let v = parseInt(bits, 2);
+      let v = parseInt(bits, 2);
 
-    return { version, typeID, v };
+      return { version, typeID, v };
+    } else if (typeID === 6) {
+      let lengthTypeID = this.readBitsAsNumber(1);
+
+      if (lengthTypeID !== 0) throw "Unexpected lengthTypeID";
+
+      let length = this.readBitsAsNumber(15);
+      this.readBits(length); // skip
+
+      return { version, typeID, v: -999 /*FIXME*/ };
+    } else throw "Unexpected typeID";
   }
 }
 
