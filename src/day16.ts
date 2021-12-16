@@ -1,6 +1,7 @@
 interface Packet {
   version: number;
   typeID: number;
+  v: number;
 }
 
 class Reader {
@@ -12,7 +13,17 @@ class Reader {
     this.pos = 0;
   }
 
+  readBits(n: number): string {
+    if (this.pos + n > this.s.length) throw "Unexpected EOF";
+
+    let ss = this.s.slice(this.pos, this.pos + n);
+    this.pos += n;
+    return ss;
+  }
+
   readBitsAsNumber(n: number): number {
+    if (this.pos + n > this.s.length) throw "Unexpected EOF";
+
     let ss = this.s.slice(this.pos, this.pos + n);
     this.pos += n;
     return parseInt(ss, 2);
@@ -22,7 +33,14 @@ class Reader {
     let version = this.readBitsAsNumber(3);
     let typeID = this.readBitsAsNumber(3);
 
-    return { version, typeID };
+    let bits: string = "";
+    while (this.readBitsAsNumber(1) === 1) {
+      bits += this.readBits(4);
+    }
+    bits += this.readBits(4);
+    let v = parseInt(bits, 2);
+
+    return { version, typeID, v };
   }
 }
 

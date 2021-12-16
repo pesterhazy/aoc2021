@@ -5,4 +5,5 @@ test("should give demo answer", () => {
   let packet = day.fromString("D2FE28").readPacket();
   expect(packet.version).toBe(6);
   expect(packet.typeID).toBe(4);
+  expect(packet.v).toBe(2021);
 });
