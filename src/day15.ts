@@ -42,12 +42,12 @@ export function solvea(cave: number[][]): number {
   let count = 0;
   let g: Map<string, number> = new Map();
 
-  while (true) {
+  while (jobs.length > 0) {
     count++;
-    if (jobs.length === 0) break;
-
     let job: Job = jobs.pop()!;
     let pos = job.path[job.path.length - 1];
+
+    if (job.cost > minCost) continue;
 
     // have we been here before and for the same cost (or less)?
     let prevCost = g.get(`${pos.x},${pos.y}`);
@@ -65,7 +65,7 @@ export function solvea(cave: number[][]): number {
     let newJobs: Job[] = [];
     for (let delta of deltas) {
       let newPos = add(pos, delta);
-      if (job.path.some(pp => pp.x === newPos.x && pp.y === newPos.y)) continue;
+      // if (job.path.some(pp => pp.x === newPos.x && pp.y === newPos.y)) continue;
       if (
         newPos.x < 0 ||
         newPos.x >= width ||
@@ -73,9 +73,8 @@ export function solvea(cave: number[][]): number {
         newPos.y >= height
       )
         continue;
-      let newCost = job.cost + cave[newPos.y][newPos.x];
 
-      if (newCost > minCost) continue;
+      let newCost = job.cost + cave[newPos.y][newPos.x];
 
       newJobs.push({
         path: [...job.path, newPos],
