@@ -1,8 +1,20 @@
-interface Packet {
+export enum PacketType {
+  Literal = 4,
+  Operator = 6
+}
+
+interface LiteralPacket {
   version: number;
-  typeID: number;
+  typeID: PacketType.Literal;
   v: number;
 }
+
+interface OperatorPacket {
+  version: number;
+  typeID: PacketType.Operator;
+}
+
+type Packet = LiteralPacket | OperatorPacket;
 
 class Reader {
   s: string;
@@ -33,7 +45,7 @@ class Reader {
     let version = this.readBitsAsNumber(3);
     let typeID = this.readBitsAsNumber(3);
 
-    if (typeID === 4) {
+    if (typeID === PacketType.Literal) {
       let bits: string = "";
       while (this.readBitsAsNumber(1) === 1) {
         bits += this.readBits(4);
@@ -42,7 +54,7 @@ class Reader {
       let v = parseInt(bits, 2);
 
       return { version, typeID, v };
-    } else if (typeID === 6) {
+    } else if (typeID === PacketType.Operator) {
       let lengthTypeID = this.readBitsAsNumber(1);
 
       if (lengthTypeID !== 0) throw "Unexpected lengthTypeID";
@@ -50,7 +62,7 @@ class Reader {
       let length = this.readBitsAsNumber(15);
       this.readBits(length); // skip
 
-      return { version, typeID, v: -999 /*FIXME*/ };
+      return { version, typeID };
     } else throw "Unexpected typeID";
   }
 }
