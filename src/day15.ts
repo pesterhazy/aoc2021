@@ -24,13 +24,16 @@ interface Job {
 }
 
 export function solvea(cave: number[][]): number {
+  const c = 5; // multiplier for manhattan distance
+
   let width = cave[0].length;
   let height = cave.length;
+  console.log("dimensions:", width, height);
   let jobs: Job[] = [
     {
       path: [{ x: 0, y: 0 }],
       cost: 0,
-      score: 5 * (width + height)
+      score: c * (width + height)
     }
   ];
   let minCost = Infinity;
@@ -44,10 +47,12 @@ export function solvea(cave: number[][]): number {
     let job: Job = jobs.pop()!;
     let pos = job.path[job.path.length - 1];
 
+    // have we been here before and for the same cost (or less)?
     let prevCost = g.get(`${pos.x},${pos.y}`);
     if (prevCost !== undefined && job.cost >= prevCost) continue;
     g.set(`${pos.x},${pos.y}`, job.cost);
 
+    // arrived at destination?
     if (pos.x === width - 1 && pos.y === height - 1) {
       if (job.cost < minCost) {
         console.log("FOUND:", job.cost);
@@ -73,7 +78,7 @@ export function solvea(cave: number[][]): number {
       newJobs.push({
         path: [...job.path, newPos],
         cost: newCost,
-        score: newCost + 5 * (width - newPos.x + (height - newPos.y))
+        score: newCost + c * (width - newPos.x + (height - newPos.y))
       });
     }
     newJobs.sort((a: Job, b: Job) => b.score - a.score);
