@@ -76,7 +76,7 @@ class Reader {
       } else if (lengthTypeID === 1) {
         let nsub = this.readBitsAsNumber(11);
         for (let n = 0; n < nsub; n++) {
-          this.readBits(11);
+          this.readPacket();
         }
       } else throw "Unexpected lengthTypeID";
 
