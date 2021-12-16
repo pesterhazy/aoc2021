@@ -1,6 +1,7 @@
 export enum PacketType {
   Literal = 4,
-  Operator = 6
+  OperatorA = 6,
+  OperatorB = 3
 }
 
 interface LiteralPacket {
@@ -13,12 +14,17 @@ export function isLiteral(p: Packet): p is LiteralPacket {
   return p.typeID === PacketType.Literal;
 }
 
-interface OperatorPacket {
+interface OperatorAPacket {
   version: number;
-  typeID: PacketType.Operator;
+  typeID: PacketType.OperatorA;
 }
 
-type Packet = LiteralPacket | OperatorPacket;
+interface OperatorBPacket {
+  version: number;
+  typeID: PacketType.OperatorB;
+}
+
+type Packet = LiteralPacket | OperatorAPacket | OperatorBPacket;
 
 class Reader {
   s: string;
@@ -58,13 +64,21 @@ class Reader {
       let v = parseInt(bits, 2);
 
       return { version, typeID, v };
-    } else if (typeID === PacketType.Operator) {
+    } else if (
+      typeID === PacketType.OperatorA ||
+      typeID === PacketType.OperatorB
+    ) {
       let lengthTypeID = this.readBitsAsNumber(1);
 
-      if (lengthTypeID !== 0) throw "Unexpected lengthTypeID";
-
-      let length = this.readBitsAsNumber(15);
-      this.readBits(length); // skip
+      if (lengthTypeID === 0) {
+        let length = this.readBitsAsNumber(15);
+        this.readBits(length); // skip
+      } else if (lengthTypeID === 1) {
+        let nsub = this.readBitsAsNumber(11);
+        for (let n = 0; n < nsub; n++) {
+          this.readBits(11);
+        }
+      } else throw "Unexpected lengthTypeID";
 
       return { version, typeID };
     } else throw "Unexpected typeID";
