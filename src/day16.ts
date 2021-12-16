@@ -120,3 +120,27 @@ function walk(packet: Packet): number {
 export function solvea(reader: Reader): number {
   return walk(reader.readPacket());
 }
+
+function eva(packet: Packet): number {
+  if (isOperator(packet)) {
+    let args = packet.children.map(eva);
+    console.log(packet.typeID, args);
+
+    switch (packet.typeID) {
+      case 0:
+        return args.reduce((a, b) => a + b);
+      case 3:
+        return args.reduce((a, b) => (a > b ? a : b), -Infinity);
+      default:
+        throw "Not implemented";
+    }
+  } else if (isLiteral(packet)) {
+    return packet.v;
+  } else throw "oops";
+}
+
+export function solveb(reader: Reader): number {
+  let packet = reader.readPacket();
+  console.log(JSON.stringify(packet));
+  return eva(packet);
+}

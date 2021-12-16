@@ -30,3 +30,8 @@ test("should answer", () => {
   let n = day.solvea(day.fromString(util.slurp("data/day16.txt")));
   expect(n).toBe(821);
 });
+
+test("should eval demo", () => {
+  let n = day.solveb(day.fromString("CE00C43D881120"));
+  expect(n).toBe(9);
+});
