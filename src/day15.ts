@@ -29,6 +29,8 @@ export function solvea(cave: number[][]): number {
   let width = cave[0].length;
   let height = cave.length;
   console.log("dimensions:", width, height);
+
+  // Use a stack to implement DFS
   let jobs: Job[] = [
     {
       path: [{ x: 0, y: 0 }],
@@ -81,6 +83,8 @@ export function solvea(cave: number[][]): number {
         score: newCost + c * (width - newPos.x + (height - newPos.y))
       });
     }
+
+    // sort in reverse order (because we're using a stack)
     newJobs.sort((a: Job, b: Job) => b.score - a.score);
     jobs = [...jobs, ...newJobs];
   }
