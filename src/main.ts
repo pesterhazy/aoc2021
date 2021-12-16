@@ -12,6 +12,8 @@ const demo = `1163751742
 1293138521
 2311944581`;
 
+// guess: 3372 is too high
+
 let result = day.solvea(day.expand(day.parse(util.slurp("data/day15.txt"))));
 // let result = day.solvea(day.expand(day.parse(demo)));
 
