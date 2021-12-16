@@ -1,5 +1,6 @@
 interface Packet {
   version: number;
+  typeID: number;
 }
 
 class Reader {
@@ -13,20 +14,24 @@ class Reader {
 
   readBitsAsNumber(n: number): number {
     let ss = this.s.slice(this.pos, this.pos + n);
+    this.pos += n;
     return parseInt(ss, 2);
   }
 
   readPacket(): Packet {
     let version = this.readBitsAsNumber(3);
+    let typeID = this.readBitsAsNumber(3);
 
-    return { version };
+    return { version, typeID };
   }
 }
 
 export function fromString(s: string): Reader {
   let ss = "";
   for (let i = 0; i < s.length; i++) {
-    ss += parseInt(s[i], 16).toString(2);
+    ss += parseInt(s[i], 16)
+      .toString(2)
+      .padStart(4, "0");
   }
   return new Reader(ss);
 }
