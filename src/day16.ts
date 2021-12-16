@@ -9,6 +9,10 @@ interface LiteralPacket {
   v: number;
 }
 
+export function isLiteral(p: Packet): p is LiteralPacket {
+  return p.typeID === PacketType.Literal;
+}
+
 interface OperatorPacket {
   version: number;
   typeID: PacketType.Operator;
