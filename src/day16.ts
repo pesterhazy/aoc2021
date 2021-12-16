@@ -32,7 +32,12 @@ class Reader {
   }
 
   eof(): boolean {
-    return this.pos >= this.s.length;
+    if (this.pos >= this.s.length) return true;
+
+    for (let i = this.pos; i < this.s.length; i++)
+      if (this.s[i] !== "0") return false;
+    // all trailing zeros
+    return true;
   }
 
   readBits(n: number): string {
