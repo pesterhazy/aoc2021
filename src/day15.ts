@@ -44,6 +44,8 @@ export function solvea(cave: number[][]): number {
 
   while (jobs.length > 0) {
     count++;
+    // sort in reverse order (because we're using a stack)
+    jobs.sort((a: Job, b: Job) => b.score - a.score);
     let job: Job = jobs.pop()!;
     let pos = job.path[job.path.length - 1];
 
@@ -62,10 +64,10 @@ export function solvea(cave: number[][]): number {
       }
       continue;
     }
-    let newJobs: Job[] = [];
     for (let delta of deltas) {
       let newPos = add(pos, delta);
-      // if (job.path.some(pp => pp.x === newPos.x && pp.y === newPos.y)) continue;
+
+      // out of bounds?
       if (
         newPos.x < 0 ||
         newPos.x >= width ||
@@ -76,16 +78,12 @@ export function solvea(cave: number[][]): number {
 
       let newCost = job.cost + cave[newPos.y][newPos.x];
 
-      newJobs.push({
+      jobs.push({
         path: [...job.path, newPos],
         cost: newCost,
         score: newCost + c * (width - newPos.x + (height - newPos.y))
       });
     }
-
-    // sort in reverse order (because we're using a stack)
-    newJobs.sort((a: Job, b: Job) => b.score - a.score);
-    jobs = [...jobs, ...newJobs];
   }
   console.log("Nodes visisted:", count);
   return minCost;
