@@ -12,6 +12,7 @@ const demo = `1163751742
 1293138521
 2311944581`;
 
-let result = day.solvea(day.parse(util.slurp("data/day15.txt")));
+// let result = day.solvea(day.parse(util.slurp("data/day15.txt")));
+let result = day.solvea(day.parse(demo));
 
 console.log(result);

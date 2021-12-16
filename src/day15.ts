@@ -26,6 +26,7 @@ export function solvea(cave: number[][]): number {
   let jobs: Job[] = [{ path: [{ x: 0, y: 0 }], cost: 0 }];
   let minScore = Infinity;
   let count = 0;
+  let g: Map<string, number> = new Map();
 
   while (true) {
     count++;
@@ -33,6 +34,10 @@ export function solvea(cave: number[][]): number {
 
     let job: Job = jobs.pop()!;
     let pos = job.path[job.path.length - 1];
+
+    let prevCost = g.get(`${pos.x},${pos.y}`);
+    if (prevCost !== undefined && job.cost >= prevCost) continue;
+    g.set(`${pos.x},${pos.y}`, job.cost);
 
     if (pos.x === cave[0].length - 1 && pos.y === cave.length - 1) {
       if (job.cost < minScore) {
