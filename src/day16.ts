@@ -124,7 +124,6 @@ export function solvea(reader: Reader): number {
 function eva(packet: Packet): number {
   if (isOperator(packet)) {
     let args = packet.children.map(eva);
-    // console.log(packet.typeID, args);
 
     switch (packet.typeID) {
       case 0:
@@ -151,6 +150,5 @@ function eva(packet: Packet): number {
 
 export function solveb(reader: Reader): number {
   let packet = reader.readPacket();
-  // console.log(JSON.stringify(packet));
   return eva(packet);
 }
