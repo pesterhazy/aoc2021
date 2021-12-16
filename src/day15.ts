@@ -11,10 +11,10 @@ function add(v1: Vec, v2: Vec) {
   return { x: v1.x + v2.x, y: v1.y + v2.y };
 }
 let deltas: Vec[] = [
-  { x: -1, y: 0 },
   { x: 1, y: 0 },
+  { x: 0, y: 1 },
   { x: 0, y: -1 },
-  { x: 0, y: 1 }
+  { x: -1, y: 0 }
 ];
 
 interface Job {
