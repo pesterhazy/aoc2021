@@ -22,6 +22,11 @@ test("should parse another operator", () => {
 });
 
 test("should answer demo", () => {
+  let n = day.solvea(day.fromString("C0015000016115A2E0802F182340"));
+  expect(n).toBe(23);
+});
+
+test("should answer", () => {
   let n = day.solvea(day.fromString(util.slurp("data/day16.txt")));
   expect(n).toBe(-999);
 });

@@ -14,10 +14,15 @@ export function isLiteral(p: Packet): p is LiteralPacket {
   return p.ptype === PacketType.Literal;
 }
 
+export function isOperator(p: Packet): p is OperatorPacket {
+  return p.ptype === PacketType.Operator;
+}
+
 interface OperatorPacket {
   version: number;
   typeID: number;
   ptype: PacketType.Operator;
+  children: Packet[];
 }
 
 type Packet = LiteralPacket | OperatorPacket;
@@ -71,18 +76,22 @@ class Reader {
       return { ptype: PacketType.Literal, version, typeID, v };
     } else {
       let lengthTypeID = this.readBitsAsNumber(1);
+      let children: Packet[] = [];
 
       if (lengthTypeID === 0) {
         let length = this.readBitsAsNumber(15);
-        this.readBits(length); // skip
+        let start = this.pos;
+        while (this.pos < start + length) {
+          children.push(this.readPacket());
+        }
       } else if (lengthTypeID === 1) {
         let nsub = this.readBitsAsNumber(11);
         for (let n = 0; n < nsub; n++) {
-          this.readPacket();
+          children.push(this.readPacket());
         }
       } else throw "Unexpected lengthTypeID";
 
-      return { ptype: PacketType.Operator, version, typeID };
+      return { ptype: PacketType.Operator, version, typeID, children };
     }
   }
 }
@@ -97,11 +106,22 @@ export function fromString(s: string): Reader {
   return new Reader(ss);
 }
 
+function walk(packet: Packet): number {
+  let ans = packet.version;
+  if (isOperator(packet)) {
+    for (let child of packet.children) {
+      ans += walk(child);
+    }
+  }
+
+  return ans;
+}
+
 export function solvea(reader: Reader): number {
   let ans = 0;
   while (!reader.eof()) {
     let packet = reader.readPacket();
-    ans += packet.version;
+    ans += walk(packet);
   }
   return ans;
 }
