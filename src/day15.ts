@@ -24,14 +24,16 @@ interface Job {
 }
 
 export function solvea(cave: number[][]): number {
+  let width = cave[0].length;
+  let height = cave.length;
   let jobs: Job[] = [
     {
       path: [{ x: 0, y: 0 }],
       cost: 0,
-      score: 5 * (cave[0].length + cave.length)
+      score: 5 * (width + height)
     }
   ];
-  let minScore = Infinity;
+  let minCost = Infinity;
   let count = 0;
   let g: Map<string, number> = new Map();
 
@@ -46,10 +48,10 @@ export function solvea(cave: number[][]): number {
     if (prevCost !== undefined && job.cost >= prevCost) continue;
     g.set(`${pos.x},${pos.y}`, job.cost);
 
-    if (pos.x === cave[0].length - 1 && pos.y === cave.length - 1) {
-      if (job.cost < minScore) {
+    if (pos.x === width - 1 && pos.y === height - 1) {
+      if (job.cost < minCost) {
         console.log("FOUND:", job.cost);
-        minScore = job.cost;
+        minCost = job.cost;
       }
       continue;
     }
@@ -59,25 +61,24 @@ export function solvea(cave: number[][]): number {
       if (job.path.some(pp => pp.x === newPos.x && pp.y === newPos.y)) continue;
       if (
         newPos.x < 0 ||
-        newPos.x >= cave[0].length ||
+        newPos.x >= width ||
         newPos.y < 0 ||
-        newPos.y >= cave.length
+        newPos.y >= height
       )
         continue;
       let newCost = job.cost + cave[newPos.y][newPos.x];
 
-      if (newCost > minScore) continue;
+      if (newCost > minCost) continue;
 
       newJobs.push({
         path: [...job.path, newPos],
         cost: newCost,
-        score:
-          newCost + 5 * (cave[0].length - newPos.x + (cave.length - newPos.y))
+        score: newCost + 5 * (width - newPos.x + (height - newPos.y))
       });
     }
     newJobs.sort((a: Job, b: Job) => b.score - a.score);
     jobs = [...jobs, ...newJobs];
   }
   console.log("Nodes visisted:", count);
-  return minScore;
+  return minCost;
 }
