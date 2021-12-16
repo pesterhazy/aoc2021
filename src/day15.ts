@@ -43,12 +43,9 @@ export function solvea(cave: number[][]): number {
   });
 
   let minCost = Infinity;
-  let count = 0;
   let g: Map<string, number> = new Map();
 
   while (!jobs.isEmpty()) {
-    count++;
-
     let job: Job = (jobs.dequeue() as any).element;
 
     let pos = job.path[job.path.length - 1];
@@ -63,7 +60,6 @@ export function solvea(cave: number[][]): number {
     // arrived at destination?
     if (pos.x === width - 1 && pos.y === height - 1) {
       if (job.cost < minCost) {
-        console.log(job.cost);
         minCost = job.cost;
       }
       continue;
@@ -89,7 +85,6 @@ export function solvea(cave: number[][]): number {
       });
     }
   }
-  // console.log("Nodes visisted:", count);
   return minCost;
 }
 
