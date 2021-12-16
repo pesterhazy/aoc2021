@@ -124,15 +124,25 @@ export function solvea(reader: Reader): number {
 function eva(packet: Packet): number {
   if (isOperator(packet)) {
     let args = packet.children.map(eva);
-    console.log(packet.typeID, args);
+    // console.log(packet.typeID, args);
 
     switch (packet.typeID) {
       case 0:
-        return args.reduce((a, b) => a + b);
+        return args.reduce((a, b) => a + b, 0);
+      case 1:
+        return args.reduce((a, b) => a * b, 1);
+      case 2:
+        return args.reduce((a, b) => (a < b ? a : b), Infinity);
       case 3:
         return args.reduce((a, b) => (a > b ? a : b), -Infinity);
+      case 5:
+        return args.reduce((a, b) => (a > b ? 1 : 0));
+      case 6:
+        return args.reduce((a, b) => (a < b ? 1 : 0));
+      case 7:
+        return args.reduce((a, b) => (a === b ? 1 : 0));
       default:
-        throw "Not implemented";
+        throw "Not implemented: " + packet.typeID;
     }
   } else if (isLiteral(packet)) {
     return packet.v;
@@ -141,6 +151,6 @@ function eva(packet: Packet): number {
 
 export function solveb(reader: Reader): number {
   let packet = reader.readPacket();
-  console.log(JSON.stringify(packet));
+  // console.log(JSON.stringify(packet));
   return eva(packet);
 }
