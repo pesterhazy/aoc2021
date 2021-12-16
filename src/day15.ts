@@ -96,6 +96,27 @@ export function solvea(cave: number[][]): number {
       });
     }
   }
-  console.log("Nodes visisted:", count);
+  // console.log("Nodes visisted:", count);
   return minCost;
+}
+
+export function expand(cave: number[][]): number[][] {
+  let width = cave[0].length;
+  let height = cave.length;
+
+  let result: number[][] = [];
+  for (let y = 0; y < height * 5; y++) {
+    let row: number[] = [];
+    for (let x = 0; x < width * 5; x++) {
+      let xx = x % width;
+      let yy = y % height;
+
+      let v = cave[yy][xx] + Math.floor(y / height) + Math.floor(x / width);
+      v = ((v - 1) % 9) + 1;
+
+      row.push(v);
+    }
+    result.push(row);
+  }
+  return result;
 }
