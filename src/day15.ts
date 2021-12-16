@@ -23,6 +23,18 @@ interface Job {
   score: number;
 }
 
+function popBest(xs: Job[]): [Job, Job[]] {
+  let minScore = Infinity;
+  let besti: number | undefined = undefined;
+  for (let i = 0; i < xs.length; i++) {
+    if (xs[i].score < minScore) {
+      besti = i;
+      minScore = xs[i].score;
+    }
+  }
+  if (besti === undefined) throw "This shouldn't happen";
+  return [xs[besti], [...xs.slice(0, besti), ...xs.slice(besti + 1)]];
+}
 export function solvea(cave: number[][]): number {
   const c = 5; // multiplier for manhattan distance
 
@@ -44,9 +56,9 @@ export function solvea(cave: number[][]): number {
 
   while (jobs.length > 0) {
     count++;
-    // sort in reverse order (because we're using a stack)
-    jobs.sort((a: Job, b: Job) => b.score - a.score);
-    let job: Job = jobs.pop()!;
+
+    let job: Job;
+    [job, jobs] = popBest(jobs);
     let pos = job.path[job.path.length - 1];
 
     if (job.cost > minCost) continue;
