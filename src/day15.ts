@@ -78,6 +78,6 @@ export function solvea(cave: number[][]): number {
     newJobs.sort((a: Job, b: Job) => b.score - a.score);
     jobs = [...jobs, ...newJobs];
   }
-  console.log(count);
+  console.log("Nodes visisted:", count);
   return minScore;
 }
