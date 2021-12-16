@@ -35,12 +35,12 @@ function popBest(xs: Job[]): [Job, Job[]] {
   if (besti === undefined) throw "This shouldn't happen";
   return [xs[besti], [...xs.slice(0, besti), ...xs.slice(besti + 1)]];
 }
+
 export function solvea(cave: number[][]): number {
   const c = 5; // multiplier for manhattan distance
 
   let width = cave[0].length;
   let height = cave.length;
-  console.log("dimensions:", width, height);
 
   // Use a stack to implement DFS
   let jobs: Job[] = [
@@ -63,7 +63,7 @@ export function solvea(cave: number[][]): number {
 
     if (job.cost > minCost) continue;
 
-    // have we been here before and for the same cost (or less)?
+    // have we reached this point before for the same cost or less?
     let prevCost = g.get(`${pos.x},${pos.y}`);
     if (prevCost !== undefined && job.cost >= prevCost) continue;
     g.set(`${pos.x},${pos.y}`, job.cost);
@@ -71,7 +71,6 @@ export function solvea(cave: number[][]): number {
     // arrived at destination?
     if (pos.x === width - 1 && pos.y === height - 1) {
       if (job.cost < minCost) {
-        console.log("FOUND:", job.cost);
         minCost = job.cost;
       }
       continue;
