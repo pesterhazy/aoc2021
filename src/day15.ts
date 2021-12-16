@@ -71,6 +71,7 @@ export function solvea(cave: number[][]): number {
     // arrived at destination?
     if (pos.x === width - 1 && pos.y === height - 1) {
       if (job.cost < minCost) {
+        console.log(job.cost);
         minCost = job.cost;
       }
       continue;
