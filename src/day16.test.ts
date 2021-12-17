@@ -38,5 +38,5 @@ test("should eval demo", () => {
 
 test("should eval", () => {
   let n = day.solveb(day.fromString(util.slurp("data/day16.txt")));
-  expect(n).toBe(-999);
+  expect(n).toBe(2056021084691);
 });
