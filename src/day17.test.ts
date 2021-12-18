@@ -9,6 +9,9 @@ test("should parse", () => {
 test("should simulate", () => {
   let result = day.parse(`target area: x=20..30, y=-10..-5`);
   expect(day.simulate(result, { x: 7, y: 2 })).toStrictEqual({ x: 28, y: -7 });
+  expect(day.simulate(result, { x: 6, y: 3 })).toBeDefined();
+  expect(day.simulate(result, { x: 9, y: 0 })).toBeDefined();
+  expect(day.simulate(result, { x: 17, y: -4 })).toBeUndefined();
 });
 
 test.skip("should give demo answer", () => {
