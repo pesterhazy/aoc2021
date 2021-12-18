@@ -12,14 +12,26 @@ export function parse(s: string): number[] {
 
 export function solvea(input: number[]): number {
   let max = -Infinity;
-  for (let x = 0; x < 100; x++) {
-    for (let y = -500; y < 500; y++) {
+  for (let x = 0; x < 300; x++) {
+    for (let y = -200; y < 200; y++) {
       let ans = simulate(input, { x, y });
       if (ans === undefined) continue;
       max = Math.max(ans, max);
     }
   }
   return max;
+}
+
+export function solveb(input: number[]): number {
+  let c = 0;
+  for (let x = 0; x < 300; x++) {
+    for (let y = -200; y < 200; y++) {
+      let ans = simulate(input, { x, y });
+      if (ans === undefined) continue;
+      c++;
+    }
+  }
+  return c;
 }
 
 interface Vec {
