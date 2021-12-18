@@ -53,31 +53,22 @@ function walk(root: Element) {
               e[0],
               e[1]
             ];
-            console.log(patches);
-            // zero out parent
             let pair = stack[0].element;
-            if (!isPair(pair)) throw "hmph";
-            pair[stack[0].idx] = 0;
-            let first = true;
             while (stack.length > 0) {
               let se = stack.shift()!;
-              console.log(JSON.stringify(se));
               for (let idx of [0, 1]) {
                 if (patches[idx] === undefined) continue;
 
-                // FIXME: parent case
                 if (se.idx === 1 - idx) {
-                  console.log("HIT", idx);
-                  if (!isPair(se.element)) throw "ouch";
-                  if (!isNumber(se.element[idx])) throw "ouch";
+                  if (!isPair(se.element)) throw "no way";
+                  if (!isNumber(se.element[idx])) continue;
                   se.element[idx] += patches[idx] as any;
                   patches[idx] = undefined;
                 }
               }
-              first = false;
             }
-            // find left neighbor and add left
-            // find right neighbor and add right
+            if (!isPair(pair)) throw "not a pair";
+            pair[todo.stackElement.idx] = 0;
           } else {
             stack.unshift(todo.stackElement);
             q.unshift({ name: "up" });

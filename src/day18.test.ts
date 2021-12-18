@@ -17,9 +17,8 @@ test.only("should explode", () => {
     7,
     [6, [5, [7, 0]]]
   ]);
-  // // [[6,[5,[4,[3,2]]]],1] becomes [[6,[5,[7,0]]],3].
-  // expect(day.explode([[6, [5, [4, [3, 2]]]], 1])).toStrictEqual([
-  //   [6, [5, [7, 0]]],
-  //   3
-  // ]);
+  expect(day.explode([[6, [5, [4, [3, 2]]]], 1])).toStrictEqual([
+    [6, [5, [7, 0]]],
+    3
+  ]);
 });
