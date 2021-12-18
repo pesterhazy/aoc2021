@@ -21,8 +21,9 @@ function add(v1: Vec, v2: Vec) {
   return { x: v1.x + v2.x, y: v1.y + v2.y };
 }
 
-export function simulate(input: number[], vel: Vec): Vec | undefined {
+export function simulate(input: number[], vel: Vec): number | undefined {
   let pos: Vec = { x: 0, y: 0 };
+  let ans = -Infinity;
 
   while (true) {
     pos = add(pos, vel);
@@ -36,6 +37,7 @@ export function simulate(input: number[], vel: Vec): Vec | undefined {
     if (pos.y < input[2] && vel.y < 0) {
       return undefined;
     }
+    ans = Math.max(ans, pos.y);
 
     if (
       pos.x >= input[0] &&
@@ -43,7 +45,7 @@ export function simulate(input: number[], vel: Vec): Vec | undefined {
       pos.y >= input[2] &&
       pos.y <= input[3]
     ) {
-      return pos;
+      return ans;
     }
   }
 }
