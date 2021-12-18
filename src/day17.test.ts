@@ -19,3 +19,8 @@ test("should give demo answer", () => {
   let result = day.parse(`target area: x=20..30, y=-10..-5`);
   expect(day.solvea(result)).toBe(45);
 });
+
+test("should give answer", () => {
+  let result = day.parse(util.slurp("data/day17.txt"));
+  expect(day.solvea(result)).toBe(-999);
+});
