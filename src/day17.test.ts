@@ -15,7 +15,7 @@ test("should simulate", () => {
   expect(day.simulate(result, { x: 17, y: -4 })).toBeUndefined();
 });
 
-test.skip("should give demo answer", () => {
+test("should give demo answer", () => {
   let result = day.parse(`target area: x=20..30, y=-10..-5`);
   expect(day.solvea(result)).toBe(45);
 });

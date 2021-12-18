@@ -10,7 +10,17 @@ export function parse(s: string): number[] {
   ];
 }
 
-export function solvea(input: number[]): number {}
+export function solvea(input: number[]): number {
+  let max = -Infinity;
+  for (let x = 0; x < 100; x++) {
+    for (let y = -50; y < 50; y++) {
+      let ans = simulate(input, { x, y });
+      if (ans === undefined) continue;
+      max = Math.max(ans, max);
+    }
+  }
+  return max;
+}
 
 interface Vec {
   x: number;
