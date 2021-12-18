@@ -6,6 +6,10 @@ export function add(a: Element, b: Element): Element {
   else throw "Unknown combination";
 }
 
+export function todoItemIsPair(e: TodoItem): e is StackElement {
+  return Array.isArray(e);
+}
+
 export function isPair(e: Element): e is Pair {
   return Array.isArray(e);
 }
@@ -14,39 +18,64 @@ export function isNumber(e: Element): e is number {
   return typeof e === "number";
 }
 
-export function explode(ee: Element): Element {
-  function visit(e: Element, depth: number) {
-    if (isPair(e)) {
-      let newDepth = depth + 1;
-      let [left, right] = e;
-      if (newDepth === 4) {
-        console.log("<=", e);
-        // [[9,8],1] => [0,9]
-        // [4,[3,2]] => [7,0]
-        if (isPair(left)) {
-          if (!isNumber(left[0]) || !isNumber(left[1])) throw "confused";
-          if (!isNumber(right)) throw "confused 2";
-          e[0] = 0;
-          e[1] = right + left[1];
-          console.log("=>", e);
-          return true;
+interface TodoExplore {
+  name: "explore";
+  stackElement: StackElement;
+}
+interface TodoUp {
+  name: "up";
+}
+
+type Todo = TodoExplore | TodoUp;
+
+interface StackElement {
+  element: Element;
+  idx: 0 | 1;
+}
+
+function walk(root: Element) {
+  let q: Todo[] = [
+    { name: "explore", stackElement: { element: root, idx: 0 } }
+  ];
+  let stack: StackElement[] = [{ element: root, idx: 0 }];
+
+  while (q.length > 0) {
+    let todo = q.shift()!;
+
+    switch (todo.name) {
+      case "explore":
+        let e = todo.stackElement.element;
+        if (isPair(e)) {
+          if (stack.length === 5) {
+            console.log(JSON.stringify(todo));
+            console.log(JSON.stringify(stack));
+            // zero out parent
+            // find left neighbor and add left
+            // find right neighbor and add right
+          } else {
+            stack.unshift(todo.stackElement);
+            q.unshift({ name: "up" });
+            q.unshift({
+              name: "explore",
+              stackElement: { element: e[1], idx: 1 }
+            });
+            q.unshift({
+              name: "explore",
+              stackElement: { element: e[0], idx: 0 }
+            });
+          }
         }
-        if (isPair(right)) {
-          if (!isNumber(right[0]) || !isNumber(right[1])) throw "confused";
-          if (!isNumber(left)) throw "confused 2";
-          e[0] = left + right[0];
-          e[1] = 0;
-          console.log("=>", e);
-          return true;
-        }
-      }
-      if (visit(left, newDepth)) return true;
-      if (visit(right, newDepth)) return true;
-    } else {
+        break;
+      case "up":
+        stack.shift();
+        break;
+      default:
+        throw "unknown";
     }
   }
-
+}
+export function explode(ee: Element): Element {
   let copy = JSON.parse(JSON.stringify(ee));
-  visit(copy, 0);
+  walk(copy);
   return copy;
 }
