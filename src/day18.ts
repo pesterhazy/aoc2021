@@ -33,17 +33,16 @@ interface StackElement {
   idx: 0 | 1;
 }
 
-export function explode(ee: Element): Element {
-  let xs: any = [];
+function walk(xs: any, e: Element) {
   let n = 0;
   let depth = 0;
-  function walk(e: Element) {
+  function step(e: Element) {
     if (isPair(e)) {
       depth++;
       xs.push({ name: "[", depth, n });
-      walk(e[0]);
+      step(e[0]);
       xs.push({ name: "," });
-      walk(e[1]);
+      step(e[1]);
       xs.push({ name: "]" });
       depth--;
     } else {
@@ -51,6 +50,10 @@ export function explode(ee: Element): Element {
       n++;
     }
   }
+  step(e);
+}
+export function explode(ee: Element): Element {
+  let xs: any = [];
   function build(cmds: any): Element {
     let s = "";
     for (let cmd of cmds) {
@@ -59,7 +62,7 @@ export function explode(ee: Element): Element {
     }
     return JSON.parse(s);
   }
-  walk(ee);
+  walk(xs, ee);
   let winner = xs.findIndex(x => x.name === "[" && x.depth === 5);
   if (winner === -1) throw "no winner";
 
