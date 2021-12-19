@@ -139,3 +139,16 @@ export function xform(e: Element): Element {
   }
   return e;
 }
+
+export function mag(e: Element): number {
+  if (isPair(e)) return 3 * mag(e[0]) + 2 * mag(e[1]);
+  else return e;
+}
+
+export function parse(s: string): Element[] {
+  return s.split(/\n/).map(l => JSON.parse(l));
+}
+
+export function solvea(es: Element[]): number {
+  return mag(es.reduce((a, b) => xform(add(a, b))));
+}
