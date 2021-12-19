@@ -152,3 +152,17 @@ export function parse(s: string): Element[] {
 export function solvea(es: Element[]): number {
   return mag(es.reduce((a, b) => xform(add(a, b))));
 }
+
+export function solveb(es: Element[]): number {
+  let max = -Infinity;
+  for (let a = 0; a < es.length; a++) {
+    for (let b = 0; b < es.length; b++) {
+      if (a === b) continue;
+
+      let r = mag(xform(add(es[a], es[b])));
+
+      if (r > max) max = r;
+    }
+  }
+  return max;
+}
