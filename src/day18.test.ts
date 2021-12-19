@@ -21,13 +21,17 @@ test.only("should explode", () => {
     [6, [5, [7, 0]]],
     3
   ]);
-  expect(
-    day.explode([
-      [3, [2, [1, [7, 3]]]],
-      [6, [5, [4, [3, 2]]]]
-    ])
-  ).toStrictEqual([
+  let input = [
+    [3, [2, [1, [7, 3]]]],
+    [6, [5, [4, [3, 2]]]]
+  ];
+  let result = day.explode(input as any);
+  let expected = [
     [3, [2, [8, 0]]],
     [9, [5, [4, [3, 2]]]]
-  ]);
+  ];
+  // console.log("input:", JSON.stringify(input));
+  // console.log("expected:", JSON.stringify(expected));
+  // console.log("actual:", JSON.stringify(result));
+  expect(result).toStrictEqual(expected);
 });
