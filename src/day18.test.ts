@@ -8,7 +8,7 @@ test("should add", () => {
   ]);
 });
 
-test.only("should explode", () => {
+test("should explode", () => {
   expect(day.explode([[[[[9, 8], 1], 2], 3], 4])).toStrictEqual([
     [[[0, 9], 2], 3],
     4
@@ -34,4 +34,25 @@ test.only("should explode", () => {
   // console.log("expected:", JSON.stringify(expected));
   // console.log("actual:", JSON.stringify(result));
   expect(result).toStrictEqual(expected);
+});
+
+test("should split", () => {
+  expect(
+    day.split([
+      [
+        [[0, 7], 4],
+        [15, [0, 13]]
+      ],
+      [1, 1]
+    ])
+  ).toStrictEqual([
+    [
+      [[0, 7], 4],
+      [
+        [7, 8],
+        [0, 13]
+      ]
+    ],
+    [1, 1]
+  ]);
 });

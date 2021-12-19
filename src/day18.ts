@@ -100,3 +100,28 @@ export function explode(ee: Element): Element {
 
   return fromCmds(xs);
 }
+
+function ssplit(n: number): [number, number] {
+  return [Math.floor(n / 2), Math.ceil(n / 2)];
+}
+
+export function split(ee: Element): Element {
+  let xs = toCmds(ee);
+
+  let winner = xs.findIndex(x => x.name === "literal" && x.v >= 10);
+  if (winner === -1) throw "no winner";
+
+  let [a, b] = ssplit(xs[winner].v);
+
+  xs = [
+    ...xs.slice(0, winner),
+    { name: "[" },
+    { name: "literal", v: a },
+    { name: "," },
+    { name: "literal", v: b },
+    { name: "]" },
+    ...xs.slice(winner + 1)
+  ];
+
+  return fromCmds(xs);
+}
