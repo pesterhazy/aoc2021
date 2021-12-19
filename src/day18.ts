@@ -14,21 +14,6 @@ export function isNumber(e: Element): e is number {
   return typeof e === "number";
 }
 
-interface TodoExplore {
-  name: "explore";
-  stackElement: StackElement;
-}
-interface TodoUp {
-  name: "up";
-}
-
-type Todo = TodoExplore | TodoUp;
-
-interface StackElement {
-  element: Element;
-  idx: 0 | 1;
-}
-
 function toCmds(e: Element): any {
   let n = 0;
   let depth = 0;
@@ -62,13 +47,11 @@ function fromCmds(cmds: any): Element {
 
 export function explode(ee: Element): Element | undefined {
   let xs = toCmds(ee);
-  let winner = xs.findIndex(x => x.name === "[" && x.depth === 5);
+  let winner = xs.findIndex((x: any) => x.name === "[" && x.depth === 5);
   if (winner === -1) return undefined;
 
   let lleft = xs[winner + 1].v;
   let rright = xs[winner + 3].v;
-
-  // zero out winner
 
   xs = [
     ...xs.slice(0, winner),
@@ -104,7 +87,7 @@ function ssplit(n: number): [number, number] {
 export function split(ee: Element): Element | undefined {
   let xs = toCmds(ee);
 
-  let winner = xs.findIndex(x => x.name === "literal" && x.v >= 10);
+  let winner = xs.findIndex((x: any) => x.name === "literal" && x.v >= 10);
   if (winner === -1) return undefined;
 
   let [a, b] = ssplit(xs[winner].v);
