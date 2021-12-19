@@ -60,10 +60,10 @@ function fromCmds(cmds: any): Element {
   return JSON.parse(s);
 }
 
-export function explode(ee: Element): Element {
+export function explode(ee: Element): Element | undefined {
   let xs = toCmds(ee);
   let winner = xs.findIndex(x => x.name === "[" && x.depth === 5);
-  if (winner === -1) throw "no winner";
+  if (winner === -1) return undefined;
 
   let lleft = xs[winner + 1].v;
   let rright = xs[winner + 3].v;
@@ -101,11 +101,11 @@ function ssplit(n: number): [number, number] {
   return [Math.floor(n / 2), Math.ceil(n / 2)];
 }
 
-export function split(ee: Element): Element {
+export function split(ee: Element): Element | undefined {
   let xs = toCmds(ee);
 
   let winner = xs.findIndex(x => x.name === "literal" && x.v >= 10);
-  if (winner === -1) throw "no winner";
+  if (winner === -1) return undefined;
 
   let [a, b] = ssplit(xs[winner].v);
 
@@ -120,4 +120,22 @@ export function split(ee: Element): Element {
   ];
 
   return fromCmds(xs);
+}
+
+export function xform(e: Element): Element {
+  while (true) {
+    let ee;
+
+    ee = explode(e);
+    if (ee !== undefined) {
+      e = ee;
+    } else {
+      ee = split(e);
+
+      if (ee !== undefined) {
+        e = ee;
+      } else break;
+    }
+  }
+  return e;
 }

@@ -56,3 +56,22 @@ test("should split", () => {
     [1, 1]
   ]);
 });
+
+test("should xform", () => {
+  let e: any = [
+    [
+      [[[4, 3], 4], 4],
+      [7, [[8, 4], 9]]
+    ],
+    [1, 1]
+  ];
+
+  e = day.xform(e);
+  expect(e).toStrictEqual([
+    [
+      [[0, 7], 4],
+      [7, [[8, 4], 9]]
+    ],
+    [1, 1]
+  ]);
+});
