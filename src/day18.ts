@@ -33,7 +33,7 @@ interface StackElement {
   idx: 0 | 1;
 }
 
-function walk(e: Element): any {
+function toCmds(e: Element): any {
   let n = 0;
   let depth = 0;
   let xs: any = [];
@@ -54,16 +54,18 @@ function walk(e: Element): any {
   step(e);
   return xs;
 }
-export function explode(ee: Element): Element {
-  function build(cmds: any): Element {
-    let s = "";
-    for (let cmd of cmds) {
-      if (cmd.name === "literal") s += cmd.v;
-      else s += cmd.name;
-    }
-    return JSON.parse(s);
+
+function fromCmds(cmds: any): Element {
+  let s = "";
+  for (let cmd of cmds) {
+    if (cmd.name === "literal") s += cmd.v;
+    else s += cmd.name;
   }
-  let xs = walk(ee);
+  return JSON.parse(s);
+}
+
+export function explode(ee: Element): Element {
+  let xs = toCmds(ee);
   let winner = xs.findIndex(x => x.name === "[" && x.depth === 5);
   if (winner === -1) throw "no winner";
 
@@ -98,5 +100,5 @@ export function explode(ee: Element): Element {
   if (left !== undefined) xs[left].v += lleft;
   if (right !== undefined) xs[right].v += rright;
 
-  return build(xs);
+  return fromCmds(xs);
 }
