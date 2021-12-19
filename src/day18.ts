@@ -33,9 +33,10 @@ interface StackElement {
   idx: 0 | 1;
 }
 
-function walk(xs: any, e: Element) {
+function walk(e: Element): any {
   let n = 0;
   let depth = 0;
+  let xs: any = [];
   function step(e: Element) {
     if (isPair(e)) {
       depth++;
@@ -51,9 +52,9 @@ function walk(xs: any, e: Element) {
     }
   }
   step(e);
+  return xs;
 }
 export function explode(ee: Element): Element {
-  let xs: any = [];
   function build(cmds: any): Element {
     let s = "";
     for (let cmd of cmds) {
@@ -62,7 +63,7 @@ export function explode(ee: Element): Element {
     }
     return JSON.parse(s);
   }
-  walk(xs, ee);
+  let xs = walk(ee);
   let winner = xs.findIndex(x => x.name === "[" && x.depth === 5);
   if (winner === -1) throw "no winner";
 
