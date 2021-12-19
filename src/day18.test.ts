@@ -150,3 +150,9 @@ test("should answer demo", () => {
 
   expect(day.solveb(input)).toBe(3993);
 });
+
+test("should answer", () => {
+  let input = day.parse(util.slurp("data/day18.txt"));
+
+  expect(day.solveb(input)).toBe(4647);
+});
