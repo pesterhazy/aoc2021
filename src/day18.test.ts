@@ -21,19 +21,31 @@ test("should explode", () => {
     [6, [5, [7, 0]]],
     3
   ]);
-  let input = [
-    [3, [2, [1, [7, 3]]]],
-    [6, [5, [4, [3, 2]]]]
-  ];
-  let result = day.explode(input as any);
-  let expected = [
+  expect(
+    day.explode([
+      [3, [2, [1, [7, 3]]]],
+      [6, [5, [4, [3, 2]]]]
+    ])
+  ).toStrictEqual([
     [3, [2, [8, 0]]],
     [9, [5, [4, [3, 2]]]]
-  ];
-  // console.log("input:", JSON.stringify(input));
-  // console.log("expected:", JSON.stringify(expected));
-  // console.log("actual:", JSON.stringify(result));
-  expect(result).toStrictEqual(expected);
+  ]);
+
+  expect(
+    day.explode([
+      [
+        [[[4, 3], 4], 4],
+        [7, [[8, 4], 9]]
+      ],
+      [1, 1]
+    ])
+  ).toStrictEqual([
+    [
+      [[0, 7], 4],
+      [7, [[8, 4], 9]]
+    ],
+    [1, 1]
+  ]);
 });
 
 test("should split", () => {
