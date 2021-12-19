@@ -74,13 +74,11 @@ export function explode(ee: Element): Element {
 
   // zero out winner
 
-  xs[winner] = { name: "literal", v: 0, n: xs[winner].n };
-  xs[winner + 1] = undefined;
-  xs[winner + 2] = undefined;
-  xs[winner + 3] = undefined;
-  xs[winner + 4] = undefined;
-
-  xs = xs.filter(x => x !== undefined);
+  xs = [
+    ...xs.slice(0, winner),
+    { name: "literal", v: 0, n: xs[winner].n },
+    ...xs.slice(winner + 5)
+  ];
 
   let right: number | undefined;
   for (let i = winner + 1; i < xs.length; i++) {
