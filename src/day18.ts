@@ -6,10 +6,6 @@ export function add(a: Element, b: Element): Element {
   else throw "Unknown combination";
 }
 
-export function todoItemIsPair(e: TodoItem): e is StackElement {
-  return Array.isArray(e);
-}
-
 export function isPair(e: Element): e is Pair {
   return Array.isArray(e);
 }
