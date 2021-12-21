@@ -40,6 +40,9 @@ export function solvea(stapos: number[]): number {
 }
 
 export function solveb(stapos: number[]): number {
+  let rolls: number[] = [];
+  for (let a = 1; a <= 3; a++) for (let b = 1; b <= 3; b++) rolls.push(a + b);
+
   function find(
     pos: number[],
     score: number[],
@@ -49,6 +52,7 @@ export function solveb(stapos: number[]): number {
     let newPos = [];
     newPos[1 - player] = pos[1 - player];
     newPos[player] = mod1(pos[player] + nextRoll, 10);
+
     let newScore = [];
     newScore[1 - player] = score[1 - player];
     newScore[player] += score[player] + pos[player];
@@ -57,8 +61,8 @@ export function solveb(stapos: number[]): number {
       return player === 0 ? [1, 0] : [0, 1];
     } else {
       let r = [0, 0];
-      for (let i = 1; i <= 3; i++) {
-        let [a, b] = find(newPos, newScore, player === 0 ? 1 : 0, i);
+      for (let roll of rolls) {
+        let [a, b] = find(newPos, newScore, player === 0 ? 1 : 0, roll);
         r[0] += a;
         r[1] += b;
       }
@@ -67,8 +71,8 @@ export function solveb(stapos: number[]): number {
   }
 
   let r = [0, 0];
-  for (let i = 1; i <= 3; i++) {
-    let [a, b] = find(stapos, [0, 0], 0, i);
+  for (let roll of rolls) {
+    let [a, b] = find(stapos, [0, 0], 0, roll);
     r[0] += a;
     r[1] += b;
   }
