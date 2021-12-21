@@ -40,5 +40,37 @@ export function solvea(stapos: number[]): number {
 }
 
 export function solveb(stapos: number[]): number {
-  return -999;
+  function find(
+    pos: number[],
+    score: number[],
+    player: 0 | 1,
+    nextRoll: number
+  ): number[] {
+    let newPos = [];
+    newPos[1 - player] = pos[1 - player];
+    newPos[player] = mod1(pos[player] + nextRoll, 10);
+    let newScore = [];
+    newScore[1 - player] = score[1 - player];
+    newScore[player] += score[player] + pos[player];
+
+    if (newScore[player] >= 21) {
+      return player === 0 ? [1, 0] : [0, 1];
+    } else {
+      let r = [0, 0];
+      for (let i = 1; i <= 3; i++) {
+        let [a, b] = find(newPos, newScore, player === 0 ? 1 : 0, i);
+        r[0] += a;
+        r[1] += b;
+      }
+      return r;
+    }
+  }
+
+  let r = [0, 0];
+  for (let i = 1; i <= 3; i++) {
+    let [a, b] = find(stapos, [0, 0], 0, i);
+    r[0] += a;
+    r[1] += b;
+  }
+  return Math.max(...r);
 }
