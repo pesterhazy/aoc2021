@@ -51,13 +51,14 @@ export function solveb(stapos: number[]): number {
     player: 0 | 1,
     nextRoll: number
   ): number[] {
+    console.log(pos, score, player, nextRoll);
     let newPos = [];
     newPos[1 - player] = pos[1 - player];
     newPos[player] = mod1(pos[player] + nextRoll, 10);
 
     let newScore = [];
     newScore[1 - player] = score[1 - player];
-    newScore[player] += score[player] + pos[player];
+    newScore[player] = score[player] + pos[player];
 
     if (newScore[player] >= 21) {
       return player === 0 ? [1, 0] : [0, 1];
