@@ -4,3 +4,11 @@ export function parse(s: string): number[] {
   let xs = m.map(ss => parseInt(ss));
   return [xs[1], xs[3]];
 }
+
+export function solvea(stapos: number[]): number {
+  return -1;
+}
+
+export function roll(n: number): number {
+  return 1 + n * 3 + (1 + n * 3 + 1) + (1 + n * 3 + 2);
+}
