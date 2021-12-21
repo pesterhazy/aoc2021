@@ -39,26 +39,31 @@ export function solvea(stapos: number[]): number {
   }
 }
 
-export function solveb(stapos: number[]): number {
-  let rolls: number[] = [];
-  for (let a = 1; a <= 3; a++)
-    for (let b = 1; b <= 3; b++)
-      for (let c = 1; c <= 3; c++) rolls.push(a + b + c);
+let frequencies = [
+  [3, 1],
+  [4, 3],
+  [5, 6],
+  [6, 7],
+  [7, 6],
+  [8, 3],
+  [9, 1]
+];
 
+export function solveb(stapos: number[]): number {
   let M: Map<string, number[]> = new Map();
 
   function find(
     pos: number[],
     score: number[],
     player: 0 | 1,
-    nextRoll: number
+    nextRoll: number[]
   ): number[] {
     let key = JSON.stringify([pos, score, player, nextRoll]);
     if (M.has(key)) return M.get(key)!;
 
     let newPos = [];
     newPos[1 - player] = pos[1 - player];
-    newPos[player] = mod1(pos[player] + nextRoll, 10);
+    newPos[player] = mod1(pos[player] + nextRoll[0], 10);
 
     let newScore = [];
     newScore[1 - player] = score[1 - player];
@@ -68,20 +73,24 @@ export function solveb(stapos: number[]): number {
       // console.log(newPos, newScore, player);
       let result = player === 0 ? [1, 0] : [0, 1];
       M.set(key, result);
+      result[0] *= nextRoll[1];
+      result[1] *= nextRoll[1];
       return result;
     } else {
-      let r = [0, 0];
-      for (let roll of rolls) {
+      let result = [0, 0];
+      for (let roll of frequencies) {
         let [a, b] = find(newPos, newScore, player === 0 ? 1 : 0, roll);
-        r[0] += a;
-        r[1] += b;
+        result[0] += a;
+        result[1] += b;
       }
-      return r;
+      result[0] *= nextRoll[1];
+      result[1] *= nextRoll[1];
+      return result;
     }
   }
 
   let r = [0, 0];
-  for (let roll of rolls) {
+  for (let roll of frequencies) {
     let [a, b] = find(stapos, [0, 0], 0, roll);
     r[0] += a;
     r[1] += b;
