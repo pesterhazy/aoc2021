@@ -18,3 +18,5 @@ export function parse(s: string): Scanner[] {
   }
   return r;
 }
+
+export function overlap(a: Scanner, b: Scanner): number {}

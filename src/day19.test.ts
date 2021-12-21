@@ -43,6 +43,13 @@ const demo = `--- scanner 0 ---
 test("should parse", () => {
   let xs = day.parse(demo);
 
-  console.log(xs);
+  // console.log(xs);
   expect(xs.length).toBe(5);
 });
+
+// test("should find overlap", () => {
+//   let xs = day.parse(demo);
+
+//   let r = day.overlap(xs[0], xs[1]);
+//   expect(r).toBe(12);
+// });
