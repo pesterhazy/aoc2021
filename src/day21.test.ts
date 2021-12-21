@@ -25,4 +25,8 @@ test("should roll", () => {
 test("should simulate", () => {
   let stapos = day.parse(demo);
   expect(day.scoreAfter(stapos, 0)).toStrictEqual([0, 0]);
+  expect(day.scoreAfter(stapos, 1)).toStrictEqual([10, 0]);
+  expect(day.scoreAfter(stapos, 2)).toStrictEqual([10, 3]);
+  expect(day.scoreAfter(stapos, 8)).toStrictEqual([26, 22]);
+  expect(day.scoreAfter(stapos, 993 / 3)).toStrictEqual([1000, 745]);
 });

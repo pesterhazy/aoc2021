@@ -15,8 +15,17 @@ export function roll(n: number): number {
   );
 }
 
+function mod1(a: number, b: number) {
+  return ((a - 1) % b) + 1;
+}
+
 export function scoreAfter(stapos: number[], nticks: number): number[] {
   let score = [0, 0];
-  for (let tick = 0; tick < nticks; tick++) {}
+  let pos = [stapos[0], stapos[1]];
+  for (let tick = 0; tick < nticks; tick++) {
+    let player = tick % 2;
+    pos[player] = mod1(pos[player] + roll(tick), 10);
+    score[player] += pos[player];
+  }
   return score;
 }
