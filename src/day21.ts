@@ -38,3 +38,7 @@ export function solvea(stapos: number[]): number {
     tick++;
   }
 }
+
+export function solveb(stapos: number[]): number {
+  return -999;
+}
