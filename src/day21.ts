@@ -58,23 +58,25 @@ export function solveb(stapos: number[]): number {
     player: 0 | 1,
     nextRoll: number[]
   ): number[] {
+    let [pips, mult] = nextRoll;
     let key = JSON.stringify([pos, score, player, nextRoll]);
     if (M.has(key)) return M.get(key)!;
 
     let newPos = [];
-    newPos[1 - player] = pos[1 - player];
-    newPos[player] = mod1(pos[player] + nextRoll[0], 10);
-
     let newScore = [];
+
+    newPos[player] = mod1(pos[player] + pips, 10);
+    newScore[player] = score[player] + newPos[player];
+
+    newPos[1 - player] = pos[1 - player];
     newScore[1 - player] = score[1 - player];
-    newScore[player] = score[player] + pos[player];
 
     if (newScore[player] >= 21) {
       // console.log(newPos, newScore, player);
       let result = player === 0 ? [1, 0] : [0, 1];
       M.set(key, result);
-      result[0] *= nextRoll[1];
-      result[1] *= nextRoll[1];
+      result[0] *= mult;
+      result[1] *= mult;
       return result;
     } else {
       let result = [0, 0];
@@ -83,8 +85,8 @@ export function solveb(stapos: number[]): number {
         result[0] += a;
         result[1] += b;
       }
-      result[0] *= nextRoll[1];
-      result[1] *= nextRoll[1];
+      result[0] *= mult;
+      result[1] *= mult;
       return result;
     }
   }
@@ -95,5 +97,6 @@ export function solveb(stapos: number[]): number {
     r[0] += a;
     r[1] += b;
   }
+  console.log(r);
   return Math.max(...r);
 }
