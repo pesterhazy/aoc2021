@@ -1,4 +1,5 @@
 import * as day from "./day21";
+import * as util from "./util";
 
 let demo = `Player 1 starting position: 4
 Player 2 starting position: 8`;
@@ -29,4 +30,10 @@ test("should simulate", () => {
   expect(day.scoreAfter(stapos, 2)).toStrictEqual([10, 3]);
   expect(day.scoreAfter(stapos, 8)).toStrictEqual([26, 22]);
   expect(day.scoreAfter(stapos, 993 / 3)).toStrictEqual([1000, 745]);
+});
+
+test("should give answer", () => {
+  let stapos = day.parse(util.slurp("data/day21.txt"));
+  let result = day.solvea(stapos);
+  expect(result).toBe(597600);
 });
