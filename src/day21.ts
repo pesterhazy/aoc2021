@@ -72,7 +72,6 @@ export function solveb(stapos: number[]): number {
     newScore[1 - player] = score[1 - player];
 
     if (newScore[player] >= 21) {
-      // console.log(newPos, newScore, player);
       let result = player === 0 ? [1, 0] : [0, 1];
       M.set(key, result);
       result[0] *= mult;
@@ -97,6 +96,5 @@ export function solveb(stapos: number[]): number {
     r[0] += a;
     r[1] += b;
   }
-  console.log(r);
   return Math.max(...r);
 }
