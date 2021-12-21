@@ -49,7 +49,7 @@ let frequencies = [
   [9, 1]
 ];
 
-export function solveb(stapos: number[]): number {
+export function solveb(stapos: number[], goal: number): number {
   let M: Map<string, number[]> = new Map();
 
   function find(
@@ -71,7 +71,7 @@ export function solveb(stapos: number[]): number {
     newPos[1 - player] = pos[1 - player];
     newScore[1 - player] = score[1 - player];
 
-    if (newScore[player] >= 21) {
+    if (newScore[player] >= goal) {
       let result = player === 0 ? [1, 0] : [0, 1];
       M.set(key, result);
       result[0] *= mult;
