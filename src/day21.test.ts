@@ -17,4 +17,7 @@ test.skip("should give demo answer", () => {
 
 test("should roll", () => {
   expect(day.roll(0)).toBe(1 + 2 + 3);
+  expect(day.roll(1)).toBe(4 + 5 + 6);
+  expect(day.roll(33)).toBe(100 + 1 + 2);
+  expect(day.roll(34)).toBe(3 + 4 + 5);
 });

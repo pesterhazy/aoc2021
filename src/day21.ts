@@ -10,5 +10,7 @@ export function solvea(stapos: number[]): number {
 }
 
 export function roll(n: number): number {
-  return 1 + n * 3 + (1 + n * 3 + 1) + (1 + n * 3 + 2);
+  return (
+    1 + ((n * 3) % 100) + 1 + ((n * 3 + 1) % 100) + 1 + ((n * 3 + 2) % 100)
+  );
 }
