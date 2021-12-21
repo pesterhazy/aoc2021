@@ -41,7 +41,9 @@ export function solvea(stapos: number[]): number {
 
 export function solveb(stapos: number[]): number {
   let rolls: number[] = [];
-  for (let a = 1; a <= 3; a++) for (let b = 1; b <= 3; b++) rolls.push(a + b);
+  for (let a = 1; a <= 3; a++)
+    for (let b = 1; b <= 3; b++)
+      for (let c = 1; c <= 3; c++) rolls.push(a + b + c);
 
   function find(
     pos: number[],
