@@ -14,3 +14,9 @@ export function roll(n: number): number {
     1 + ((n * 3) % 100) + 1 + ((n * 3 + 1) % 100) + 1 + ((n * 3 + 2) % 100)
   );
 }
+
+export function scoreAfter(stapos: number[], nticks: number): number[] {
+  let score = [0, 0];
+  for (let tick = 0; tick < nticks; tick++) {}
+  return score;
+}

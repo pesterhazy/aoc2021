@@ -21,3 +21,8 @@ test("should roll", () => {
   expect(day.roll(33)).toBe(100 + 1 + 2);
   expect(day.roll(34)).toBe(3 + 4 + 5);
 });
+
+test("should simulate", () => {
+  let stapos = day.parse(demo);
+  expect(day.scoreAfter(stapos, 0)).toStrictEqual([0, 0]);
+});
