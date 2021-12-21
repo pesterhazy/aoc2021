@@ -9,7 +9,7 @@ test("should parse", () => {
   expect(xs).toStrictEqual([4, 8]);
 });
 
-test.skip("should give demo answer", () => {
+test("should give demo answer", () => {
   let stapos = day.parse(demo);
   let result = day.solvea(stapos);
   expect(result).toBe(739785);

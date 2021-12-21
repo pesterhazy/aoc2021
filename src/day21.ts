@@ -5,10 +5,6 @@ export function parse(s: string): number[] {
   return [xs[1], xs[3]];
 }
 
-export function solvea(stapos: number[]): number {
-  return -1;
-}
-
 export function roll(n: number): number {
   return (
     1 + ((n * 3) % 100) + 1 + ((n * 3 + 1) % 100) + 1 + ((n * 3 + 2) % 100)
@@ -28,4 +24,17 @@ export function scoreAfter(stapos: number[], nticks: number): number[] {
     score[player] += pos[player];
   }
   return score;
+}
+
+export function solvea(stapos: number[]): number {
+  let score = [0, 0];
+  let pos = [stapos[0], stapos[1]];
+  let tick = 0;
+  while (true) {
+    let player = tick % 2;
+    pos[player] = mod1(pos[player] + roll(tick), 10);
+    score[player] += pos[player];
+    if (score[player] >= 1000) return score[1 - player] * (tick + 1) * 3;
+    tick++;
+  }
 }
