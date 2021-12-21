@@ -45,13 +45,17 @@ export function solveb(stapos: number[]): number {
     for (let b = 1; b <= 3; b++)
       for (let c = 1; c <= 3; c++) rolls.push(a + b + c);
 
+  let M: Map<string, number[]> = new Map();
+
   function find(
     pos: number[],
     score: number[],
     player: 0 | 1,
     nextRoll: number
   ): number[] {
-    console.log(pos, score, player, nextRoll);
+    let key = JSON.stringify([pos, score, player, nextRoll]);
+    if (M.has(key)) return M.get(key)!;
+
     let newPos = [];
     newPos[1 - player] = pos[1 - player];
     newPos[player] = mod1(pos[player] + nextRoll, 10);
@@ -61,7 +65,10 @@ export function solveb(stapos: number[]): number {
     newScore[player] = score[player] + pos[player];
 
     if (newScore[player] >= 21) {
-      return player === 0 ? [1, 0] : [0, 1];
+      // console.log(newPos, newScore, player);
+      let result = player === 0 ? [1, 0] : [0, 1];
+      M.set(key, result);
+      return result;
     } else {
       let r = [0, 0];
       for (let roll of rolls) {
