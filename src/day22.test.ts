@@ -36,3 +36,9 @@ test("should parse", () => {
     ]
   });
 });
+
+test("should give demo answer", () => {
+  let xs = day.parse(demo);
+
+  expect(day.solvea(xs)).toBe(590784);
+});
