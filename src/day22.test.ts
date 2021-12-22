@@ -37,20 +37,35 @@ test("should parse", () => {
   });
 });
 
-test("should give demo answer", () => {
-  let xs = day.parse(demo);
+// test("should give demo answer", () => {
+//   let xs = day.parse(demo);
 
-  expect(
-    day.solvea(xs.slice(0, xs.length - 2), [
-      [-50, 50],
-      [-50, 50],
-      [-50, 50]
-    ])
-  ).toBe(590784);
-});
+//   expect(
+//     day.solvea(xs.slice(0, xs.length - 2), [
+//       [-50, 50],
+//       [-50, 50],
+//       [-50, 50]
+//     ])
+//   ).toBe(590784);
+// });
 
 // test("should give answer", () => {
 //   let xs = day.parse(util.slurp("data/day22.txt"));
 
 //   expect(day.solvea(xs)).toBe(602574);
 // });
+
+test("should sub", () => {
+  let a = [
+    [0, 2],
+    [0, 2],
+    [0, 2]
+  ];
+  let b = [
+    [1, 1],
+    [1, 1],
+    [1, 1]
+  ];
+
+  expect(day.size(day.sub(a, b))).toBe(26);
+});

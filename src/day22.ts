@@ -43,52 +43,30 @@ function outside(box: number[][], { ranges }: Inst): boolean {
   );
 }
 
-function size(box: number[][]): number {
+type Box = number[][];
+type BoxSet = number[][][];
+
+function size1(box: Box): number {
   let r = 1;
   for (let i = 0; i < 3; i++) r *= box[i][1] - box[i][0] + 1;
   return r;
 }
 
-export function solvea(insts: Inst[], init: number[][]): number {
-  let jobs: number[][][] = [init];
-  let ans = 0;
+export function size(boxes: BoxSet): number {
+  return boxes.map(size1).reduce((a, b) => a + b);
+}
 
-  let count = 0;
-  while (jobs.length > 0) {
-    if (count++ > 1000) throw "boom";
-    let box = jobs.pop()!;
+export function sub(a: Box, b: Box): BoxSet {
+  // trim
 
-    if (
-      insts
-        .filter(inst => inst.on)
-        .every(inst => within(box, inst) || outside(box, inst))
-    ) {
-      console.log(box);
-      let flag = false;
-      for (let inst of insts) {
-        if (within(box, inst)) flag = inst.on;
-      }
-      if (flag) {
-        ans += size(box);
-        console.log(ans);
-      }
-      continue;
-    }
+  b = JSON.parse(JSON.stringify(b));
 
-    // split
-
-    let dims = [0, 1, 2].map(i => box[i][1] - box[i][0] + 1);
-    let d;
-    if (dims[0] >= dims[1] && dims[0] >= dims[2]) d = 0;
-    else if (dims[1] >= dims[0] && dims[1] >= dims[2]) d = 1;
-    else d = 2;
-
-    let a = [...box];
-    let b = [...box];
-    a[d] = [box[d][0], box[d][0] + Math.floor(dims[d] / 2)];
-    b[d] = [box[d][0] + Math.floor(dims[d] / 2) + 1, box[d][1]];
-    jobs.push(a);
-    jobs.push(b);
+  for (let i = 0; i < 3; i++) {
+    b[i][0] = Math.max(b[i][0], a[i][0]);
+    b[i][1] = Math.min(b[i][1], a[i][1]);
   }
-  return ans;
+
+  console.log(b);
+
+  return [a]; // FIXME
 }
