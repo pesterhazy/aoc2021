@@ -53,23 +53,29 @@ export function solvea(insts: Inst[], init: number[][]): number {
   let jobs: number[][][] = [init];
   let ans = 0;
 
+  let count = 0;
   while (jobs.length > 0) {
+    if (count++ > 1000) throw "boom";
     let box = jobs.pop()!;
-    console.log(box);
 
     if (
       insts
         .filter(inst => inst.on)
         .every(inst => within(box, inst) || outside(box, inst))
     ) {
+      console.log(box);
       let flag = false;
       for (let inst of insts) {
-        if (!within(box, inst)) continue;
-        flag = inst.on;
+        if (within(box, inst)) flag = inst.on;
       }
-      if (flag) ans += size(box);
+      if (flag) {
+        ans += size(box);
+        console.log(ans);
+      }
       continue;
     }
+
+    // split
 
     let dims = [0, 1, 2].map(i => box[i][1] - box[i][0] + 1);
     let d;

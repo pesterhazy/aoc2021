@@ -44,7 +44,7 @@ test("should give demo answer", () => {
     day.solvea(xs.slice(0, xs.length - 2), [
       [-50, 50],
       [-50, 50],
-      [50, 50]
+      [-50, 50]
     ])
   ).toBe(590784);
 });
