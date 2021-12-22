@@ -40,5 +40,17 @@ test("should parse", () => {
 test("should give demo answer", () => {
   let xs = day.parse(demo);
 
-  expect(day.solvea(xs)).toBe(590784);
+  expect(
+    day.solvea(xs.slice(0, xs.length - 2), [
+      [-50, 50],
+      [-50, 50],
+      [50, 50]
+    ])
+  ).toBe(590784);
 });
+
+// test("should give answer", () => {
+//   let xs = day.parse(util.slurp("data/day22.txt"));
+
+//   expect(day.solvea(xs)).toBe(602574);
+// });

@@ -31,12 +31,58 @@ function isOn(insts: Inst[], vec: number[]): boolean {
   return on;
 }
 
-export function solvea(insts: Inst[]): number {
-  let count = 0;
-  for (let x = -50; x <= 50; x++)
-    for (let y = -50; y <= 50; y++)
-      for (let z = -50; z <= 50; z++) {
-        if (isOn(insts, [x, y, z])) count++;
+function within(box: number[][], { ranges }: Inst): boolean {
+  return [0, 1, 2].every(
+    i => box[i][0] >= ranges[i][0] && box[i][1] <= ranges[i][1]
+  );
+}
+
+function outside(box: number[][], { ranges }: Inst): boolean {
+  return [0, 1, 2].some(
+    i => box[i][1] < ranges[i][0] || box[i][0] > ranges[i][1]
+  );
+}
+
+function size(box: number[][]): number {
+  let r = 1;
+  for (let i = 0; i < 3; i++) r *= box[i][1] - box[i][0] + 1;
+  return r;
+}
+
+export function solvea(insts: Inst[], init: number[][]): number {
+  let jobs: number[][][] = [init];
+  let ans = 0;
+
+  while (jobs.length > 0) {
+    let box = jobs.pop()!;
+    console.log(box);
+
+    if (
+      insts
+        .filter(inst => inst.on)
+        .every(inst => within(box, inst) || outside(box, inst))
+    ) {
+      let flag = false;
+      for (let inst of insts) {
+        if (!within(box, inst)) continue;
+        flag = inst.on;
       }
-  return count;
+      if (flag) ans += size(box);
+      continue;
+    }
+
+    let dims = [0, 1, 2].map(i => box[i][1] - box[i][0] + 1);
+    let d;
+    if (dims[0] >= dims[1] && dims[0] >= dims[2]) d = 0;
+    else if (dims[1] >= dims[0] && dims[1] >= dims[2]) d = 1;
+    else d = 2;
+
+    let a = [...box];
+    let b = [...box];
+    a[d] = [box[d][0], box[d][0] + Math.floor(dims[d] / 2)];
+    b[d] = [box[d][0] + Math.floor(dims[d] / 2) + 1, box[d][1]];
+    jobs.push(a);
+    jobs.push(b);
+  }
+  return ans;
 }
