@@ -20,6 +20,12 @@ export function compile(s: string): string {
       case "div":
         out += `${tokens[1]} = Math.floor(${tokens[1]} / ${tokens[2]});\n`;
         break;
+      case "mul":
+        out += `${tokens[1]} = ${tokens[1]} * ${tokens[2]};\n`;
+        break;
+      case "eql":
+        out += `${tokens[1]} = (${tokens[1]} === ${tokens[2]} ? 1 : 0);\n`;
+        break;
       default:
         throw "Unknown token: " + tokens[0];
     }
