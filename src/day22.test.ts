@@ -49,7 +49,7 @@ test("should give demo answer", () => {
 //   expect(day.solvea(xs)).toBe(602574);
 // });
 
-test("should sub", () => {
+test.only("should sub", () => {
   let a, b;
 
   a = [
@@ -86,6 +86,19 @@ test("should sub", () => {
   b = a;
 
   expect(day.size(day.sub1(a, b))).toBe(0);
+
+  a = [
+    [29, 33],
+    [-21, 23],
+    [-26, 28]
+  ];
+  b = [
+    [-46, 7],
+    [-6, 46],
+    [-50, -1]
+  ];
+
+  expect(day.size(day.sub1(a, b))).toBeGreaterThan(0);
 });
 
 test("should sub many", () => {
