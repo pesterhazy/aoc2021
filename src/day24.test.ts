@@ -15,7 +15,7 @@ mod w 2`;
 
 test("should compile", () => {
   let result = day.compile(demo);
-  console.log(result);
+  // console.log(result);
   expect(result.length).toBeGreaterThan(0);
   expect(result.split(/\n/).filter(l => l.length > 0).length).toBe(
     demo.split(/\n/).length
@@ -25,7 +25,7 @@ test("should compile", () => {
 test("should compile data", () => {
   let input = util.slurp("data/day24.txt");
   let result = day.compile(input);
-  console.log(result);
+  // console.log(result);
   expect(result.length).toBeGreaterThan(0);
   expect(result.split(/\n/).filter(l => l.length > 0).length).toBe(
     input.split(/\n/).length

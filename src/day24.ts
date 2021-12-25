@@ -21,7 +21,8 @@ export function compile(s: string): string {
         out += `${tokens[1]} = Math.floor(${tokens[1]} / ${tokens[2]});\n`;
         break;
       case "mul":
-        out += `${tokens[1]} = ${tokens[1]} * ${tokens[2]};\n`;
+        if (tokens[2] === "0") out += `${tokens[1]} = 0;\n`;
+        else out += `${tokens[1]} = ${tokens[1]} * ${tokens[2]};\n`;
         break;
       case "eql":
         out += `${tokens[1]} = (${tokens[1]} === ${tokens[2]} ? 1 : 0);\n`;
