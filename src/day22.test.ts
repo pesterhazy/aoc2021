@@ -177,6 +177,5 @@ test.only("should add many more", () => {
   ];
 
   let r = day.add(a, b);
-  console.log(r);
   expect(day.size(r)).toBe(27 * 3);
 });

@@ -100,13 +100,11 @@ function disjoint(a: Box, b: Box): boolean {
 }
 
 export function add(boxes: BoxSet, addendum: Box): BoxSet {
-  if (boxes.length === 1) return add1(boxes[0], addendum);
-  else if (boxes.every(aa => disjoint(aa, addendum))) {
-    console.log("jackpot");
-    return [...boxes, addendum];
-  } else {
-    return boxes.reduce(add, [addendum]);
+  let r = [addendum];
+  for (let box of boxes) {
+    sub1(box, addendum).map(x => r.push(x));
   }
+  return r;
 }
 
 export function solvea(insts: Inst[]): number {
