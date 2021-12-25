@@ -78,27 +78,6 @@ export function sub(a: BoxSet, b: Box): BoxSet {
   return a.flatMap(box => sub1(box, b));
 }
 
-function within(vec: number[], box: number[][]): boolean {
-  return [0, 1, 2].every(i => vec[i] >= box[i][0] && vec[i] <= box[i][1]);
-}
-
-function start(box: Box): number[] {
-  return [box[0][0], box[1][0], box[2][0]];
-}
-
-function end(box: Box): number[] {
-  return [box[0][1], box[1][1], box[2][1]];
-}
-
-function disjoint(a: Box, b: Box): boolean {
-  return !(
-    within(start(a), b) ||
-    within(end(a), b) ||
-    within(start(b), a) ||
-    within(end(b), a)
-  );
-}
-
 export function add(boxes: BoxSet, addendum: Box): BoxSet {
   let r = [addendum];
   for (let box of boxes) {
