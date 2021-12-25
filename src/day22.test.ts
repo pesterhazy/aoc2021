@@ -56,16 +56,31 @@ test("should parse", () => {
 // });
 
 test("should sub", () => {
-  let a = [
+  let a, b;
+
+  a = [
     [0, 2],
     [0, 2],
     [0, 2]
   ];
-  let b = [
+  b = [
     [1, 1],
     [1, 1],
     [1, 1]
   ];
 
   expect(day.size(day.sub(a, b))).toBe(26);
+
+  a = [
+    [0, 2],
+    [0, 2],
+    [0, 2]
+  ];
+  b = [
+    [1, 3],
+    [1, 3],
+    [1, 3]
+  ];
+
+  expect(day.size(day.sub(a, b))).toBe(3 * 3 * 3 - 2 * 2 * 2);
 });
