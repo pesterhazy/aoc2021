@@ -83,4 +83,26 @@ test("should sub", () => {
   ];
 
   expect(day.size(day.sub(a, b))).toBe(3 * 3 * 3 - 2 * 2 * 2);
+
+  a = [
+    [0, 2],
+    [0, 2],
+    [0, 2]
+  ];
+  b = a;
+
+  expect(day.size(day.sub(a, b))).toBe(0);
+});
+
+test("should add", () => {
+  let a, b;
+
+  a = [
+    [0, 2],
+    [0, 2],
+    [0, 2]
+  ];
+  b = a;
+
+  expect(day.size(day.add(a, b))).toBe(3 * 3 * 3);
 });

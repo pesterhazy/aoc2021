@@ -53,7 +53,7 @@ function size1(box: Box): number {
 }
 
 export function size(boxes: BoxSet): number {
-  return boxes.map(size1).reduce((a, b) => a + b);
+  return boxes.map(size1).reduce((a, b) => a + b, 0);
 }
 
 export function sub(a: Box, b: Box): BoxSet {
@@ -88,6 +88,13 @@ export function sub(a: Box, b: Box): BoxSet {
       a[i][1] = b[i][1];
     }
   }
+
+  return r;
+}
+
+export function add(a: Box, b: Box): BoxSet {
+  let r = sub(a, b);
+  r.push(b);
 
   return r;
 }
