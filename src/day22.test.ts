@@ -170,10 +170,12 @@ test.only("should add many more", () => {
     ]
   ];
   b = [
-    [1, 7],
+    [1, 6],
     [1, 1],
     [1, 1]
   ];
 
-  expect(day.size(day.add(a, b))).toBe(27 * 3);
+  let r = day.add(a, b);
+  console.log(r);
+  expect(day.size(r)).toBe(27 * 3);
 });

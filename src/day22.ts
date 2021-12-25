@@ -91,7 +91,7 @@ function overlap(a: Box, b: Box): boolean {
 
 export function add(a: BoxSet, b: Box): BoxSet {
   if (a.length === 1) return add1(a[0], b);
-  else if (a.some(bb => overlap(b, bb))) {
+  else if (a.some(aa => overlap(aa, b))) {
     return a.reduce(add, [b]);
   } else {
     return [...a, b];
