@@ -1,6 +1,6 @@
 interface Agent {
   pos: number;
-  kind: string;
+  slot: number;
   id: number;
 }
 
@@ -17,7 +17,9 @@ export function parse(s: string): Game {
     for (let x = 0; x < lines[y].length; x++) {
       if (["A", "B", "C", "D"].includes(lines[y][x])) {
         let pos = (x - 1) * 10 + y - 2;
-        agents.push({ id: n++, kind: lines[y][x], pos });
+        let kind = lines[y][x];
+        let slot = (kind.charCodeAt(0) - "A".charCodeAt(0)) * 2 + 2;
+        agents.push({ id: n++, slot, pos });
       }
     }
   }
