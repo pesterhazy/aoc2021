@@ -43,11 +43,11 @@ test("should give demo answer", () => {
   expect(day.solvea(xs.slice(0, xs.length - 2))).toBe(590784);
 });
 
-// test("should give answer", () => {
-//   let xs = day.parse(util.slurp("data/day22.txt"));
+test("should give answer", () => {
+  let xs = day.parse(util.slurp("data/day22.txt"));
 
-//   expect(day.solvea(xs)).toBe(602574);
-// });
+  expect(day.solvea(xs)).toBe(602574);
+});
 
 test("should sub", () => {
   let a, b;
