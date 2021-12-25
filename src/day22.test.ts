@@ -49,7 +49,7 @@ test("should give demo answer", () => {
 //   expect(day.solvea(xs)).toBe(602574);
 // });
 
-test.only("should sub", () => {
+test("should sub", () => {
   let a, b;
 
   a = [

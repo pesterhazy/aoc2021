@@ -91,6 +91,5 @@ export function solvea(insts: Inst[]): number {
     if (inst.on) r = add(r, inst.box);
     else r = sub(r, inst.box);
   }
-  console.log(r);
   return size(r);
 }
