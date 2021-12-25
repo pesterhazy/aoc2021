@@ -79,12 +79,9 @@ export function sub(a: BoxSet, b: Box): BoxSet {
 }
 
 export function add(a: BoxSet, b: Box): BoxSet {
-  console.log(a, b);
-  function step(a: BoxSet, b: Box): BoxSet {
-    if (a.length === 1) return add1(a[0], b);
-    else {
-      return a.reduce(step, [b]);
-    }
+  if (a.length === 1) return add1(a[0], b);
+  else {
+    return a.reduce(add, [b]);
   }
   return step(a, b);
 }
