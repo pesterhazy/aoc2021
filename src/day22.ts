@@ -37,15 +37,14 @@ export function sub1(a: Box, b: Box): BoxSet {
   a = JSON.parse(JSON.stringify(a));
   b = JSON.parse(JSON.stringify(b));
 
-  // find section of b enclosed in a
-  for (let i = 0; i < 3; i++) {
-    b[i][0] = Math.max(b[i][0], a[i][0]);
-    b[i][1] = Math.min(b[i][1], a[i][1]);
-  }
-
   // for each dimension, cut off slices
   for (let i = 0; i < 3; i++) {
     // lower bound
+
+    for (let j = 0; j < 3; j++) {
+      b[j][0] = Math.max(b[j][0], a[j][0]);
+      b[j][1] = Math.min(b[j][1], a[j][1]);
+    }
     if (a[i][0] < b[i][0]) {
       let c = JSON.parse(JSON.stringify(a));
       c[i][0] = a[i][0];
@@ -55,6 +54,11 @@ export function sub1(a: Box, b: Box): BoxSet {
       if (size1(a) < 0) throw "Invariant failed: size1(a)<0";
     }
     // upper bound
+
+    for (let j = 0; j < 3; j++) {
+      b[j][0] = Math.max(b[j][0], a[j][0]);
+      b[j][1] = Math.min(b[j][1], a[j][1]);
+    }
     if (a[i][1] > b[i][1]) {
       let c = JSON.parse(JSON.stringify(a));
       c[i][0] = b[i][1] + 1;
