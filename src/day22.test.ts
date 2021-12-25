@@ -46,7 +46,7 @@ test("should give demo answer", () => {
 test("should give answer", () => {
   let xs = day.parse(util.slurp("data/day22.txt"));
 
-  expect(day.solvea(xs)).toBe(602574);
+  expect(day.solvea(xs)).toBe(1288707160324706);
 });
 
 test("should sub", () => {

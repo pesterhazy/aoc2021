@@ -43,8 +43,6 @@ export function sub1(a: Box, b: Box): BoxSet {
     b[j][0] = Math.max(b[j][0], a[j][0]);
     b[j][1] = Math.min(b[j][1], a[j][1]);
   }
-  if (size1(a) < 0) throw "INIT Invariant failed: size1(a)<0";
-  if (size1(b) < 0) throw "INIT Invariant failed: size1(b)<0";
   // for each dimension, cut off slices
   for (let i = 0; i < 3; i++) {
     // lower bound
@@ -55,7 +53,6 @@ export function sub1(a: Box, b: Box): BoxSet {
       c[i][1] = b[i][0] - 1;
       r.push(c);
       a[i][0] = b[i][0];
-      if (size1(a) < 0) throw "LOWER Invariant failed: size1(a)<0";
     }
     // upper bound
 
@@ -65,7 +62,6 @@ export function sub1(a: Box, b: Box): BoxSet {
       c[i][1] = a[i][1];
       r.push(c);
       a[i][1] = b[i][1];
-      if (size1(a) < 0) throw "UPPER Invariant failed: size1(a)<0";
     }
   }
 
