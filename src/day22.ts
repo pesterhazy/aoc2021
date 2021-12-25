@@ -78,23 +78,34 @@ export function sub(a: BoxSet, b: Box): BoxSet {
   return a.flatMap(box => sub1(box, b));
 }
 
-function within(a: number[][], b: number[][]): boolean {
-  return [0, 1, 2].every(
-    (i => a[i][0] >= b[i][0] && a[i][0] <= b[i][1]) ||
-      (i => a[i][1] >= b[i][0] && a[i][1] <= b[i][1])
+function within(vec: number[], box: number[][]): boolean {
+  return [0, 1, 2].every(i => vec[i] >= box[i][0] && vec[i] <= box[i][1]);
+}
+
+function start(box: Box): number[] {
+  return [box[0][0], box[1][0], box[2][0]];
+}
+
+function end(box: Box): number[] {
+  return [box[0][1], box[1][1], box[2][1]];
+}
+
+function disjoint(a: Box, b: Box): boolean {
+  return !(
+    within(start(a), b) ||
+    within(end(a), b) ||
+    within(start(b), a) ||
+    within(end(b), a)
   );
 }
 
-function overlap(a: Box, b: Box): boolean {
-  return within(a, b) || within(b, a);
-}
-
-export function add(a: BoxSet, b: Box): BoxSet {
-  if (a.length === 1) return add1(a[0], b);
-  else if (a.some(aa => overlap(aa, b))) {
-    return a.reduce(add, [b]);
+export function add(boxes: BoxSet, addendum: Box): BoxSet {
+  if (boxes.length === 1) return add1(boxes[0], addendum);
+  else if (boxes.every(aa => disjoint(aa, addendum))) {
+    console.log("jackpot");
+    return [...boxes, addendum];
   } else {
-    return [...a, b];
+    return boxes.reduce(add, [addendum]);
   }
 }
 
