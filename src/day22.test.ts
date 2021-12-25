@@ -69,7 +69,7 @@ test("should sub", () => {
     [1, 1]
   ];
 
-  expect(day.size(day.sub(a, b))).toBe(26);
+  expect(day.size(day.sub1(a, b))).toBe(26);
 
   a = [
     [0, 2],
@@ -82,7 +82,7 @@ test("should sub", () => {
     [1, 3]
   ];
 
-  expect(day.size(day.sub(a, b))).toBe(3 * 3 * 3 - 2 * 2 * 2);
+  expect(day.size(day.sub1(a, b))).toBe(3 * 3 * 3 - 2 * 2 * 2);
 
   a = [
     [0, 2],
@@ -91,7 +91,7 @@ test("should sub", () => {
   ];
   b = a;
 
-  expect(day.size(day.sub(a, b))).toBe(0);
+  expect(day.size(day.sub1(a, b))).toBe(0);
 });
 
 test("should add", () => {
@@ -104,5 +104,5 @@ test("should add", () => {
   ];
   b = a;
 
-  expect(day.size(day.add(a, b))).toBe(3 * 3 * 3);
+  expect(day.size(day.add1(a, b))).toBe(3 * 3 * 3);
 });

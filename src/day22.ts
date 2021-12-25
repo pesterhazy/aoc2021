@@ -18,31 +18,6 @@ export function parse(s: string): Inst[] {
   });
 }
 
-function isOn(insts: Inst[], vec: number[]): boolean {
-  let on = false;
-  for (let inst of insts) {
-    let inRange = true;
-    for (let i = 0; i < 3; i++)
-      if (vec[i] < inst.ranges[i][0] || vec[i] > inst.ranges[i][1])
-        inRange = false;
-    if (!inRange) continue;
-    on = inst.on;
-  }
-  return on;
-}
-
-function within(box: number[][], { ranges }: Inst): boolean {
-  return [0, 1, 2].every(
-    i => box[i][0] >= ranges[i][0] && box[i][1] <= ranges[i][1]
-  );
-}
-
-function outside(box: number[][], { ranges }: Inst): boolean {
-  return [0, 1, 2].some(
-    i => box[i][1] < ranges[i][0] || box[i][0] > ranges[i][1]
-  );
-}
-
 type Box = number[][];
 type BoxSet = number[][][];
 
@@ -56,7 +31,7 @@ export function size(boxes: BoxSet): number {
   return boxes.map(size1).reduce((a, b) => a + b, 0);
 }
 
-export function sub(a: Box, b: Box): BoxSet {
+export function sub1(a: Box, b: Box): BoxSet {
   let r: Box[] = [];
   // trim
 
@@ -92,8 +67,8 @@ export function sub(a: Box, b: Box): BoxSet {
   return r;
 }
 
-export function add(a: Box, b: Box): BoxSet {
-  let r = sub(a, b);
+export function add1(a: Box, b: Box): BoxSet {
+  let r = sub1(a, b);
   r.push(b);
 
   return r;
