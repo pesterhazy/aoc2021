@@ -33,7 +33,6 @@ export function size(boxes: BoxSet): number {
 
 export function sub1(a: Box, b: Box): BoxSet {
   let r: Box[] = [];
-  // trim
 
   a = JSON.parse(JSON.stringify(a));
   b = JSON.parse(JSON.stringify(b));
@@ -51,12 +50,9 @@ export function sub1(a: Box, b: Box): BoxSet {
       let c = JSON.parse(JSON.stringify(a));
       c[i][0] = a[i][0];
       c[i][1] = b[i][0] - 1;
-      if (size1(c) < 0) {
-        console.log(c);
-        throw "ouch";
-      }
       r.push(c);
       a[i][0] = b[i][0];
+      if (size1(a) < 0) throw "Invariant failed: size1(a)<0";
     }
     // upper bound
     if (a[i][1] > b[i][1]) {
@@ -65,6 +61,7 @@ export function sub1(a: Box, b: Box): BoxSet {
       c[i][1] = a[i][1];
       r.push(c);
       a[i][1] = b[i][1];
+      if (size1(a) < 0) throw "Invariant failed: size1(a)<0";
     }
   }
 
