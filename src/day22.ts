@@ -78,12 +78,24 @@ export function sub(a: BoxSet, b: Box): BoxSet {
   return a.flatMap(box => sub1(box, b));
 }
 
+function within(a: number[][], b: number[][]): boolean {
+  return [0, 1, 2].every(
+    (i => a[i][0] >= b[i][0] && a[i][0] <= b[i][1]) ||
+      (i => a[i][1] >= b[i][0] && a[i][1] <= b[i][1])
+  );
+}
+
+function overlap(a: Box, b: Box): boolean {
+  return within(a, b) || within(b, a);
+}
+
 export function add(a: BoxSet, b: Box): BoxSet {
   if (a.length === 1) return add1(a[0], b);
-  else {
+  else if (a.some(bb => overlap(b, bb))) {
     return a.reduce(add, [b]);
+  } else {
+    return [...a, b];
   }
-  return step(a, b);
 }
 
 export function solvea(insts: Inst[]): number {

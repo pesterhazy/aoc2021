@@ -175,5 +175,5 @@ test.only("should add many more", () => {
     [1, 1]
   ];
 
-  expect(day.size(day.add(a, b))).toBe(27 * 2);
+  expect(day.size(day.add(a, b))).toBe(27 * 3);
 });
