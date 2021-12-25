@@ -1,6 +1,6 @@
 interface Inst {
   on: boolean;
-  ranges: number[][];
+  box: number[][];
 }
 
 export function parse(s: string): Inst[] {
@@ -9,12 +9,12 @@ export function parse(s: string): Inst[] {
     let m = l.match(/[-0-9]+/g);
     if (!m) throw "boom";
     let xs = m.map(v => parseInt(v));
-    let ranges = [
+    let box = [
       [xs[0], xs[1]],
       [xs[2], xs[3]],
       [xs[4], xs[5]]
     ];
-    return { on, ranges };
+    return { on, box };
   });
 }
 
@@ -83,8 +83,9 @@ export function solvea(insts: Inst[]): number {
   let r: BoxSet = [];
 
   for (let inst of insts) {
-    if (inst.on) r = add(r, inst.ranges);
-    else r = sub(r, inst.ranges);
+    if (inst.on) r = add(r, inst.box);
+    else r = sub(r, inst.box);
   }
+  console.log(r);
   return size(r);
 }
