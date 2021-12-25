@@ -57,16 +57,37 @@ export function size(boxes: BoxSet): number {
 }
 
 export function sub(a: Box, b: Box): BoxSet {
+  let r: Box[] = [];
   // trim
 
+  a = JSON.parse(JSON.stringify(a));
   b = JSON.parse(JSON.stringify(b));
 
+  // find section of b enclosed in a
   for (let i = 0; i < 3; i++) {
     b[i][0] = Math.max(b[i][0], a[i][0]);
     b[i][1] = Math.min(b[i][1], a[i][1]);
   }
 
-  console.log(b);
+  // for each dimension, cut off slices
+  for (let i = 0; i < 3; i++) {
+    // lower bound
+    if (a[i][0] < b[i][0]) {
+      let c = JSON.parse(JSON.stringify(a));
+      c[i][0] = a[i][0];
+      c[i][1] = b[i][0] - 1;
+      r.push(c);
+      a[i][0] = b[i][0];
+    }
+    // upper bound
+    if (a[i][1] > b[i][1]) {
+      let c = JSON.parse(JSON.stringify(a));
+      c[i][0] = b[i][1] + 1;
+      c[i][1] = a[i][1];
+      r.push(c);
+      a[i][1] = b[i][1];
+    }
+  }
 
-  return [a]; // FIXME
+  return r;
 }
