@@ -106,3 +106,51 @@ test("should add", () => {
 
   expect(day.size(day.add1(a, b))).toBe(3 * 3 * 3);
 });
+
+test("should sub many", () => {
+  let a, b;
+
+  a = [
+    [
+      [0, 2],
+      [0, 2],
+      [0, 2]
+    ],
+    [
+      [3, 5],
+      [0, 2],
+      [0, 2]
+    ]
+  ];
+  b = [
+    [1, 4],
+    [1, 1],
+    [1, 1]
+  ];
+
+  expect(day.size(day.sub(a, b))).toBe(27 * 2 - 4);
+});
+
+test("should add many", () => {
+  let a, b;
+
+  a = [
+    [
+      [0, 2],
+      [0, 2],
+      [0, 2]
+    ],
+    [
+      [3, 5],
+      [0, 2],
+      [0, 2]
+    ]
+  ];
+  b = [
+    [1, 4],
+    [1, 1],
+    [1, 1]
+  ];
+
+  expect(day.size(day.add(a, b))).toBe(27 * 2);
+});

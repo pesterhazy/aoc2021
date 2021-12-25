@@ -73,3 +73,14 @@ export function add1(a: Box, b: Box): BoxSet {
 
   return r;
 }
+
+export function sub(a: BoxSet, b: Box): BoxSet {
+  return a.flatMap(box => sub1(box, b));
+}
+
+export function add(a: BoxSet, b: Box): BoxSet {
+  if (a.length === 1) return add1(a[0], b);
+  else {
+    return a.reduce(add, [b]);
+  }
+}
