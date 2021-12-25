@@ -149,7 +149,7 @@ test("should add many", () => {
   expect(day.size(day.add(a, b))).toBe(27 * 2);
 });
 
-test.only("should add many more", () => {
+test("should add many more", () => {
   let a, b;
 
   //
