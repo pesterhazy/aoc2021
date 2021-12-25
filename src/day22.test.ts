@@ -29,7 +29,7 @@ test("should parse", () => {
 
   expect(xs[xs.length - 1]).toStrictEqual({
     on: true,
-    ranges: [
+    box: [
       [967, 23432],
       [45373, 81175],
       [27513, 53682]
