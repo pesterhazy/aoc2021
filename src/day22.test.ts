@@ -88,19 +88,6 @@ test("should sub", () => {
   expect(day.size(day.sub1(a, b))).toBe(0);
 });
 
-test("should add", () => {
-  let a, b;
-
-  a = [
-    [0, 2],
-    [0, 2],
-    [0, 2]
-  ];
-  b = a;
-
-  expect(day.size(day.add1(a, b))).toBe(3 * 3 * 3);
-});
-
 test("should sub many", () => {
   let a, b;
 

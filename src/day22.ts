@@ -67,13 +67,6 @@ export function sub1(a: Box, b: Box): BoxSet {
   return r;
 }
 
-export function add1(a: Box, b: Box): BoxSet {
-  let r = sub1(a, b);
-  r.push(b);
-
-  return r;
-}
-
 export function sub(a: BoxSet, b: Box): BoxSet {
   return a.flatMap(box => sub1(box, b));
 }
