@@ -154,3 +154,27 @@ test("should add many", () => {
 
   expect(day.size(day.add(a, b))).toBe(27 * 2);
 });
+
+test("should add many more", () => {
+  let a, b;
+
+  a = [
+    [
+      [0, 2],
+      [0, 2],
+      [0, 2]
+    ],
+    [
+      [3, 5],
+      [0, 2],
+      [0, 2]
+    ]
+  ];
+  b = [
+    [1, 4],
+    [1, 1],
+    [1, 1]
+  ];
+
+  expect(day.size(day.add(a, b))).toBe(27 * 2);
+});

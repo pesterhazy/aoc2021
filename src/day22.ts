@@ -79,8 +79,22 @@ export function sub(a: BoxSet, b: Box): BoxSet {
 }
 
 export function add(a: BoxSet, b: Box): BoxSet {
-  if (a.length === 1) return add1(a[0], b);
-  else {
-    return a.reduce(add, [b]);
+  console.log(a, b);
+  function step(a: BoxSet, b: Box): BoxSet {
+    if (a.length === 1) return add1(a[0], b);
+    else {
+      return a.reduce(step, [b]);
+    }
   }
+  return step(a, b);
+}
+
+export function solvea(insts: Inst[]): number {
+  let r: BoxSet = [];
+
+  for (let inst of insts) {
+    if (inst.on) r = add(r, inst.ranges);
+    else r = sub(r, inst.ranges);
+  }
+  return size(r);
 }
