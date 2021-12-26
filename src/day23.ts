@@ -97,8 +97,6 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
 
   let arrived = 0;
   for (let agent of agents) {
-    assert([2, 4, 6, 8].includes(agent.slot));
-
     let parked;
     let vv = M.get(agent.slot * 10 + 1);
     if (vv !== undefined && agents[vv].slot === agent.slot) parked = true;
