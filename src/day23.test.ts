@@ -15,22 +15,12 @@ test("should parse", () => {
   expect(r.agents.length).toBe(16);
 });
 
-test("should return candidates", () => {
-  let r = day.parse(demo);
-  let cans, arrived;
-  [cans, arrived] = day.candidates(r.agents);
-  expect(cans.length).toBe(7 * 4);
-  r.agents[0].pos = 3;
-  [cans, arrived] = day.candidates(r.agents);
-  expect(cans.length).toBe(12);
-});
-
-test.only("should solve demo", () => {
+test("should solve demo", () => {
   let r = day.parse(demo);
   expect(day.solvea(r.agents)).toBe(44169);
 });
 
 test("should solve", () => {
   let r = day.parse(util.slurp("data/day23.txt"));
-  expect(day.solvea(r.agents)).toBe(14148);
+  expect(day.solvea(r.agents)).toBe(43814);
 });
