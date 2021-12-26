@@ -165,7 +165,7 @@ function print(history: Agent[][]) {
     for (let agent of agents) {
       let x, y;
       if (agent.pos >= 20) {
-        x = Math.floor(agent.pos / 10);
+        x = Math.floor(agent.pos / 10) + 1;
         y = Math.floor((agent.pos % 20) + 2);
       } else {
         x = agent.pos + 1;
