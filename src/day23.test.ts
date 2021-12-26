@@ -1,4 +1,5 @@
 import * as day from "./day23";
+import * as util from "./util";
 
 const demo = `#############
 #...........#
@@ -25,4 +26,9 @@ test("should return candidates", () => {
 test("should solve demo", () => {
   let r = day.parse(demo);
   expect(day.solvea(r.agents)).toBe(12521);
+});
+
+test("should solve", () => {
+  let r = day.parse(util.slurp("data/day23.txt"));
+  expect(day.solvea(r.agents)).toBe(14148);
 });

@@ -215,6 +215,6 @@ export function solvea(agents: Agent[]): number {
     }
   }
   if (!best) throw "not found";
-  print(best.history);
+  // print(best.history);
   return best.cost;
 }
