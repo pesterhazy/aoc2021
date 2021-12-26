@@ -148,15 +148,19 @@ interface Job {
 export function solvea(agents: Agent[]): number {
   let jobs: Job[] = [{ agents: agents, cost: 0 }];
   let best = Infinity;
+  let seen: Map<string, number> = new Map();
 
   while (true) {
     let job = jobs.pop();
     if (!job) break;
 
+    let key = JSON.stringify(job.agents);
+    if (seen.has(key) && seen.get(key)! >= job.cost) continue;
+
+    seen.set(key, job.cost);
+
     let [cans, arrived] = candidates(job.agents);
     if (arrived) {
-      console.log(job.agents, job.cost);
-      throw "boom";
       best = Math.min(best, job.cost);
       continue;
     }
