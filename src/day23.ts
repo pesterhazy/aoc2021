@@ -87,7 +87,7 @@ function findPath(frm: number, to: number): number[] {
   return r.slice(1);
 }
 
-export function candidates(agents: Agent[]): Candidate[] {
+export function candidates(agents: Agent[]): [Candidate[], boolean] {
   let cans: Candidate[] = [];
   let M: Map<number, number> = new Map();
 
@@ -95,6 +95,7 @@ export function candidates(agents: Agent[]): Candidate[] {
     M.set(agent.pos, agent.id);
   }
 
+  let arrived = 0;
   for (let agent of agents) {
     assert([2, 4, 6, 8].includes(agent.slot));
 
@@ -104,10 +105,16 @@ export function candidates(agents: Agent[]): Candidate[] {
     else parked = false;
 
     // already in the right slot?
-    if (agent.pos === agent.slot * 10 + 1) continue;
+    if (agent.pos === agent.slot * 10 + 1) {
+      arrived++;
+      continue;
+    }
     if (agent.pos === agent.slot * 10) {
       let vv = M.get(agent.slot * 10 + 1);
-      if (vv !== undefined && agents[vv].slot === agent.slot) continue;
+      if (vv !== undefined && agents[vv].slot === agent.slot) {
+        arrived++;
+        continue;
+      }
     }
 
     let dests: number[] = [];
@@ -129,5 +136,34 @@ export function candidates(agents: Agent[]): Candidate[] {
       cans.push({ id: agent.id, pos: dest, cost });
     }
   }
-  return cans;
+  if (arrived === agents.length) return [[], true];
+  else return [cans, false];
+}
+
+interface Job {
+  agents: Agent[];
+  cost: number;
+}
+
+export function solvea(agents: Agent[]): number {
+  let jobs: Job[] = [{ agents: agents, cost: 0 }];
+  let best = Infinity;
+
+  while (true) {
+    let job = jobs.pop();
+    if (!job) break;
+
+    let [cans, arrived] = candidates(job.agents);
+    if (arrived) {
+      best = Math.min(best, job.cost);
+      continue;
+    }
+    for (let can of cans) {
+      let newAgents: Agent[] = JSON.parse(JSON.stringify(job.agents));
+
+      newAgents[can.id].pos = can.pos;
+      jobs.push({ agents: newAgents, cost: job.cost + can.cost });
+    }
+  }
+  return best;
 }
