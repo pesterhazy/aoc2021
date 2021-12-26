@@ -1,8 +1,10 @@
 import { strict as assert } from "assert";
+
 interface Agent {
   pos: number;
   slot: number;
   id: number;
+  mult: number;
 }
 
 interface Game {
@@ -20,7 +22,8 @@ export function parse(s: string): Game {
         let pos = (x - 1) * 10 + y - 2;
         let kind = lines[y][x];
         let slot = (kind.charCodeAt(0) - "A".charCodeAt(0)) * 2 + 2;
-        agents.push({ id: n++, slot, pos });
+        let mult = Math.pow(10, kind.charCodeAt(0) - "A".charCodeAt(0));
+        agents.push({ id: n++, slot, pos, mult });
       }
     }
   }
@@ -58,7 +61,11 @@ function makeNeighbors() {
   return m;
 }
 
-interface Candidate {}
+interface Candidate {
+  id: number;
+  pos: number;
+  cost: number;
+}
 
 function findPath(frm: number, to: number): number[] {
   function find(path: number[]): number[] | undefined {
@@ -118,7 +125,8 @@ export function candidates(agents: Agent[]): Candidate[] {
       // blocked?
       if (path.some((pp: number) => M.has(pp))) continue;
 
-      cans.push({ id: agent.id, pos: dest });
+      let cost = agent.mult * path.length;
+      cans.push({ id: agent.id, pos: dest, cost });
     }
   }
   return cans;
