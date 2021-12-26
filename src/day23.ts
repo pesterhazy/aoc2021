@@ -194,7 +194,7 @@ export function solvea(agents: Agent[]): number {
     if (!job) break;
 
     let key = JSON.stringify(job.agents);
-    if (seen.has(key) && seen.get(key)! >= job.cost) continue;
+    if (seen.has(key) && seen.get(key)! <= job.cost) continue;
 
     seen.set(key, job.cost);
 
