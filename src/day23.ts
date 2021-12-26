@@ -106,28 +106,27 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
 
   let arrived = 0;
   for (let agent of agents) {
-    let parked;
-    let vv = M.get(agent.slot * 10 + 1);
-    if (vv !== undefined && agents[vv].slot === agent.slot) parked = true;
-    else parked = false;
+    let parked = 0;
+    for (let p = 3; p >= 0; p--) {
+      let vv = M.get(agent.slot * 10 + p);
+      if (vv !== undefined && agents[vv].slot === agent.slot) {
+        parked++;
+      } else break;
+    }
 
     // already in the right slot?
-    if (agent.pos === agent.slot * 10 + 1) {
+    if (
+      agent.pos >= 20 &&
+      Math.floor(agent.pos / 10) === agent.slot &&
+      3 - (agent.pos % 20) >= parked
+    ) {
       arrived++;
       continue;
-    }
-    if (agent.pos === agent.slot * 10) {
-      let vv = M.get(agent.slot * 10 + 1);
-      if (vv !== undefined && agents[vv].slot === agent.slot) {
-        arrived++;
-        continue;
-      }
     }
 
     let dests: number[] = [];
 
-    dests.push(agent.slot * 10 + 1);
-    if (parked) dests.push(agent.slot * 10);
+    if (parked < 4) dests.push(agent.slot * 10 + 3 - parked);
 
     if (Math.floor(agent.pos / 20) > 0) {
       dests.push(...HALLWAY);
