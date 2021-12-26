@@ -154,6 +154,41 @@ interface Job {
   cost: number;
 }
 
+export function solvea(agents: Agent[]): number {
+  let jobs: Job[] = [{ agents: agents, cost: 0, history: [agents] }];
+  let best: Job | undefined;
+  let seen: Map<string, number> = new Map();
+
+  while (true) {
+    let job = jobs.pop();
+    if (!job) break;
+
+    let key = JSON.stringify(job.agents);
+    if (seen.has(key) && seen.get(key)! <= job.cost) continue;
+
+    seen.set(key, job.cost);
+
+    let [cans, arrived] = candidates(job.agents);
+    if (arrived) {
+      if (best === undefined || job.cost < best.cost) best = job;
+      continue;
+    }
+    for (let can of cans) {
+      let newAgents: Agent[] = JSON.parse(JSON.stringify(job.agents));
+
+      newAgents[can.id].pos = can.pos;
+      jobs.push({
+        agents: newAgents,
+        cost: job.cost + can.cost,
+        history: [...job.history, newAgents]
+      });
+    }
+  }
+  if (!best) throw "not found";
+  // print(best.history);
+  return best.cost;
+}
+
 const field = `#############
 #...........#
 ###.#.#.#.###
@@ -190,39 +225,4 @@ export function print(history: Agent[][]) {
     }
     console.log(s);
   }
-}
-
-export function solvea(agents: Agent[]): number {
-  let jobs: Job[] = [{ agents: agents, cost: 0, history: [agents] }];
-  let best: Job | undefined;
-  let seen: Map<string, number> = new Map();
-
-  while (true) {
-    let job = jobs.pop();
-    if (!job) break;
-
-    let key = JSON.stringify(job.agents);
-    if (seen.has(key) && seen.get(key)! <= job.cost) continue;
-
-    seen.set(key, job.cost);
-
-    let [cans, arrived] = candidates(job.agents);
-    if (arrived) {
-      if (best === undefined || job.cost < best.cost) best = job;
-      continue;
-    }
-    for (let can of cans) {
-      let newAgents: Agent[] = JSON.parse(JSON.stringify(job.agents));
-
-      newAgents[can.id].pos = can.pos;
-      jobs.push({
-        agents: newAgents,
-        cost: job.cost + can.cost,
-        history: [...job.history, newAgents]
-      });
-    }
-  }
-  if (!best) throw "not found";
-  // print(best.history);
-  return best.cost;
 }
