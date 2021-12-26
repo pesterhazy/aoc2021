@@ -110,11 +110,9 @@ export function candidates(agents: Agent[]): Candidate[] {
 
     if (Math.floor(agent.pos / 20) > 0) {
       dests.push(...HALLWAY);
-    } else {
-      throw "Not Implemented";
     }
 
-    for (let dest of HALLWAY) {
+    for (let dest of dests) {
       let path = findPath(agent.pos, dest);
 
       // blocked?

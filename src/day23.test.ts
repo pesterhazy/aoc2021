@@ -14,7 +14,10 @@ test("should parse", () => {
 
 test("should return candidates", () => {
   let r = day.parse(demo);
-  let cans = day.candidates(r.agents);
-
+  let cans;
+  cans = day.candidates(r.agents);
   expect(cans.length).toBe(7 * 4);
+  r.agents[0].pos = 3;
+  cans = day.candidates(r.agents);
+  expect(cans.length).toBe(12);
 });
