@@ -1,3 +1,4 @@
+import { strict as assert } from "assert";
 interface Agent {
   pos: number;
   slot: number;
@@ -75,7 +76,7 @@ function findPath(frm: number, to: number): number[] {
   }
 
   let r = find([frm]);
-  if (!r) throw "not ofund";
+  if (!r) throw "not found";
   return r.slice(1);
 }
 
@@ -88,17 +89,38 @@ export function candidates(agents: Agent[]): Candidate[] {
   }
 
   for (let agent of agents) {
+    assert([2, 4, 6, 8].includes(agent.slot));
+
+    let parked;
+    let vv = M.get(agent.slot * 10 + 1);
+    if (vv !== undefined && agents[vv].slot === agent.slot) parked = true;
+    else parked = false;
+
+    // already in the right slot?
+    if (agent.pos === agent.slot * 10 + 1) continue;
+    if (agent.pos === agent.slot * 10) {
+      let vv = M.get(agent.slot * 10 + 1);
+      if (vv !== undefined && agents[vv].slot === agent.slot) continue;
+    }
+
+    let dests: number[] = [];
+
+    dests.push(agent.slot * 10 + 1);
+    if (parked) dests.push(agent.slot * 10);
+
     if (Math.floor(agent.pos / 20) > 0) {
-      for (let dest of HALLWAY) {
-        let path = findPath(agent.pos, dest);
-
-        // blocked?
-        if (path.some((pp: number) => M.has(pp))) continue;
-
-        cans.push({ id: agent.id, pos: dest });
-      }
+      dests.push(...HALLWAY);
     } else {
       throw "Not Implemented";
+    }
+
+    for (let dest of HALLWAY) {
+      let path = findPath(agent.pos, dest);
+
+      // blocked?
+      if (path.some((pp: number) => M.has(pp))) continue;
+
+      cans.push({ id: agent.id, pos: dest });
     }
   }
   return cans;
