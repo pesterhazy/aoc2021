@@ -60,6 +60,8 @@ function makeNeighbors() {
     let n = 2 * (i + 1);
     add(n, n * 10);
     add(n * 10, n * 10 + 1);
+    add(n * 10 + 1, n * 10 + 2);
+    add(n * 10 + 2, n * 10 + 3);
   }
 
   for (let i = 0; i < 10; i++) {
