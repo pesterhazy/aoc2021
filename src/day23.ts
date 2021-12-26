@@ -155,6 +155,8 @@ export function solvea(agents: Agent[]): number {
 
     let [cans, arrived] = candidates(job.agents);
     if (arrived) {
+      console.log(job.agents, job.cost);
+      throw "boom";
       best = Math.min(best, job.cost);
       continue;
     }
