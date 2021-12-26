@@ -133,7 +133,10 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
       if (path.some((pp: number) => M.has(pp))) continue;
 
       let cost = agent.mult * path.length;
-      cans.push({ id: agent.id, pos: dest, cost });
+      let can = { id: agent.id, pos: dest, cost };
+      // hole in one
+      if (dest >= 20) return [[can], false];
+      cans.push(can);
     }
   }
   if (arrived === agents.length) return [[], true];
