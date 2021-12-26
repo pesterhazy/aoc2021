@@ -96,6 +96,8 @@ function findPath(frm: number, to: number): number[] {
   return r.slice(1);
 }
 
+const depth = 4;
+
 export function candidates(agents: Agent[]): [Candidate[], boolean] {
   let cans: Candidate[] = [];
   let M: Map<number, number> = new Map();
@@ -106,19 +108,16 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
 
   let arrived = 0;
   for (let agent of agents) {
-    let parked = 0;
-    for (let p = 3; p >= 0; p--) {
-      let vv = M.get(agent.slot * 10 + p);
-      if (vv !== undefined && agents[vv].slot === agent.slot) {
-        parked++;
-      } else break;
+    let parked: number = 0;
+    for (let i = 1; i <= depth; i++) {
+      let vv = M.get(agent.slot * 10 + depth - i);
+      if (vv !== undefined && agents[vv].slot === agent.slot) parked = i;
+      else break;
     }
 
-    // already in the right slot?
     if (
-      agent.pos >= 20 &&
       Math.floor(agent.pos / 10) === agent.slot &&
-      3 - (agent.pos % 20) >= parked
+      depth - (agent.pos % 10) - 1 <= parked
     ) {
       arrived++;
       continue;
@@ -126,7 +125,7 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
 
     let dests: number[] = [];
 
-    if (parked < 4) dests.push(agent.slot * 10 + 3 - parked);
+    if (parked < depth) dests.push(agent.slot * 10 + depth - parked - 1);
 
     if (Math.floor(agent.pos / 20) > 0) {
       dests.push(...HALLWAY);

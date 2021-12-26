@@ -27,7 +27,7 @@ test("should return candidates", () => {
 
 test.only("should solve demo", () => {
   let r = day.parse(demo);
-  expect(day.solvea(r.agents)).toBe(12521);
+  expect(day.solvea(r.agents)).toBe(44169);
 });
 
 test("should solve", () => {
