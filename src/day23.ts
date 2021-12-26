@@ -5,6 +5,7 @@ interface Agent {
   slot: number;
   id: number;
   mult: number;
+  kind: string;
 }
 
 interface Game {
@@ -23,7 +24,7 @@ export function parse(s: string): Game {
         let kind = lines[y][x];
         let slot = (kind.charCodeAt(0) - "A".charCodeAt(0)) * 2 + 2;
         let mult = Math.pow(10, kind.charCodeAt(0) - "A".charCodeAt(0));
-        agents.push({ id: n++, slot, pos, mult });
+        agents.push({ id: n++, slot, pos, mult, kind });
       }
     }
   }
@@ -143,12 +144,49 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
 
 interface Job {
   agents: Agent[];
+  history: Agent[][];
   cost: number;
 }
 
+const field = `#############
+#...........#
+###.#.#.#.###
+  #.#.#.#.#
+  #########`;
+
+function print(history: Agent[][]) {
+  for (let agents of history) {
+    let a: string[][] = [];
+
+    for (let line of field.split(/\n/)) {
+      a.push(Array.from(line));
+    }
+
+    for (let agent of agents) {
+      let x, y;
+      if (agent.pos >= 20) {
+        x = Math.floor(agent.pos / 10);
+        y = Math.floor((agent.pos % 20) + 2);
+      } else {
+        x = agent.pos + 1;
+        y = 1;
+      }
+      a[y][x] = agent.kind;
+    }
+    let s = "";
+    for (let row of a) {
+      for (let col of row) {
+        s += col;
+      }
+      s += "\n";
+    }
+    console.log(s);
+  }
+}
+
 export function solvea(agents: Agent[]): number {
-  let jobs: Job[] = [{ agents: agents, cost: 0 }];
-  let best = Infinity;
+  let jobs: Job[] = [{ agents: agents, cost: 0, history: [agents] }];
+  let best: Job | undefined;
   let seen: Map<string, number> = new Map();
 
   while (true) {
@@ -162,15 +200,21 @@ export function solvea(agents: Agent[]): number {
 
     let [cans, arrived] = candidates(job.agents);
     if (arrived) {
-      best = Math.min(best, job.cost);
+      if (best === undefined || job.cost < best.cost) best = job;
       continue;
     }
     for (let can of cans) {
       let newAgents: Agent[] = JSON.parse(JSON.stringify(job.agents));
 
       newAgents[can.id].pos = can.pos;
-      jobs.push({ agents: newAgents, cost: job.cost + can.cost });
+      jobs.push({
+        agents: newAgents,
+        cost: job.cost + can.cost,
+        history: [...job.history, newAgents]
+      });
     }
   }
-  return best;
+  if (!best) throw "not found";
+  print(best.history);
+  return best.cost;
 }
