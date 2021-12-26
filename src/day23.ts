@@ -150,12 +150,11 @@ export function candidates(agents: Agent[]): [Candidate[], boolean] {
 
 interface Job {
   agents: Agent[];
-  history: Agent[][];
   cost: number;
 }
 
 export function solvea(agents: Agent[]): number {
-  let jobs: Job[] = [{ agents: agents, cost: 0, history: [agents] }];
+  let jobs: Job[] = [{ agents: agents, cost: 0 }];
   let best: Job | undefined;
   let seen: Map<string, number> = new Map();
 
@@ -179,13 +178,11 @@ export function solvea(agents: Agent[]): number {
       newAgents[can.id].pos = can.pos;
       jobs.push({
         agents: newAgents,
-        cost: job.cost + can.cost,
-        history: [...job.history, newAgents]
+        cost: job.cost + can.cost
       });
     }
   }
   if (!best) throw "not found";
-  // print(best.history);
   return best.cost;
 }
 
