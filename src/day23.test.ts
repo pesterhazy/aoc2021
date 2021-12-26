@@ -10,7 +10,9 @@ const demo = `#############
 test("should parse", () => {
   let r = day.parse(demo);
 
-  expect(r.agents.length).toBe(8);
+  console.log(r.agents);
+  day.print([r.agents]);
+  expect(r.agents.length).toBe(16);
 });
 
 test("should return candidates", () => {
@@ -23,7 +25,7 @@ test("should return candidates", () => {
   expect(cans.length).toBe(12);
 });
 
-test("should solve demo", () => {
+test.only("should solve demo", () => {
   let r = day.parse(demo);
   expect(day.solvea(r.agents)).toBe(12521);
 });

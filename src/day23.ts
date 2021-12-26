@@ -12,8 +12,14 @@ interface Game {
   agents: Agent[];
 }
 
+let INSERT = `  #D#C#B#A#
+  #D#B#A#C# `;
+
 export function parse(s: string): Game {
-  let lines = s.split(/\n/);
+  let lines: string[] = s.split(/\n/);
+  let inserts: string[] = INSERT.split(/\n/);
+  lines = [...lines.slice(0, 3), ...inserts, ...lines.slice(3)];
+
   let agents: Agent[] = [];
   let n = 0;
 
@@ -152,9 +158,11 @@ const field = `#############
 #...........#
 ###.#.#.#.###
   #.#.#.#.#
+  #.#.#.#.#
+  #.#.#.#.#
   #########`;
 
-function print(history: Agent[][]) {
+export function print(history: Agent[][]) {
   for (let agents of history) {
     let a: string[][] = [];
 
