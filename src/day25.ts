@@ -92,11 +92,11 @@ function xform(game: Game): Game | undefined {
       let v = game.canvas.peek({ x, y });
 
       if (v === 2) {
-        if (game.canvas.peek({ x: x + 1, y }) === 0) {
-          newCanvas.poke({ x: (x + 1) % game.width, y }, 2);
+        if (game.canvas.peek({ x: (x + 1) % game.width, y }) === 0) {
+          newCanvas.poke({ x: (x + 1) % game.width, y }, v);
           moved = true;
         } else {
-          newCanvas.poke({ x: x, y }, 2);
+          newCanvas.poke({ x: x, y }, v);
         }
       }
     }
@@ -107,10 +107,10 @@ function xform(game: Game): Game | undefined {
 
       if (v === 1) {
         if (game.canvas.peek({ x, y: (y + 1) % game.height }) === 0) {
-          newCanvas.poke({ x, y: (y + 1) % game.height }, 1);
+          newCanvas.poke({ x, y: (y + 1) % game.height }, v);
           moved = true;
         } else {
-          newCanvas.poke({ x: x, y }, 1);
+          newCanvas.poke({ x: x, y }, v);
         }
       }
     }
