@@ -100,10 +100,10 @@ function xform(game: Game): Game | undefined {
           newCanvas.poke(pos, v);
           moved = true;
         } else {
-          newCanvas.poke({ x: x, y }, v);
+          newCanvas.poke({ x, y }, v);
         }
       } else {
-        newCanvas.poke({ x: x, y }, v);
+        newCanvas.poke({ x, y }, v);
       }
     }
   }
@@ -119,10 +119,10 @@ function xform(game: Game): Game | undefined {
           newCanvas.poke(pos, v);
           moved = true;
         } else {
-          newCanvas.poke({ x: x, y }, v);
+          newCanvas.poke({ x, y }, v);
         }
       } else {
-        newCanvas.poke({ x: x, y }, v);
+        newCanvas.poke({ x, y }, v);
       }
     }
   }
