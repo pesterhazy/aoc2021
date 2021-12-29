@@ -1,4 +1,5 @@
 import { strict as assert } from "assert";
+import * as util from "./util";
 
 const input = `..#.#..#####.#.#.#.###.##.....###.##.#..###.####..#####..#....#..#..##..##
 #..######.###...####..#..#####..##..#.#####...##.#.#..#.##..#.#......#.###
@@ -44,32 +45,35 @@ function parse(s: string): Game {
 }
 
 function xform(image: Set<string>, dict: boolean[]): Set<string> {
-  let pix: Set<string> = new Set();
+  let minx = Infinity;
+  let miny = Infinity;
+  let maxx = -Infinity;
+  let maxy = -Infinity;
 
   for (let s of image) {
     let [x, y] = JSON.parse(s);
 
-    for (let yy = y - 1; yy <= y + 1; yy++) {
-      for (let xx = x - 1; xx <= x + 1; xx++) {
-        pix.add(JSON.stringify([xx, yy]));
-      }
-    }
+    minx = Math.min(minx, x);
+    miny = Math.min(minx, y);
+    maxx = Math.max(maxx, x);
+    maxy = Math.max(maxy, y);
   }
 
   let r: Set<string> = new Set();
-  for (let s of pix) {
-    let [x, y] = JSON.parse(s);
-
-    let v = 0;
-    let shift = 0;
-    for (let yy = y; yy < y + 3; yy++) {
-      for (let xx = x; xx < x + 3; xx++) {
-        let b = image.has(JSON.stringify([xx, yy])) ? 1 : 0;
-        v += b << shift;
-        shift++;
+  for (let y = miny - 1; y <= maxy + 1; y++) {
+    for (let x = minx - 1; x <= maxx + 1; x++) {
+      let v = 0;
+      let shift = 0;
+      for (let yy = y - 1; yy <= y + 1; yy++) {
+        for (let xx = x - 1; xx <= x + 1; xx++) {
+          let b = image.has(JSON.stringify([xx, yy])) ? 1 : 0;
+          v += b << shift;
+          shift++;
+        }
       }
+
+      if (dict[v]) r.add(JSON.stringify([x, y]));
     }
-    if (dict[v]) r.add(s);
   }
   return r;
 }
@@ -99,13 +103,15 @@ function print(image: Set<string>) {
 }
 
 function main() {
-  let game = parse(input);
+  // let s=util.slurp("data/day20.txt")
+  let s = input;
+  let game = parse(s);
 
   let image: Set<string> = game.init;
-  // print(image);
+  print(image);
   for (let n = 0; n < 2; n++) {
     image = xform(image, game.dict);
-    // print(image);
+    print(image);
   }
 
   let r = image.size;
