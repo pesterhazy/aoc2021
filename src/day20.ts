@@ -78,7 +78,11 @@ function xform(
         }
       }
 
-      if (dict[v] !== dict[0]) r.add(JSON.stringify([x, y]));
+      let bb = dict[v];
+
+      if (dict[0] && !flipped) bb = !bb;
+
+      if (bb) r.add(JSON.stringify([x, y]));
     }
   }
 
