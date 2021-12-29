@@ -69,8 +69,8 @@ function xform(image: Set<string>, dict: boolean[]): Set<string> {
 
     let v = 0;
     let shift = 0;
-    for (let yy = 0; yy < 3; yy++) {
-      for (let xx = 0; xx < 3; xx++) {
+    for (let yy = y; yy < y + 3; yy++) {
+      for (let xx = x; xx < x + 3; xx++) {
         let b = image.has(JSON.stringify([xx, yy])) ? 1 : 0;
         v += b << shift;
         shift++;
