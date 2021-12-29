@@ -54,7 +54,7 @@ function xform(image: Set<string>, dict: boolean[]): Set<string> {
     let [x, y] = JSON.parse(s);
 
     minx = Math.min(minx, x);
-    miny = Math.min(minx, y);
+    miny = Math.min(miny, y);
     maxx = Math.max(maxx, x);
     maxy = Math.max(maxy, y);
   }
@@ -87,7 +87,7 @@ function print(image: Set<string>) {
     let [x, y] = JSON.parse(s);
 
     minx = Math.min(minx, x);
-    miny = Math.min(minx, y);
+    miny = Math.min(miny, y);
     maxx = Math.max(maxx, x);
     maxy = Math.max(maxy, y);
   }
@@ -103,8 +103,8 @@ function print(image: Set<string>) {
 }
 
 function main() {
-  // let s = util.slurp("data/day20.txt");
-  let s = input;
+  let s = util.slurp("data/day20.txt");
+  // let s = input;
   let game = parse(s);
 
   let image: Set<string> = game.init;
