@@ -132,8 +132,8 @@ function xform(game: Game): Game | undefined {
 }
 
 function main() {
-  // let s = util.slurp("data/day20.txt");
-  let s = input;
+  let s = util.slurp("data/day25.txt");
+  // let s = input;
   let game: Game | undefined = parse(s);
 
   let count = 0;
