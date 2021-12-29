@@ -44,7 +44,11 @@ function parse(s: string): Game {
   return { init, dict };
 }
 
-function xform(image: Set<string>, dict: boolean[]): Set<string> {
+function xform(
+  image: Set<string>,
+  flipped: boolean,
+  dict: boolean[]
+): [Set<string>, boolean] {
   let minx = Infinity;
   let miny = Infinity;
   let maxx = -Infinity;
@@ -66,16 +70,21 @@ function xform(image: Set<string>, dict: boolean[]): Set<string> {
       let shift = 8;
       for (let yy = y - 1; yy <= y + 1; yy++) {
         for (let xx = x - 1; xx <= x + 1; xx++) {
-          let b = image.has(JSON.stringify([xx, yy])) ? 1 : 0;
-          v += b << shift;
+          let b = image.has(JSON.stringify([xx, yy]));
+          if (flipped) b = !b;
+
+          v += (b ? 1 : 0) << shift;
           shift--;
         }
       }
 
-      if (dict[v]) r.add(JSON.stringify([x, y]));
+      if (dict[v] !== dict[0]) r.add(JSON.stringify([x, y]));
     }
   }
-  return r;
+
+  if (dict[0]) flipped = !flipped;
+
+  return [r, flipped];
 }
 
 function print(image: Set<string>) {
@@ -109,8 +118,9 @@ function main() {
 
   let image: Set<string> = game.init;
   print(image);
+  let flipped = false;
   for (let n = 0; n < 2; n++) {
-    image = xform(image, game.dict);
+    [image, flipped] = xform(image, flipped, game.dict);
     print(image);
   }
 
