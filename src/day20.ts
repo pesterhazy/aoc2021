@@ -38,28 +38,21 @@ function parse(s: string): Game {
       if (rows[y][x] === "#") init.add(JSON.stringify([x, y]));
     }
   }
+
+  assert(dict.length === 512);
   return { init, dict };
 }
 
-let deltas = [
-  { x: -1, y: -1 },
-  { x: -1, y: 0 },
-  { x: -1, y: 1 },
-  { x: 0, y: -1 },
-  { x: 0, y: 1 },
-  { x: 1, y: -1 },
-  { x: 1, y: 0 },
-  { x: 1, y: 1 }
-];
-
 function xform(image: Set<string>, dict: boolean[]): Set<string> {
-  let pix = new Set(image);
+  let pix: Set<string> = new Set();
 
   for (let s of image) {
     let [x, y] = JSON.parse(s);
 
-    for (let delta of deltas) {
-      pix.add(JSON.stringify([x + delta.x, y + delta.y]));
+    for (let yy = y - 1; yy <= y + 1; yy++) {
+      for (let xx = x - 1; xx <= x + 1; xx++) {
+        pix.add(JSON.stringify([xx, yy]));
+      }
     }
   }
 
@@ -76,17 +69,44 @@ function xform(image: Set<string>, dict: boolean[]): Set<string> {
         shift++;
       }
     }
-
     if (dict[v]) r.add(s);
   }
   return r;
 }
 
+function print(image: Set<string>) {
+  let minx = Infinity;
+  let miny = Infinity;
+  let maxx = -Infinity;
+  let maxy = -Infinity;
+  for (let s of image) {
+    let [x, y] = JSON.parse(s);
+
+    minx = Math.min(minx, x);
+    miny = Math.min(minx, y);
+    maxx = Math.max(maxx, x);
+    maxy = Math.max(maxy, y);
+  }
+
+  let s = "";
+  for (let y = miny; y <= maxy; y++) {
+    for (let x = minx; x <= maxx; x++) {
+      s += image.has(JSON.stringify([x, y])) ? "#" : ".";
+    }
+    s += "\n";
+  }
+  console.log(s);
+}
+
 function main() {
   let game = parse(input);
 
-  let image = game.init;
-  for (let n = 0; n < 2; n++) image = xform(image, game.dict);
+  let image: Set<string> = game.init;
+  // print(image);
+  for (let n = 0; n < 2; n++) {
+    image = xform(image, game.dict);
+    // print(image);
+  }
 
   let r = image.size;
   console.log(r);
