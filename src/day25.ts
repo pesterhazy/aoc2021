@@ -102,7 +102,7 @@ function xform(game: Game): Game | undefined {
         } else {
           newCanvas.poke({ x, y }, v);
         }
-      } else {
+      } else if (v !== 0) {
         newCanvas.poke({ x, y }, v);
       }
     }
@@ -121,7 +121,7 @@ function xform(game: Game): Game | undefined {
         } else {
           newCanvas.poke({ x, y }, v);
         }
-      } else {
+      } else if (v !== 0) {
         newCanvas.poke({ x, y }, v);
       }
     }
