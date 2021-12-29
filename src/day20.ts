@@ -121,11 +121,11 @@ function main() {
   let game = parse(s);
 
   let image: Set<string> = game.init;
-  print(image);
+  // print(image);
   let flipped = false;
-  for (let n = 0; n < 2; n++) {
+  for (let n = 0; n < 50; n++) {
     [image, flipped] = xform(image, flipped, game.dict);
-    print(image);
+    // print(image);
   }
 
   let r = image.size;
