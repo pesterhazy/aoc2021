@@ -85,39 +85,49 @@ function parse(s: string): Game {
 }
 
 function xform(game: Game): Game | undefined {
-  let newCanvas = new Canvas();
+  let newCanvas;
   let moved = false;
+  let canvas = game.canvas;
+
+  newCanvas = new Canvas();
   for (let y = 0; y < game.height; y++) {
     for (let x = 0; x < game.width; x++) {
-      let v = game.canvas.peek({ x, y });
+      let v = canvas.peek({ x, y });
 
       if (v === 2) {
-        if (game.canvas.peek({ x: (x + 1) % game.width, y }) === 0) {
-          newCanvas.poke({ x: (x + 1) % game.width, y }, v);
+        let pos = { x: (x + 1) % game.width, y };
+        if (canvas.peek(pos) === 0) {
+          newCanvas.poke(pos, v);
           moved = true;
         } else {
           newCanvas.poke({ x: x, y }, v);
         }
+      } else {
+        newCanvas.poke({ x: x, y }, v);
       }
     }
   }
+  canvas = newCanvas;
+  newCanvas = new Canvas();
   for (let y = 0; y < game.height; y++) {
     for (let x = 0; x < game.width; x++) {
-      let v = game.canvas.peek({ x, y });
+      let v = canvas.peek({ x, y });
 
       if (v === 1) {
-        if (game.canvas.peek({ x, y: (y + 1) % game.height }) === 0) {
-          newCanvas.poke({ x, y: (y + 1) % game.height }, v);
+        let pos = { x, y: (y + 1) % game.height };
+        if (canvas.peek(pos) === 0) {
+          newCanvas.poke(pos, v);
           moved = true;
         } else {
           newCanvas.poke({ x: x, y }, v);
         }
+      } else {
+        newCanvas.poke({ x: x, y }, v);
       }
     }
   }
-  console.log(moved);
-  if (moved)
-    return { width: game.width, height: game.height, canvas: newCanvas };
+  canvas = newCanvas;
+  if (moved) return { width: game.width, height: game.height, canvas };
   else return undefined;
 }
 
