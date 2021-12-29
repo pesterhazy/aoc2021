@@ -63,12 +63,12 @@ function xform(image: Set<string>, dict: boolean[]): Set<string> {
   for (let y = miny - 1; y <= maxy + 1; y++) {
     for (let x = minx - 1; x <= maxx + 1; x++) {
       let v = 0;
-      let shift = 0;
+      let shift = 8;
       for (let yy = y - 1; yy <= y + 1; yy++) {
         for (let xx = x - 1; xx <= x + 1; xx++) {
           let b = image.has(JSON.stringify([xx, yy])) ? 1 : 0;
           v += b << shift;
-          shift++;
+          shift--;
         }
       }
 
@@ -103,7 +103,7 @@ function print(image: Set<string>) {
 }
 
 function main() {
-  // let s=util.slurp("data/day20.txt")
+  // let s = util.slurp("data/day20.txt");
   let s = input;
   let game = parse(s);
 
